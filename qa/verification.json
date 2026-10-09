@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-07T04:21:09.708Z",
+  "syntax": "passed",
+  "navigation": "8 FinTarget + 10 Miracle views passed",
+  "interactions": [
+    "sector sensitivity",
+    "currency context",
+    "issuer inspector",
+    "source filter",
+    "model selection",
+    "readiness gate",
+    "FX arithmetic",
+    "model filter"
+  ],
+  "finRuntimeErrors": 0,
+  "allRuntimeErrors": [],
+  "mobileOverflow": false,
+  "limitations": [
+    "Remote maps/fonts require network",
+    "No real data ingestion or trained models",
+    "Mobbin visual review unavailable"
+  ]
+}

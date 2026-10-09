@@ -1,0 +1,163 @@
+$ python3 referencias/logo-design-skill/scripts/search_library.py --industry payments-fintech --summary
+37 logos match (of 1432).
+
+Mark types
+  abstract                    8   21.6%
+  wordmark                    8   21.6%
+  combination                 8   21.6%
+  letterform                  6   16.2%
+  emblem                      4   10.8%
+  lettermark                  2    5.4%
+  pictorial                   1    2.7%
+
+Symbol type (combination marks)
+  abstract                    6   16.2%
+  pictorial                   2    5.4%
+
+Primary colour family
+  multi                      12   32.4%
+  blue                       11   29.7%
+  mono                        5   13.5%
+  red                         3    8.1%
+  green                       3    8.1%
+  orange                      3    8.1%
+
+Techniques
+  color-segments             10   27.0%
+  negative-space              9   24.3%
+  containment                 9   24.3%
+  overlap-transparency        6   16.2%
+  mirror-symmetry             4   10.8%
+  gradient                    4   10.8%
+  geometric-construction      3    8.1%
+  arrow                       3    8.1%
+  line-monoline               3    8.1%
+  dimensional-shading         2    5.4%
+  isometric-3d                2    5.4%
+  radial-symmetry             2    5.4%
+
+Geometry
+  circle                     13   35.1%
+  freeform                    6   16.2%
+  rounded-square              4   10.8%
+  square                      2    5.4%
+  diamond                     2    5.4%
+  radial                      2    5.4%
+  organic                     2    5.4%
+  triangle                    1    2.7%
+
+Type style (when type present)
+  geometric-sans              8   21.6%
+  display-custom              7   18.9%
+  grotesque-sans              4   10.8%
+  humanist-sans               1    2.7%
+  script                      1    2.7%
+  serif                       1    2.7%
+
+Colour count: 49% use 1-2 colours; gradients in 19%.
+Exemplary examples: patreon.svg, square.svg, ethereum.svg, adyen.svg, stripe.svg, mastercard.svg, cardano-icon.svg
+
+Reading: the most frequent types/colours/techniques are the category's conventions. Repeating them signals belonging; departing from them creates distinction.
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --subject sun --limit 12
+7 match, showing 7  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+  eclipse-icon.svg                   pictorial               4c  striped dark disc eclipsing orange sun
+  realm.svg                          abstract                9c  sunset wave layers inside circle
+  kloudless.svg                      abstract                5c  multicolor sunburst with center ring
+  solr.svg                           combination/pictorial   2c  thin Solr name with red sunburst
+  awesome.svg                        combination/pictorial   2c  pink sunglasses above lowercase name
+  letsencrypt.svg                    combination/pictorial   2c  padlock with rising sun rays
+  samsung.svg                        wordmark                1c  SAMSUNG wide type, A without crossbar
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --subject eye --limit 25
+20 match, showing 20  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+★ discord-icon.svg                   mascot                  1c  controller-shaped face with two eyes
+      ↳ Controller shape doubles as friendly face; minimal features, maximum personality.
+★ twitch.svg                         pictorial               1c  glitch speech bubble with eyes
+      ↳ Speech bubble with two eyes: chat and character in one shape.
+★ mailgun-icon.svg                   pictorial               1c  at sign shaped like bullseye target
+      ↳ @ sign merged with bullseye target; email plus precision.
+★ giantswarm.svg                     mascot                  4c  ant head with terminal-prompt eyes
+      ↳ Terminal glyphs as eyes merge character with developer meaning.
+★ android-icon.svg                   mascot                  2c  green robot with antennae and eyes
+      ↳ Character built from simple rounded primitives, instantly readable
+  vaddy.svg                          abstract                2c  green ring around dot like eye
+  cordova.svg                        pictorial               1c  robot-like head with two eyes
+  sameroom.svg                       mascot                  4c  grey square face with eyes and smile
+  watchman.svg                       pictorial               2c  eye with hexagon iris in circle
+  browserstack.svg                   pictorial              12c  eye inside colorful concentric rings
+  blender.svg                        abstract                3c  orbiting ring with blue eye core
+  pumpkindb.svg                      mascot                  8c  orange pumpkin with single eye
+  etcd.svg                           mascot                  1c  cog-shaped creature with two eyes
+  memcached.svg                      letterform              8c  teal M with red eyes in rounded tile
+  cobalt.svg                         letterform              2c  letter C with radiating ticks and eye
+  nightwatch.svg                     mascot                  6c  wide-eyed owl character
+  mailgun.svg                        combination/pictorial   2c  at sign shaped like bullseye target
+  jsbin.svg                          mascot                 10c  robot trash can with eyes
+  gopher.svg                         mascot                  5c  cartoon gopher with big eyes
+  cassandra.svg                      combination/pictorial   4c  detailed eye above italic lowercase name
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --technique negative-space --exemplary --limit 8
+54 match, showing 8  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+★ kotlin-icon.svg                    letterform              3c  gradient square with triangular notch K
+      ↳ K implied by one triangular cut; extreme geometric economy.
+★ patreon.svg                        letterform              1c  circle beside vertical bar forming P
+      ↳ P reduced to a bar and a circle; simplest possible construction.
+★ framer.svg                         abstract                1c  F-like shape from triangles and squares
+      ↳ Squares and triangles tessellate into an F; rigorous modular geometry.
+★ pagekit.svg                        letterform              1c  square frame with notch forming P
+      ↳ A single square outline with one notch reads as P.
+★ rocky-linux-icon.svg               abstract                1c  green circle cut by mountain chevron
+      ↳ Mountain peak carved from circle with one cut
+★ ello.svg                           pictorial               1c  white smile curve in black disc
+      ↳ A single smile arc in a circle; radical reduction of a face.
+★ npm-icon.svg                       letterform              2c  white n in red square
+      ↳ n carved from a solid square; pure negative-space simplicity.
+★ dreamhost.svg                      pictorial               2c  dark crescent moon around blue disc
+      ↳ Two circles make a crescent moon; minimal geometry, clear name link.
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --query pixel --limit 12
+4 match, showing 4  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+  sendgrid-icon.svg                  abstract                4c  blue squares in staggered pixel grid
+  rxdb.svg                           combination/abstract    3c  pixelated gradient stacked bars plus RxDB
+  sendgrid.svg                       combination/abstract    5c  pixel grid icon plus SendGrid name
+  digital-ocean.svg                  combination/abstract    1c  open ring with pixel squares
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --query target --limit 12
+7 match, showing 7  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+★ mailgun-icon.svg                   pictorial               1c  at sign shaped like bullseye target
+      ↳ @ sign merged with bullseye target; email plus precision.
+  ethnio.svg                         abstract                4c  target-like concentric rings in dark disc
+  freedomdefined.svg                 abstract               12c  concentric rainbow rings target
+  bugsnag-icon.svg                   letterform              1c  monoline b wrapping target dot
+  mailgun.svg                        combination/pictorial   2c  at sign shaped like bullseye target
+  targetprocess.svg                  abstract               12c  colored rounded bars in radial cluster
+  require.svg                        combination/pictorial   5c  archery target with arrow and arched name
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --query mirror --limit 8
+0 match, showing 0  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --query portal --limit 8
+0 match, showing 0  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+
+
+$ python3 referencias/logo-design-skill/scripts/search_library.py --query mountain --limit 8
+10 match, showing 8  (★ = exemplary; files in /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/referencias/logo-design-skill/assets/library/svg)
+★ rocky-linux-icon.svg               abstract                1c  green circle cut by mountain chevron
+      ↳ Mountain peak carved from circle with one cut
+★ snowpack.svg                       pictorial               1c  black mountain with snow-cap cutout
+      ↳ Mountain and snow cap from one triangle and one cut
+★ atlassian.svg                      abstract                3c  two gradient blue mountain peaks
+      ↳ Two gradient peaks, strong simplicity scalable to favicon
+  akka.svg                           abstract                2c  two-tone swooping mountain-like fin shape
+  xplenty.svg                        pictorial               3c  mountain peaks in ring
+  backerkit.svg                      pictorial               1c  mountain peaks with summit flag
+  nuxt.svg                           combination/abstract    3c  two green triangles like mountains
+  rocky-linux.svg                    combination/abstract    2c  mountain circle plus Rocky Linux name

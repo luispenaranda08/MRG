@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Miracle · Radar tecnológico de defensa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Miracle V1 — mockup navegable. Blanco y negro, serif de informe, reglas finas. Contenido de ejemplo. */
+:root{
+  --black:#0B0B0C; --ink:#141416; --sub:#66666B; --mute:#9A9AA0; --line:#E2E2E4; --line-2:#EFEFF0;
+  --paper:#FFFFFF; --soft:#F6F6F5; --soft-2:#ECECEA; --white:#FFFFFF;
+  --f-serif:"Newsreader","Iowan Old Style",Georgia,serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--black);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
+
+/* ---------- Encabezado ---------- */
+.top{position:sticky;top:0;z-index:20;background:var(--black);color:var(--white)}
+.bar{display:flex;align-items:center;gap:34px;padding:0 28px;height:58px}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--f-serif);font-weight:600;letter-spacing:.28em;font-size:16px}
+.logo svg{width:34px;height:34px}
+.nav{display:flex;gap:4px;height:100%;overflow-x:auto}
+.nav button{all:unset;cursor:pointer;padding:0 12px;display:flex;align-items:center;color:#A6A6AB;font-size:13.5px;border-bottom:2px solid transparent;white-space:nowrap}
+.nav button:hover{color:var(--white)}
+.nav button[aria-current="page"]{color:var(--white);border-bottom-color:var(--white)}
+.nav button:focus-visible{outline:1px solid var(--white);outline-offset:-4px}
+.access{margin-left:auto;all:unset;cursor:pointer;margin-left:auto;font-size:12.5px;border:1px solid #4A4A4F;padding:7px 12px;color:var(--white);white-space:nowrap}
+.access:hover{border-color:var(--white)}
+.band{background:var(--paper);color:var(--sub);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:7px 28px}
+.band span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.band b{color:var(--black);font-weight:500}
+.demo{background:var(--soft);border-bottom:1px solid var(--line);text-align:center;font-size:12.5px;color:var(--sub);padding:6px 16px}
+
+.wrap{max-width:1380px;margin:0 auto;padding:28px 28px 56px}
+.view[hidden]{display:none}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--black);padding-bottom:14px;margin-bottom:22px}
+.head h1{margin:6px 0 0;font-family:var(--f-serif);font-weight:500;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.01em;line-height:1.05}
+.head p{margin:6px 0 0;color:var(--sub);max-width:70ch}
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;background:var(--black);color:var(--white);font-size:13px;font-weight:500;padding:9px 14px}
+.btn.ghost{background:var(--paper);color:var(--black);border:1px solid var(--black)}
+.btn:hover{opacity:.88}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Radar ---------- */
+.radar-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+.radar-wrap{border:1px solid var(--line);padding:16px}
+.radar-wrap svg{display:block;width:100%;height:auto}
+.blip{cursor:pointer}
+.blip:focus-visible circle,.blip:focus-visible rect,.blip:focus-visible path{stroke:#0B0B0C;stroke-width:3}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin-top:10px;padding-top:10px;border-top:1px solid var(--line-2)}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;background:var(--black)}
+.legend i.c{border-radius:50%}
+.legend i.t{width:0;height:0;background:none;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--black)}
+.ring-key{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--black);margin-top:18px}
+.ring-key div{padding:10px 12px 0 0}
+.ring-key b{display:block;font-family:var(--f-serif);font-weight:500;font-size:17px}
+.ring-key span{font-size:12.5px;color:var(--sub)}
+.summary h2{margin:0 0 8px;font-family:var(--f-serif);font-weight:500;font-size:22px}
+.summary p{margin:0 0 14px;font-family:var(--f-serif);font-size:16.5px;line-height:1.55;max-width:62ch}
+.kf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--black);border-bottom:1px solid var(--line);margin:4px 0 18px}
+.kf div{padding:12px 0}
+.kf b{display:block;font-family:var(--f-serif);font-weight:500;font-size:34px;line-height:1}
+.kf span{font-size:12px;color:var(--sub)}
+.finds{display:grid;gap:0;border-top:1px solid var(--line)}
+.find{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.find .n{font-family:var(--f-mono);font-size:12px;color:var(--sub);padding-top:2px}
+.find b{font-weight:600}
+.find p{margin:2px 0 0;font-size:13.5px;color:var(--sub);font-family:var(--f-body)}
+
+/* ---------- Fichas ---------- */
+.dossier{display:grid;grid-template-columns:210px minmax(0,1fr) minmax(0,1.15fr);border:1px solid var(--line);min-height:680px}
+.filters{border-right:1px solid var(--line);padding:18px 16px;display:grid;gap:20px;align-content:start}
+.filters h5{margin:0 0 8px}
+.filters label{display:flex;align-items:center;gap:9px;font-size:13px;padding:3px 0;cursor:pointer}
+.filters input{accent-color:var(--black);width:15px;height:15px}
+.filters .count{margin-left:auto;font-family:var(--f-mono);font-size:11px;color:var(--sub)}
+.list{border-right:1px solid var(--line);min-width:0;display:flex;flex-direction:column}
+.list-head{padding:14px 18px;border-bottom:1px solid var(--black);display:flex;justify-content:space-between;align-items:baseline}
+.list-head b{font-family:var(--f-serif);font-weight:500;font-size:19px}
+.rows{overflow:auto}
+.row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:4px 10px;padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:hover{background:var(--soft)}
+.row[aria-selected="true"]{background:var(--soft);box-shadow:inset 3px 0 0 var(--black)}
+.row:focus-visible{outline:2px solid var(--black);outline-offset:-2px}
+.row .id{font-family:var(--f-mono);font-size:11.5px;color:var(--sub);padding-top:2px}
+.row .t{font-weight:600;font-size:14px}
+.row .c{font-family:var(--f-mono);font-size:11px;color:var(--sub);text-align:right;white-space:nowrap}
+.tags{display:flex;gap:6px;flex-wrap:wrap;grid-column:2/-1}
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em;border:1px solid var(--line);padding:1px 6px;color:var(--sub);white-space:nowrap}
+.tag.solid{background:var(--black);border-color:var(--black);color:var(--white)}
+.mat{display:inline-flex;gap:2px;vertical-align:middle;margin-left:5px}
+.mat i{width:6px;height:6px;background:var(--line);display:block}
+.mat i.on{background:var(--black)}
+.doc{padding:22px 26px;display:grid;gap:18px;align-content:start;min-width:0}
+.doc h2{margin:4px 0 0;font-family:var(--f-serif);font-weight:500;font-size:30px;line-height:1.1}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--black);border-bottom:1px solid var(--line)}
+.facts div{padding:9px 0}
+.facts b{display:block;font-weight:600;font-size:14px;margin-top:2px}
+.doc section p{margin:4px 0 0;font-family:var(--f-serif);font-size:16.5px;line-height:1.55}
+.doc sup{font-family:var(--f-mono);font-size:10px}
+.co{background:var(--black);color:var(--white);padding:16px 18px}
+.co .label{color:#A6A6AB}
+.co p{color:var(--white)}
+.tl{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));border-top:1px solid var(--black);padding-top:10px}
+.tl div{font-size:12.5px;padding-right:10px;position:relative}
+.tl div::before{content:"";position:absolute;top:-15px;left:0;width:9px;height:9px;background:var(--black);border-radius:50%}
+.tl b{display:block;font-family:var(--f-mono);font-size:11.5px;font-weight:500}
+.srcs{display:grid}
+.srcs div{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;border-bottom:1px solid var(--line);padding:8px 0;font-size:13px}
+.srcs .k{font-family:var(--f-mono);font-size:11.5px;color:var(--sub)}
+.srcs .lic{font-family:var(--f-mono);font-size:10.5px;color:var(--sub)}
+
+/* ---------- Tendencias ---------- */
+.mult{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--black)}
+.mult .m{padding:14px 16px 10px}
+.mult .m+.m{border-left:1px solid var(--line)}
+.mult h3{margin:0;font-family:var(--f-serif);font-weight:500;font-size:19px}
+.mult .val{display:flex;justify-content:space-between;font-size:12.5px;color:var(--sub);margin-top:2px}
+.mult .val b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+.mult svg{display:block;width:100%;height:auto;margin-top:8px;overflow:visible}
+.sec{margin-top:34px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--black);padding-bottom:8px;margin-bottom:12px;gap:12px;flex-wrap:wrap}
+.sec-h h2{margin:0;font-family:var(--f-serif);font-weight:500;font-size:22px}
+.sec-h span{color:var(--sub);font-size:12.5px}
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.bars{display:grid;gap:9px}
+.bars .b{display:grid;grid-template-columns:200px minmax(0,1fr) 54px;gap:12px;align-items:center;font-size:13px}
+.bars .track{height:14px;background:var(--line-2);position:relative}
+.bars .fill{position:absolute;inset:0 auto 0 0;background:var(--black)}
+.bars .n{font-family:var(--f-mono);font-size:12px;text-align:right}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);font-weight:500;text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--black)}
+td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}
+td.r,th.r{text-align:right;white-space:nowrap}
+.tbl-scroll{overflow-x:auto}
+
+/* ---------- Fuentes ---------- */
+.lay{display:inline-block;font-family:var(--f-mono);font-size:10.5px;padding:1px 7px;border:1px solid var(--black)}
+.lay.pub{background:var(--black);color:var(--white)}
+.lay.no{border-style:dashed;color:var(--sub);border-color:var(--mute)}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--black);margin-top:28px}
+.rules div{padding:14px 18px 0 0}
+.rules div+div{padding-left:18px;border-left:1px solid var(--line)}
+.rules b{display:block;font-family:var(--f-serif);font-weight:500;font-size:17px;margin-bottom:4px}
+.rules p{margin:0;font-size:13.5px;color:var(--sub)}
+
+/* ---------- Edición / Acceso ---------- */
+.ed{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:40px;align-items:start}
+.cover{aspect-ratio:210/297;max-width:100%;background:var(--paper);border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45);padding:34px 32px;display:flex;flex-direction:column}
+.cover .top-c{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--black);padding-bottom:10px}
+.cover .top-c .logo{color:var(--black);font-size:12px}
+.cover .top-c .logo svg{width:24px;height:24px}
+.cover h2{font-family:var(--f-serif);font-weight:500;font-size:42px;line-height:1;margin:auto 0 10px}
+.cover .ed-n{font-family:var(--f-serif);font-style:italic;font-size:18px;color:var(--sub)}
+.cover .bigstar{align-self:flex-end;width:46%;margin:18px 0}
+.cover .bottom-c{border-top:1px solid var(--black);padding-top:8px;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+.toc-ed{display:grid;border-top:1px solid var(--black)}
+.toc-ed div{display:grid;grid-template-columns:40px minmax(0,1fr) 40px;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.toc-ed .k,.toc-ed .p{font-family:var(--f-mono);font-size:12px;color:var(--sub)}
+.toc-ed .p{text-align:right}
+.toc-ed b{font-family:var(--f-serif);font-weight:500;font-size:17px}
+.tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--black)}
+.tier{padding:18px 22px 22px 0}
+.tier+.tier{padding-left:22px;border-left:1px solid var(--line)}
+.tier h3{margin:0;font-family:var(--f-serif);font-weight:500;font-size:24px}
+.tier ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.tier li{font-size:13.5px;padding-left:18px;position:relative}
+.tier li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;background:var(--black)}
+.tier.dark{background:var(--black);color:var(--white);padding-left:22px}
+.tier.dark li::before{background:var(--white)}
+.tier.dark .label{color:#A6A6AB}
+form.req{display:grid;gap:14px;margin-top:28px;max-width:640px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fld{display:grid;gap:5px}
+.fld label{font-size:12.5px;font-weight:500}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:14px;border:0;border-bottom:1px solid var(--black);padding:8px 0;background:transparent;color:var(--ink);border-radius:0}
+.fld textarea{resize:vertical;min-height:70px;border:1px solid var(--line);padding:8px}
+.fld .err{font-size:12px;color:var(--black);font-weight:500}
+.ok-msg{border:1px solid var(--black);padding:14px 16px;font-size:14px}
+.ok-msg[hidden]{display:none}
+.checkline{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+.checkline input{accent-color:var(--black);margin-top:3px}
+
+.tip{position:fixed;pointer-events:none;background:var(--black);color:var(--white);font-size:12px;padding:7px 10px;z-index:50;max-width:280px}
+.tip[hidden]{display:none}
+.site-foot{border-top:1px solid var(--black);margin-top:40px;padding-top:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--sub)}
+
+/* ---------- Panorama ---------- */
+.prods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--black)}
+.prod{padding:20px 26px 24px 0;display:grid;gap:10px;align-content:start}
+.prod+.prod{padding-left:26px;border-left:1px solid var(--line)}
+.prod h2{margin:0;font-family:var(--f-serif);font-weight:500;font-size:28px;line-height:1.1}
+.prod p{margin:0;font-family:var(--f-serif);font-size:16.5px;line-height:1.5;max-width:56ch}
+.prod .q{font-family:var(--f-serif);font-style:italic;color:var(--sub);font-size:17px}
+.mets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:6px 0 8px}
+.mets div{padding:10px 0}
+.mets b{display:block;font-family:var(--f-serif);font-weight:500;font-size:30px;line-height:1}
+.mets span{font-size:12px;color:var(--sub)}
+.maps2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;margin-top:30px}
+.mapbox{border:1px solid var(--line);padding:14px 16px}
+.mapbox h3{margin:0;font-family:var(--f-serif);font-weight:500;font-size:19px}
+.mapbox .sub{font-size:12.5px;color:var(--sub);margin:2px 0 8px}
+.mapbox svg{display:block;width:100%;height:auto}
+.map-note{font-size:12px;color:var(--sub);margin-top:6px}
+.map-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin-top:8px}
+.map-legend i{display:inline-block;width:18px;height:4px;margin-right:6px;vertical-align:middle;background:var(--black)}
+.ramp{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--sub);margin-top:8px}
+.ramp i{display:inline-block;width:22px;height:12px}
+.country{stroke:#FFFFFF;stroke-width:.5}
+.tile{cursor:pointer}
+.tile:focus-visible rect{stroke:#0B0B0C;stroke-width:3}
+/* ---------- IRS ---------- */
+.kpi3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--black);border-bottom:1px solid var(--line);margin-bottom:22px}
+.kpi3 div{padding:12px 16px 12px 0}
+.kpi3 div+div{padding-left:16px;border-left:1px solid var(--line)}
+.kpi3 b{display:block;font-family:var(--f-serif);font-weight:500;font-size:34px;line-height:1}
+.kpi3 span{font-size:12.5px;color:var(--sub)}
+.irs-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--line);margin-top:26px}
+.irs-list{border-right:1px solid var(--line);min-width:0}
+.irs-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 44px;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer}
+.irs-row:hover{background:var(--soft)}
+.irs-row[aria-selected="true"]{background:var(--soft);box-shadow:inset 3px 0 0 var(--black)}
+.irs-row:focus-visible{outline:2px solid var(--black);outline-offset:-2px}
+.irs-row .t{font-weight:600;font-size:14px}
+.irs-row .o{font-size:12px;color:var(--sub)}
+.irs-row .bar{height:10px;background:var(--line-2);position:relative}
+.irs-row .bar i{position:absolute;inset:0 auto 0 0;background:var(--black)}
+.irs-row .v{font-family:var(--f-mono);font-size:14px;text-align:right}
+.lvl{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;padding:1px 6px;border:1px solid var(--black);margin-left:6px;vertical-align:1px}
+.lvl.hi{background:var(--black);color:var(--white)}
+.irs-doc{padding:20px 22px;display:grid;gap:16px;align-content:start;min-width:0}
+.irs-doc h2{margin:2px 0 0;font-family:var(--f-serif);font-weight:500;font-size:26px}
+.comp{display:grid;gap:7px}
+.comp .c{display:grid;grid-template-columns:190px minmax(0,1fr) 34px;gap:10px;align-items:center;font-size:13px}
+.comp .track{height:8px;background:var(--line-2);position:relative}
+.comp .track i{position:absolute;inset:0 auto 0 0;background:var(--black)}
+.comp .n{font-family:var(--f-mono);font-size:12px;text-align:right}
+.chartbox svg{display:block;width:100%;height:auto;overflow:visible}
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--black);margin-top:30px}
+.case{padding:18px 24px 0 0}
+.case+.case{padding-left:24px;border-left:1px solid var(--line)}
+.case h3{margin:0 0 6px;font-family:var(--f-serif);font-weight:500;font-size:22px}
+.case p{margin:0 0 10px;font-family:var(--f-serif);font-size:16px;line-height:1.5}
+.case a{color:var(--black)}
+.case .srcl{font-size:12px;color:var(--sub);display:flex;gap:10px;flex-wrap:wrap}
+/* ---------- Dron ---------- */
+.dron-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.rank{display:grid;border-top:1px solid var(--black)}
+.rank div{display:grid;grid-template-columns:24px minmax(0,1fr) 120px 40px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.rank .k{font-family:var(--f-mono);font-size:11.5px;color:var(--sub)}
+.rank .bar{height:8px;background:var(--line-2);position:relative}
+.rank .bar i{position:absolute;inset:0 auto 0 0;background:var(--black)}
+.rank .n{font-family:var(--f-mono);font-size:12.5px;text-align:right}
+.metric-def{border:1px solid var(--line);padding:12px 14px;font-size:13px;margin-top:14px;background:var(--soft)}
+.metric-def code{font-family:var(--f-mono);font-size:12px}
+.redline{border:1px solid var(--black);padding:14px 16px;margin-top:30px;display:grid;gap:4px}
+.redline b{font-family:var(--f-serif);font-weight:500;font-size:18px}
+.redline p{margin:0;font-size:13.5px;color:var(--sub)}
+
+@media (max-width:1100px){
+  .prods,.maps2,.irs-grid,.cases,.dron-top{grid-template-columns:1fr}
+  .prod+.prod,.case+.case{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .irs-list{border-right:0;border-bottom:1px solid var(--line)}
+  .radar-grid,.ed,.twocol{grid-template-columns:1fr}
+  .dossier{grid-template-columns:1fr}
+  .filters,.list{border-right:0;border-bottom:1px solid var(--line)}
+  .filters{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rows{max-height:420px}
+}
+@media (max-width:720px){
+  .mult,.rules,.tiers,.kf,.facts,.ring-key{grid-template-columns:1fr}
+  .mult .m+.m,.rules div+div,.tier+.tier{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .bars .b{grid-template-columns:120px minmax(0,1fr) 44px}
+  .filters{grid-template-columns:1fr}
+  .wrap{padding:20px 16px}.bar{padding:0 16px;gap:16px}.f2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){.row{transition:background .12s}}
+</style>
+<link rel="stylesheet" href="miracle-modelos.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mi" viewBox="0 0 256 256"><path d="M128 14C138.6 80 176 117.4 242 128C176 138.6 138.6 176 128 242C117.4 176 80 138.6 14 128C80 117.4 117.4 80 128 14Z"/><path style="fill:var(--knock,#fff)" d="M98.3 102.1h5.8v5.8h-5.8ZM104.1 107.8h5.8v5.8h-5.8ZM98.3 113.6h5.8v5.8h-5.8ZM104.1 119.4h5.8v5.8h-5.8ZM98.3 125.1h5.8v5.8h-5.8ZM104.1 130.9h5.8v5.8h-5.8ZM98.3 136.6h5.8v5.8h-5.8ZM104.1 142.4h5.8v5.8h-5.8ZM98.3 148.2h5.8v5.8h-5.8ZM109.8 102.1h14.4v51.8h-14.4ZM147.3 102.1h14.4v51.8h-14.4ZM123.9 122.2h23.8v11.5h-23.8Z"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="bar">
+    <div class="logo"><svg fill="#FFFFFF" style="--knock:#0B0B0C" aria-hidden="true"><use href="#mi"/></svg>MIRACLE</div>
+    <nav class="nav" aria-label="Secciones">
+      <button type="button" data-view="pano" aria-current="page">Panorama</button>
+      <button type="button" data-view="irs">Sostenimiento</button>
+      <button type="button" data-view="dron">Amenaza dron</button>
+      <button type="button" data-view="radar">Radar</button>
+      <button type="button" data-view="fichas">Fichas</button>
+      <button type="button" data-view="tend">Tendencias</button>
+      <button type="button" data-view="models">Laboratorio</button>
+<button type="button" data-view="fuentes">Fuentes</button>
+      <button type="button" data-view="edicion">Edición 1</button>
+    </nav>
+    <button type="button" class="access" data-go="acceso">Acceso institucional</button>
+  </div>
+</header>
+<div class="band"><span>Solo fuentes abiertas · análisis a nivel de capacidad · sin datos personales</span><span>Edición <b>1</b> · corte <b>18 oct 2026</b></span></div>
+<div class="demo">Mockup V1 · Fichas, cifras y series son de ejemplo para mostrar el diseño.</div>
+
+<main class="wrap">
+
+<!-- =============== RADAR =============== -->
+<!-- =============== PANORAMA =============== -->
+<section class="view" id="v-pano" aria-labelledby="h-pano">
+  <div class="head">
+    <div><span class="label">Inteligencia de defensa · Colombia</span><h1 id="h-pano">Lo que se nos puede caer y lo que se nos viene encima</h1><p>Miracle mide dos riesgos que hoy nadie cuantifica de forma abierta y recurrente: la fragilidad del inventario de defensa y la evolución de la amenaza dron en el país.</p></div>
+    <div class="actions"><button type="button" class="btn" data-go="acceso">Solicitar acceso</button></div>
+  </div>
+  <div class="prods">
+    <div class="prod">
+      <span class="label">Producto 1 · horizonte 1–5 años</span>
+      <h2>Índice de Riesgo de Sostenimiento</h2>
+      <div class="q">¿Qué plataformas pueden quedarse en tierra, cuánto costaría evitarlo y quién puede resolverlo?</div>
+      <div class="mets"><div><b id="p-hhi">—</b><span>HHI de dependencia</span></div><div><b id="p-hi">—</b><span>plataformas en riesgo alto</span></div><div><b id="p-sh">—</b><span>del inventario con origen en ruptura o sanción</span></div></div>
+      <div><button type="button" class="btn ghost" data-go="irs">Abrir Sostenimiento →</button></div>
+    </div>
+    <div class="prod">
+      <span class="label">Producto 2 · horizonte 1–24 meses</span>
+      <h2>Riesgo antidron</h2>
+      <div class="q">¿Dónde, cuándo y con qué tecnología evolucionará la amenaza, y qué contramedidas quedan obsoletas?</div>
+      <div class="mets"><div><b id="p-dep">—</b><span>departamentos en exposición alta</span></div><div><b>2027</b><span>llegada estimada del FPV con fibra</span></div><div><b>~2027</b><span>vida media del inhibidor de radio</span></div></div>
+      <div><button type="button" class="btn ghost" data-go="dron">Abrir Amenaza dron →</button></div>
+    </div>
+  </div>
+  <div class="maps2">
+    <div class="mapbox"><h3>De quién dependemos</h3><div class="sub">Origen del inventario de defensa. El grosor indica el peso en el inventario; el tono, el riesgo.</div><svg id="world-p" viewBox="0 0 760 400" role="img" aria-label="Mapa mundial de dependencia del inventario"></svg><div class="map-legend"><span><i></i>Ruptura o sanción</span><span><i style="background:#7A7A80"></i>En revisión</span><span><i style="background:#C9C9CD"></i>Estable</span></div></div>
+    <div class="mapbox"><h3>Exposición a amenaza dron</h3><div class="sub">Índice mensual por departamento · mapa de teselas, no a escala</div><svg id="tiles-p" viewBox="0 0 340 440" role="img" aria-label="Exposición por departamento"></svg><div class="ramp" id="ramp-p"></div></div>
+  </div>
+<div class="ml-shortcuts"><button type="button" class="btn ghost" data-model-open="dron">Abrir modelo y requisitos de datos →</button></div></section>
+
+<!-- =============== SOSTENIMIENTO =============== -->
+<section class="view" id="v-irs" hidden aria-labelledby="h-irs">
+  <div class="head">
+    <div><span class="label">Producto 1</span><h1 id="h-irs">Índice de Riesgo de Sostenimiento</h1><p>Qué tan expuesta está cada plataforma a quedarse en tierra por su proveedor, sanciones, diplomacia, tipo de cambio u obsolescencia, y si la industria nacional puede cubrirla.</p></div>
+    <div class="actions"><button type="button" class="btn ghost">Metodología del IRS</button><button type="button" class="btn">Exportar informe</button></div>
+  </div>
+  <div class="kpi3"><div><b id="k-hhi">—</b><span>HHI de dependencia del inventario por país de origen (0 a 1)</span></div><div><b id="k-hi">—</b><span>plataformas con IRS alto (≥ 65)</span></div><div><b id="k-nat">—</b><span>plataformas donde la industria nacional podría entrar</span></div></div>
+  <div class="mapbox"><h3>Mapa de dependencia</h3><div class="sub">Flujos desde cada país proveedor hacia Colombia. Pasa el cursor sobre un país.</div><svg id="world" viewBox="0 0 960 470" role="img" aria-label="Mapa mundial de dependencia"></svg><div class="map-legend"><span><i></i>Ruptura o sanción</span><span><i style="background:#7A7A80"></i>En revisión</span><span><i style="background:#C9C9CD"></i>Estable</span></div><div class="map-note" id="world-note"></div></div>
+  <div class="irs-grid">
+    <div class="irs-list"><div class="list-head"><b>Plataformas</b><span class="label">IRS 0–100 · ilustrativo</span></div><div id="irs-rows" role="listbox" aria-label="Plataformas"></div></div>
+    <article class="irs-doc" id="irs-doc" aria-live="polite"></article>
+  </div>
+  <div class="cases">
+    <div class="case">
+      <span class="label">Caso · dato público</span>
+      <h3>Mi-17: cuando el proveedor queda sancionado</h3>
+      <p>De 25 helicópteros comprados a Rusia, solo 8 seguían operando. El mantenimiento quedó bloqueado por las sanciones y el proveedor entró a la lista OFAC. En septiembre de 2026, EE. UU. descartó asumir el mantenimiento.</p>
+      <p style="font-size:14.5px;color:var(--sub)">Prueba del IRS: con datos hasta 2021, ¿el índice habría marcado este riesgo antes de 2022?</p>
+      <div class="srcl"><a href="https://www.infobae.com/colombia/2026/09/22/siguen-los-problemas-con-los-helicopteros-mi-17-del-ejercito-colombiano-estados-unidos-descarto-asumir-su-mantenimiento/" target="_blank" rel="noopener">Infobae, 22 sep 2026</a><a href="https://www.swissinfo.ch/spa/mosc%C3%BA-y-bogot%C3%A1-a%C3%BAn-no-logran-acuerdo-sobre-el-mantenimiento-de-helic%C3%B3pteros-rusos-mi-17/89191194" target="_blank" rel="noopener">Swissinfo</a></div>
+    </div>
+    <div class="case">
+      <span class="label">Caso · dato público</span>
+      <h3>Gripen: exposición cambiaria de un contrato en euros</h3>
+      <p>17 aviones por €3.135 millones, unos COP 16,5 billones, con entregas entre 2028 y 2032. El contrato está en revisión por el gobierno.</p>
+      <div class="chartbox"><svg id="fx" viewBox="0 0 520 220" role="img" aria-label="Valor del contrato en pesos según el EUR/COP"></svg></div>
+      <div class="srcl"><a href="https://www.portafolio.co/economia/gobierno/colombia-firma-contrato-por-17-cazas-gripen-en-historico-acuerdo-con-saab-483217" target="_blank" rel="noopener">Portafolio</a><a href="https://www.infobae.com/colombia/2026/10/02/el-millonario-contrato-con-la-empresa-suiza-saab-para-comprar-17-aviones-gripen-no-le-gusta-al-gobierno-de-abelardo-de-la-espriella-se-esta-evaluando-confirmo-el-comandante-de-la-fac/" target="_blank" rel="noopener">Infobae, 2 oct 2026</a><span>Supone pago sin cobertura · verificar cláusulas</span></div>
+    </div>
+  </div>
+<div class="ml-shortcuts"><button type="button" class="btn ghost" data-model-open="sustain">Abrir modelo y requisitos de datos →</button></div></section>
+
+<!-- =============== AMENAZA DRON =============== -->
+<section class="view" id="v-dron" hidden aria-labelledby="h-dron">
+  <div class="head">
+    <div><span class="label">Producto 2</span><h1 id="h-dron">Riesgo antidron</h1><p>Prevención e identificación de riesgo: dónde crece la exposición, qué tácticas vienen de los otros teatros y cuánto le queda a cada contramedida.</p></div>
+    <div class="actions"><button type="button" class="btn ghost">Metodología</button><button type="button" class="btn">Pronóstico mensual</button></div>
+  </div>
+  <div class="dron-top">
+    <div class="mapbox"><h3>Índice de exposición a amenaza dron</h3><div class="sub">Por departamento · octubre 2026 · valores de ejemplo</div><svg id="tiles" viewBox="0 0 340 440" role="img" aria-label="Exposición por departamento"></svg><div class="ramp" id="ramp"></div></div>
+    <div>
+      <div class="sec-h"><h2>Mayor exposición</h2><span>Clic en una tesela para ver su detalle</span></div>
+      <div class="rank" id="rank"></div>
+      <div class="metric-def" id="dep-detail"></div>
+      <div class="metric-def"><b>Cómo se calcula.</b> Modelo de conteo (binomial negativo) con la tendencia de ataques de la base de eventos, presencia de grupos armados según informes públicos, importación de drones comerciales (DANE, partida 8806) y menciones en prensa. Se evalúa con <code>Brier score</code> y curva de calibración.</div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-h"><h2>Reloj de difusión de tácticas</h2><span>Del primer registro en otro teatro al primer registro en Colombia · fechas de ejemplo</span></div>
+    <div class="chartbox"><svg id="clock" viewBox="0 0 1100 300" role="img" aria-label="Rezago de difusión por táctica"></svg></div>
+    <div class="metric-def"><code>Rezago = primera documentación en Colombia − primera documentación en el teatro externo</code>. Con los rezagos históricos se estima la llegada de las tácticas que todavía no aparecen en el país (círculo vacío).</div>
+  </div>
+  <div class="sec twocol">
+    <div>
+      <div class="sec-h"><h2>Cobertura y vida media</h2><span>Contramedidas por clase · proyección de ejemplo</span></div>
+      <div class="chartbox"><svg id="cover" viewBox="0 0 520 280" role="img" aria-label="Cobertura de amenaza por contramedida"></svg></div>
+      <div class="metric-def"><code>Cobertura(c) = Σ mezcla_observada(t) × eficacia(c, t)</code>. La vida media es el año en que la cobertura cae por debajo del 50%.</div>
+    </div>
+    <div>
+      <div class="sec-h"><h2>Materia prima: drones importados</h2><span>DANE · partida 8806 · unidades por mes · ejemplo</span></div>
+      <div class="chartbox"><svg id="imports" viewBox="0 0 520 280" role="img" aria-label="Importaciones mensuales de drones"></svg></div>
+      <div class="metric-def">Alerta automática cuando un mes supera en más de 2 desviaciones estándar el promedio móvil de 12 meses.</div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-h"><h2>Ratio de intercambio de costo</h2><span>Costo de neutralizar ÷ costo del dron atacante · órdenes de magnitud</span></div>
+    <div class="tbl-scroll"><table><thead><tr><th>Contramedida</th><th>Contra</th><th class="r">Ratio aproximado</th><th>Lectura</th></tr></thead><tbody>
+      <tr><td><b>Inhibidor portátil</b></td><td>Dron comercial por radio</td><td class="r mono">&lt; 1</td><td>Reutilizable y barato, mientras la amenaza use radio</td></tr>
+      <tr><td><b>Dron interceptor</b></td><td>Dron comercial o FPV</td><td class="r mono">≈ 1</td><td>Escala bien y no depende del enlace del atacante</td></tr>
+      <tr><td><b>Munición antiaérea guiada</b></td><td>Dron comercial</td><td class="r mono">&gt; 100</td><td>Insostenible contra ataques repetidos</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="redline"><b>Líneas rojas del producto</b><p>Público: solo agregados por departamento y mes, tendencias y metodología. Nunca, ni en la capa institucional: vulnerabilidad de sitios específicos, cobertura de sensores desplegados ni cómo vencer una contramedida concreta. El pronóstico apoya la prevención y se entrega con su incertidumbre.</p></div>
+<div class="ml-shortcuts"><button type="button" class="btn ghost" data-model-open="dron">Abrir modelo y requisitos de datos →</button></div></section>
+
+<section class="view" id="v-radar" hidden aria-labelledby="h-radar">
+  <div class="head">
+    <div><span class="label">Radar tecnológico · industria de defensa colombiana</span><h1 id="h-radar">Antidrones y UAV</h1><p>Qué está funcionando en Ucrania, Irán y región, e Israel–Gaza–Líbano, y qué significa para quien diseña, compra o despliega en Colombia.</p></div>
+    <div class="actions"><button type="button" class="btn ghost" data-go="edicion">Leer la Edición 1</button><button type="button" class="btn" data-go="acceso">Solicitar acceso</button></div>
+  </div>
+  <div class="radar-grid">
+    <div class="radar-wrap">
+      <svg id="radar" viewBox="0 0 640 600" role="img" aria-label="Radar de sistemas por categoría y madurez"></svg>
+      <div class="legend"><span><i class="c"></i>Detección</span><span><i></i>Neutralización</span><span><i class="t"></i>UAV</span><span>Tamaño = relevancia para Colombia</span></div>
+    </div>
+    <div class="summary">
+      <span class="label">Resumen ejecutivo</span>
+      <h2 style="margin-top:6px">La ventaja se mueve de la interferencia a la detección</h2>
+      <p>En los tres teatros, la respuesta más común contra drones pequeños sigue siendo la interferencia de radio. Pero los enlaces por fibra óptica y la navegación autónoma la están dejando atrás, y la detección óptica y acústica gana peso.</p>
+      <div class="kf"><div><b style="font-family:var(--f-serif)">12</b><span>sistemas en esta muestra</span></div><div><b style="font-family:var(--f-serif)">3</b><span>teatros analizados</span></div><div><b style="font-family:var(--f-serif)">69</b><span>fuentes citadas</span></div></div>
+      <div class="finds">
+        <div class="find"><span class="n">01</span><div><b>Los drones por fibra óptica no se pueden interferir</b><p>Para CODALTEC: priorizar la detección óptica y acústica en la próxima línea de producto.</p></div></div>
+        <div class="find"><span class="n">02</span><div><b>La defensa por capas supera al sensor único</b><p>El radar pierde blancos pequeños a baja altura. En terreno montañoso, la integración de sensores vale más que cualquier sensor aislado.</p></div></div>
+        <div class="find"><span class="n">03</span><div><b>Los drones navales cambian la ecuación de costo</b><p>Para Cotecmar y la Armada: proteger los buques propios y usarlos en interdicción.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ring-key"><div><b>Probado en combate</b><span>Uso extendido y documentado en al menos un teatro</span></div><div><b>En despliegue</b><span>Uso creciente, evidencia parcial</span></div><div><b>Emergente</b><span>Primeros usos reportados o en desarrollo</span></div></div>
+</section>
+
+<!-- =============== FICHAS =============== -->
+<section class="view" id="v-fichas" hidden aria-labelledby="h-fichas">
+  <div class="head">
+    <div><span class="label">Expedientes</span><h1 id="h-fichas">Fichas de sistemas</h1><p>Cada ficha resume uso observado, eficacia reportada y relevancia para Colombia, con todas sus fuentes.</p></div>
+    <div class="actions"><button type="button" class="btn ghost">Exportar ficha</button></div>
+  </div>
+  <div class="dossier">
+    <div class="filters" id="filters">
+      <div><h5 class="label">Categoría</h5>
+        <label><input type="checkbox" value="Detección" checked> Detección <span class="count" data-c="Detección"></span></label>
+        <label><input type="checkbox" value="Neutralización" checked> Neutralización <span class="count" data-c="Neutralización"></span></label>
+        <label><input type="checkbox" value="UAV" checked> UAV <span class="count" data-c="UAV"></span></label></div>
+      <div><h5 class="label">Teatro</h5>
+        <label><input type="checkbox" value="Ucrania" checked> Ucrania</label>
+        <label><input type="checkbox" value="Irán y región" checked> Irán y región</label>
+        <label><input type="checkbox" value="Israel–Gaza–Líbano" checked> Israel–Gaza–Líbano</label></div>
+      <div><h5 class="label">Relevancia Colombia</h5>
+        <label><input type="checkbox" value="alta" checked> Alta</label>
+        <label><input type="checkbox" value="media" checked> Media</label></div>
+    </div>
+    <div class="list"><div class="list-head"><b>Sistemas</b><span class="label" id="n-vis"></span></div><div class="rows" id="rows" role="listbox" aria-label="Sistemas"></div></div>
+    <article class="doc" id="doc" aria-live="polite"></article>
+  </div>
+</section>
+
+<!-- =============== TENDENCIAS =============== -->
+<section class="view" id="v-tend" hidden aria-labelledby="h-tend">
+  <div class="head"><div><span class="label">Series</span><h1 id="h-tend">Tendencias</h1><p>Eventos con drones reportados por trimestre, en la misma escala para los tres teatros. Fuente de ejemplo: UCDP y GDELT agregados por región y semana.</p></div></div>
+  <div class="mult" id="mult"></div>
+  <div class="sec twocol">
+    <div>
+      <div class="sec-h"><h2>Patentes por subtecnología</h2><span>2021–2026 · ejemplo</span></div>
+      <div class="bars" id="pat"></div>
+    </div>
+    <div>
+      <div class="sec-h"><h2>Contratos públicos recientes</h2><span>USAspending · TED · SECOP II · ejemplo</span></div>
+      <div class="tbl-scroll"><table><thead><tr><th>Comprador</th><th>Objeto</th><th class="r">Monto</th><th class="r">Año</th></tr></thead><tbody>
+        <tr><td>Departamento de Defensa, EE. UU.</td><td>Sensores antidrones para bases expedicionarias</td><td class="r mono">US$ 48 M</td><td class="r mono">2026</td></tr>
+        <tr><td>Agencia de adquisiciones, UE</td><td>Drones interceptores, lote de evaluación</td><td class="r mono">€ 12 M</td><td class="r mono">2026</td></tr>
+        <tr><td>Entidad del sector defensa, Colombia</td><td>Inhibidores portátiles de señal</td><td class="r mono">COP 6.400 M</td><td class="r mono">2025</td></tr>
+        <tr><td>Departamento de Defensa, EE. UU.</td><td>Municiones merodeadoras de corto alcance</td><td class="r mono">US$ 95 M</td><td class="r mono">2025</td></tr>
+        <tr><td>Armada de un país de la OTAN</td><td>Vehículos de superficie no tripulados</td><td class="r mono">€ 31 M</td><td class="r mono">2025</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+<div class="ml-shortcuts"><button type="button" class="btn ghost" data-model-open="diffusion">Abrir modelo y requisitos de datos →</button></div></section>
+
+<!-- =============== FUENTES =============== -->
+<section class="view" id="v-fuentes" hidden aria-labelledby="h-fuentes">
+  <div class="head"><div><span class="label">Trazabilidad</span><h1 id="h-fuentes">Fuentes y licencias</h1><p>Qué fuente alimenta qué capa. Lo que no se puede redistribuir no llega a la capa pública.</p></div></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th>Fuente</th><th>Qué aporta</th><th>Licencia</th><th>Capa</th><th class="r">Actualización</th></tr></thead>
+    <tbody>
+      <tr><td><b>UCDP GED + Candidate</b></td><td>Eventos de conflicto georreferenciados</td><td class="mono">CC BY 4.0</td><td><span class="lay pub">Pública</span></td><td class="r mono">Mensual</td></tr>
+      <tr><td><b>GDELT 2.0</b></td><td>Eventos de prensa global</td><td class="mono">Abierta</td><td><span class="lay pub">Pública</span></td><td class="r mono">15 min</td></tr>
+      <tr><td><b>ACLED</b></td><td>Eventos de conflicto curados</td><td class="mono">Uso comercial con licencia</td><td><span class="lay no">Pendiente</span></td><td class="r mono">Semanal</td></tr>
+      <tr><td><b>SIPRI</b></td><td>Transferencias; no inventario operativo ni precios</td><td class="mono">Uso comercial: autorización y licencia</td><td><span class="lay no">Licencia pendiente</span></td><td class="r mono">Anual</td></tr>
+      <tr><td><b>Oryx</b></td><td>Pérdidas de equipo por tipo</td><td class="mono">Por verificar</td><td><span class="lay">Institucional</span></td><td class="r mono">Diaria</td></tr>
+      <tr><td><b>Kiel Ukraine Support Tracker</b></td><td>Ayuda militar por tipo de sistema</td><td class="mono">Atribución</td><td><span class="lay pub">Pública</span></td><td class="r mono">Trimestral</td></tr>
+      <tr><td><b>RUSI · CSIS · ISW · CNA</b></td><td>Análisis de campo y lecciones aprendidas</td><td class="mono">Cita</td><td><span class="lay">Institucional</span></td><td class="r mono">Continua</td></tr>
+      <tr><td><b>Lens.org · OpenAlex</b></td><td>Patentes y literatura científica</td><td class="mono">Abierta</td><td><span class="lay">Institucional</span></td><td class="r mono">Semanal</td></tr>
+      <tr><td><b>SECOP II · USAspending · TED</b></td><td>Contratos públicos</td><td class="mono">Pública</td><td><span class="lay">Institucional</span></td><td class="r mono">Diaria</td></tr>
+    </tbody>
+  </table></div>
+  <div class="rules">
+    <div><b>Nivel de capacidad</b><p>Miracle describe qué existe, cómo se usa y qué tan bien funciona. No publica diseño, fabricación ni datos técnicos controlados.</p></div>
+    <div><b>Nada filtrado</b><p>No usamos material filtrado ni hackeado, aunque circule en abierto. Si no es una fuente pública legítima, no entra.</p></div>
+    <div><b>Neutralidad</b><p>Cada cifra lleva su fuente y fecha de corte. Las cifras disputadas se marcan y se presentan varias fuentes.</p></div>
+  </div>
+</section>
+
+<!-- =============== EDICIÓN =============== -->
+<section class="view" id="v-edicion" hidden aria-labelledby="h-edicion">
+  <div class="head"><div><span class="label">Publicación</span><h1 id="h-edicion">Radar Antidrones y UAV · Edición 1</h1><p>Informe de 12 páginas para la industria de defensa colombiana.</p></div><div class="actions"><button type="button" class="btn" data-go="acceso">Recibir el PDF</button></div></div>
+  <div class="ed">
+    <div class="cover" aria-label="Portada del informe">
+      <div class="top-c"><div class="logo"><svg fill="#0B0B0C" aria-hidden="true"><use href="#mi"/></svg>MIRACLE</div><span class="label">Edición 1 · Oct 2026</span></div>
+      <svg class="bigstar" viewBox="0 0 256 256" fill="#0B0B0C" aria-hidden="true"><use href="#mi"/></svg>
+      <h2>Radar<br>Antidrones<br>y UAV</h2>
+      <div class="ed-n">Lo que funciona en tres teatros, leído desde Colombia</div>
+      <div class="bottom-c" style="margin-top:18px"><span>Fuentes abiertas</span><span>HyperTarget</span></div>
+    </div>
+    <div>
+      <div class="toc-ed">
+        <div><span class="k">01</span><b>Resumen ejecutivo</b><span class="p">2</span></div>
+        <div><span class="k">02</span><b>El radar: 25 sistemas en tres anillos</b><span class="p">3</span></div>
+        <div><span class="k">03</span><b>Detección: por qué gana la integración</b><span class="p">5</span></div>
+        <div><span class="k">04</span><b>Neutralización: el fin de la interferencia como respuesta única</b><span class="p">6</span></div>
+        <div><span class="k">05</span><b>UAV: del FPV al MALE</b><span class="p">8</span></div>
+        <div><span class="k">06</span><b>Qué significa para Colombia</b><span class="p">10</span></div>
+        <div><span class="k">07</span><b>Metodología y fuentes</b><span class="p">12</span></div>
+      </div>
+      <p style="font-family:var(--f-serif);font-size:17px;line-height:1.55;margin-top:20px;max-width:60ch">La Edición 1 se envía a CODALTEC, CIAC, Cotecmar, Indumil, los centros de doctrina de las Fuerzas y la ESDEG. Cada envío destaca el hallazgo más relevante para la línea de trabajo de quien lo recibe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== ACCESO =============== -->
+<section class="view" id="v-acceso" hidden aria-labelledby="h-acceso">
+  <div class="head"><div><span class="label">Semipública</span><h1 id="h-acceso">Acceso institucional</h1><p>La capa pública es abierta. La capa institucional se habilita para entidades verificadas.</p></div></div>
+  <div class="tiers">
+    <div class="tier"><span class="label">Abierta</span><h3>Capa pública</h3><ul><li>Tendencias agregadas por teatro y trimestre</li><li>Resumen del radar</li><li>Metodología y fuentes</li><li>Edición trimestral en PDF</li></ul></div>
+    <div class="tier dark"><span class="label">Con solicitud</span><h3>Capa institucional</h3><ul><li>Radar completo y 25 fichas con fuentes</li><li>Vigilancia de patentes y contratos</li><li>Descargas granulares y API</li><li>Informes a la medida por línea de producto</li></ul></div>
+  </div>
+  <form class="req" id="req" novalidate>
+    <div class="f2">
+      <div class="fld"><label for="r-name">Nombre</label><input id="r-name" autocomplete="name" placeholder="Nombre y apellido"></div>
+      <div class="fld"><label for="r-role">Cargo</label><input id="r-role" placeholder="Ej.: Director de I+D"></div>
+    </div>
+    <div class="f2">
+      <div class="fld"><label for="r-org">Entidad</label><input id="r-org" placeholder="Ej.: CODALTEC"></div>
+      <div class="fld"><label for="r-type">Tipo de entidad</label><select id="r-type"><option>Industria de defensa (GSED)</option><option>Fuerzas Militares o Policía</option><option>Academia o centro de estudios</option><option>Empresa privada</option><option>Otra entidad pública</option></select></div>
+    </div>
+    <div class="fld"><label for="r-email">Correo institucional</label><input id="r-email" type="email" autocomplete="email" placeholder="nombre@entidad.gov.co"><span class="err" id="r-err" hidden>Escribe un correo institucional válido para poder verificar la entidad.</span></div>
+    <div class="fld"><label for="r-use">¿Para qué usarás Miracle?</label><textarea id="r-use" placeholder="Ej.: priorizar la hoja de ruta de sistemas antidrones"></textarea></div>
+    <label class="checkline"><input type="checkbox" id="r-terms"> Acepto que el uso es para análisis estratégico y que Miracle no puede usarse para dañar a personas.</label>
+    <div><button type="submit" class="btn">Enviar solicitud</button></div>
+    <div class="ok-msg" id="r-ok" hidden role="status"></div>
+  </form>
+</section>
+
+
+
+<section class="view" id="v-models" hidden aria-labelledby="h-models">
+<div class="head"><div><span class="label">Ciencia de decisión / modelos y evidencia</span><h1 id="h-models">Laboratorio predictivo</h1><p>De la evidencia a una estimación defendible. Cada modelo tiene una pregunta, un baseline y una condición de activación.</p></div><div class="actions"><button type="button" class="btn ghost" id="ml-export">Exportar registro</button></div></div>
+<div class="ml-stats"><div><span class="ml-tag">FAMILIAS DE ANÁLISIS</span><strong>06</strong></div><div><span class="ml-tag">MODELOS ENTRENADOS</span><strong>00</strong></div><div><span class="ml-tag">ESTADO</span><strong>Investigación</strong></div></div>
+<div class="ml-grid"><aside><label for="model-search" class="ml-tag">BUSCAR MODELO</label><input id="model-search" class="ml-input" type="search" placeholder="LightGBM, costo, difusión…"><div id="model-list"></div><div class="ml-status">No hay predicciones en producción. La elección final depende de datos y desempeño fuera de muestra.</div></aside><div><article class="ml-card" id="model-detail"></article><div class="ml-card"><button type="button" class="btn" id="model-check">Revisar preparación</button><p id="model-readiness" role="status" aria-live="polite"></p></div></div></div>
+<div class="ml-card"><span class="ml-tag">ESCENARIO FINANCIERO / DEMOSTRACIÓN DETERMINISTA</span><h2>Sensibilidad del costo al tipo de cambio</h2><p>Ejercicio reproducible sobre una exposición neta sin cobertura que tú defines. No es LightGBM, Monte Carlo ni SeR₉₅.</p><div class="ml-scenario"><div><label for="ml-cost">Costo base supuesto · COP millones</label><input id="ml-cost" class="ml-input" type="number" value="100000" min="0" step="1000"><label for="ml-exposure">Exposición neta sin cobertura <b id="ml-exposure-value">50%</b></label><input id="ml-exposure" type="range" min="0" max="100" value="50"><label for="ml-fx">Shock de tipo de cambio <b id="ml-fx-value">10%</b></label><input id="ml-fx" type="range" min="-30" max="30" value="10"></div><div><span class="ml-tag">CAMBIO DE COSTO BAJO LOS SUPUESTOS</span><div id="ml-result" class="ml-result"></div><p id="ml-total"></p><div class="ml-status">Δcosto = costo base × exposición neta × shock. No incluye coberturas, inflación, cambio de proveedor ni correlaciones.</div></div></div></div>
+<div class="ml-card"><span class="ml-tag">GOBERNANZA DEL MODELO</span><h2>Qué acompaña a cada resultado</h2><div class="ml-row"><span>Contrato de salida</span><p>Objetivo, unidad, horizonte, corte de información, cobertura, modelo y versión, baseline, incertidumbre, fuentes y decisión de revisión humana.</p></div><div class="ml-row"><span>Backtesting</span><p>Datos disponibles en cada fecha histórica, ventanas móviles, evaluación por región y fuente, calibración y comparación con baseline. No publicar scores sin calcularlos.</p></div><div class="ml-row"><span>Monitorización</span><p>Rezago, datos faltantes, deriva de variables, calibración, intervalos y cambios de cobertura. Suspender salida cuando el contrato de datos falle.</p></div><div class="ml-row"><span>Decisión</span><p>Priorizar revisión de evidencia, contrastar escenarios de presupuesto y documentar supuestos. Pronóstico público agregado por departamento y mes.</p></div></div>
+<div class="ml-card"><span class="ml-tag">DISPONIBILIDAD / REVISIÓN DOCUMENTAL 6 OCT 2026</span><h2>Datos que sostienen los modelos</h2><div class="tbl-scroll"><table><thead><tr><th>Fuente</th><th>Estado</th><th>Insumos</th><th>Límite concreto</th></tr></thead><tbody id="ml-source-rows"></tbody></table></div></div>
+</section>
+
+<footer class="site-foot"><span>Miracle es un producto de HyperTarget · Barranquilla, Colombia</span><span>Análisis estratégico con fuentes abiertas</span></footer>
+</main>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var M=[
+ {t:"Dron FPV guiado por fibra óptica",cat:"UAV",ring:1,th:["Ucrania"],mat:4,rel:"alta",src:7,kind:"UAV · ataque de corto alcance",
+  uso:"Uso extendido en el frente ucraniano desde 2024 por ambos bandos. El enlace por fibra elimina la señal de radio que buscan los sistemas de interferencia.",
+  ef:"Las fuentes abiertas lo describen como inmune a la interferencia de radio y con alcance limitado por el carrete. Su punto débil es la detección visual y acústica.",
+  co:"Los grupos armados en Colombia ya usan drones comerciales con explosivos. Si adoptan enlaces por fibra, los inhibidores que hoy compra la Fuerza Pública dejan de servir. Para CODALTEC es una señal para priorizar la detección óptica y acústica.",
+  tl:[["2024","Primeros reportes"],["2025","Uso extendido"],["2026","Respuesta: detección óptica"]]},
+ {t:"Interferidor de radio portátil",cat:"Neutralización",ring:0,th:["Ucrania","Israel–Gaza–Líbano"],mat:5,rel:"alta",src:9,kind:"Antidrón · neutralización electrónica",
+  uso:"Es el equipo antidrón más común a nivel de pelotón en los dos teatros. Bloquea las bandas de control y de navegación satelital.",
+  ef:"Funciona bien contra drones comerciales con radio. Pierde eficacia frente a enlaces por fibra, salto de frecuencia y navegación autónoma.",
+  co:"Es el segmento con más demanda inmediata en Colombia. El radar muestra hacia dónde se mueve la amenaza para no comprar capacidad que quede obsoleta en 18 meses.",
+  tl:[["2022","Despliegue masivo"],["2024","Contramedidas aparecen"],["2026","Eficacia en descenso"]]},
+ {t:"Radar de banda X para drones pequeños",cat:"Detección",ring:0,th:["Ucrania","Israel–Gaza–Líbano"],mat:4,rel:"alta",src:6,kind:"Antidrón · detección",
+  uso:"Se despliega en capas junto a sensores ópticos para proteger infraestructura y bases.",
+  ef:"Detecta blancos pequeños a media distancia. Pierde blancos a muy baja altura y en terreno quebrado.",
+  co:"La geografía montañosa colombiana limita el radar como sensor único. Refuerza el argumento de sistemas por capas para la oferta de CODALTEC.",
+  tl:[["2022","Uso en bases"],["2024","Integración por capas"],["2026","Estándar en infraestructura"]]},
+ {t:"Dron interceptor",cat:"Neutralización",ring:1,th:["Ucrania"],mat:3,rel:"media",src:5,kind:"Antidrón · neutralización cinética",
+  uso:"Ucrania lo ha desplegado contra drones de reconocimiento y municiones merodeadoras.",
+  ef:"Su costo por intercepción es bajo comparado con un misil. Depende de una buena detección previa.",
+  co:"Puede ser una línea de producto nacional de bajo costo. Requiere integrar sensores, capacidad que ya tiene la industria colombiana.",
+  tl:[["2024","Primeros usos"],["2025","Producción en serie"],["2026","Uso creciente"]]},
+ {t:"Munición merodeadora de largo alcance (tipo Shahed)",cat:"UAV",ring:0,th:["Ucrania","Irán y región"],mat:5,rel:"media",src:8,kind:"UAV · ataque de largo alcance",
+  uso:"Es diseño iraní y se usa de forma masiva contra infraestructura en Ucrania. Irán también la empleó en ataques regionales.",
+  ef:"Es barata y se lanza en oleadas para saturar las defensas. Es vulnerable a defensa antiaérea de corto alcance si se detecta a tiempo.",
+  co:"La lección es doctrinal: cómo proteger infraestructura crítica ante ataques de saturación. También hay un ángulo regional por la cooperación militar Irán–Venezuela reportada en fuentes abiertas.",
+  tl:[["2022","Uso en Ucrania"],["2024","Ataques regionales"],["2026","Defensas por capas"]]},
+ {t:"Sensor acústico distribuido",cat:"Detección",ring:1,th:["Ucrania"],mat:3,rel:"alta",src:4,kind:"Antidrón · detección pasiva",
+  uso:"Ucrania lo usa como red de alerta temprana de bajo costo contra municiones merodeadoras.",
+  ef:"Es barato y escalable. Necesita densidad de sensores y procesamiento de señal.",
+  co:"Complemento de bajo costo para zonas rurales. Puede ser un producto conjunto de CODALTEC con universidades colombianas.",
+  tl:[["2023","Red piloto"],["2024","Escala nacional"],["2026","Integración con radar"]]},
+ {t:"Dron naval de superficie",cat:"UAV",ring:0,th:["Ucrania"],mat:4,rel:"media",src:6,kind:"UAV · naval",
+  uso:"Ucrania lo usó con éxito contra buques en el Mar Negro.",
+  ef:"Las fuentes describen un impacto alto con costo bajo frente al blanco. Puede neutralizarse con vigilancia y armas de cubierta.",
+  co:"Para Cotecmar y la Armada sirve en dos sentidos: proteger los buques propios y usar estos drones en interdicción contra semisumergibles.",
+  tl:[["2022","Primeros ataques"],["2023","Campaña en el Mar Negro"],["2025","Adopción por otras armadas"]]},
+ {t:"UAV MALE de vigilancia",cat:"UAV",ring:0,th:["Ucrania","Israel–Gaza–Líbano","Irán y región"],mat:5,rel:"alta",src:7,kind:"UAV · vigilancia de largo alcance",
+  uso:"Hace reconocimiento persistente en los tres teatros. Es vulnerable en espacio aéreo disputado.",
+  ef:"Funciona muy bien en entornos permisivos y tiene pérdidas altas frente a defensa antiaérea moderna.",
+  co:"Contexto directo para el SIRTAP y la CIAC: el entorno colombiano es mayormente permisivo, lo que favorece el concepto. La lección clave es la resistencia a interferencias.",
+  tl:[["2022","Pérdidas en Ucrania"],["2024","Uso en entornos permisivos"],["2026","Endurecimiento electrónico"]]},
+ {t:"Sensor electroóptico e infrarrojo",cat:"Detección",ring:0,th:["Israel–Gaza–Líbano","Ucrania"],mat:5,rel:"alta",src:5,kind:"Antidrón · detección y seguimiento",
+  uso:"Confirma e identifica lo que detectan el radar y los sensores de radio.",
+  ef:"Identificación precisa a corta y media distancia. Sufre con lluvia, niebla y de noche sin infrarrojo.",
+  co:"Clave en la selva y la montaña colombianas, donde el radar sufre. Compatible con estaciones de armas remotas de fabricación nacional.",
+  tl:[["2022","Uso en capas"],["2024","Seguimiento automático"],["2026","Clasificación con IA"]]},
+ {t:"Arma de energía dirigida",cat:"Neutralización",ring:2,th:["Israel–Gaza–Líbano"],mat:2,rel:"media",src:4,kind:"Antidrón · energía dirigida",
+  uso:"Primeros despliegues operativos reportados para defensa de punto.",
+  ef:"Costo por disparo muy bajo según fuentes oficiales. Limitada por clima y alcance.",
+  co:"No es una compra cercana para Colombia, pero conviene seguirla para la planeación de largo plazo.",
+  tl:[["2024","Pruebas"],["2025","Primer uso operativo"],["2026","Evaluación"]]},
+ {t:"Enjambre autónomo",cat:"UAV",ring:2,th:["Ucrania"],mat:2,rel:"media",src:3,kind:"UAV · coordinación autónoma",
+  uso:"Reportes iniciales de coordinación limitada entre varios drones.",
+  ef:"Evidencia escasa y difícil de verificar.",
+  co:"Tema de vigilancia tecnológica para la academia y la CIAC. Todavía no es amenaza operativa en Colombia.",
+  tl:[["2025","Primeros reportes"],["2026","Pruebas"]]},
+ {t:"Detección por radiofrecuencia pasiva",cat:"Detección",ring:1,th:["Ucrania","Irán y región"],mat:4,rel:"alta",src:5,kind:"Antidrón · detección pasiva",
+  uso:"Escucha las señales de control para ubicar el dron y a su operador.",
+  ef:"Muy eficaz contra drones con radio. No detecta drones por fibra ni autónomos.",
+  co:"Útil hoy en Colombia porque los drones de los grupos armados usan radio. Hay que combinarla con sensores ópticos antes de que cambie la amenaza.",
+  tl:[["2022","Uso extendido"],["2024","Ubicación del operador"],["2026","Pierde contra fibra"]]}
+];
+M.forEach(function(m,i){m.id="MR-"+String(i+1).padStart(2,"0");});
+var sel=0;
+var tip=$("tip");
+function showTip(e,h){tip.innerHTML=h;tip.hidden=false;var x=e.clientX+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px";}
+function hideTip(){tip.hidden=true;}
+
+/* ---------- Radar ---------- */
+function renderRadar(){
+  var cx=320,cy=300,R=[110,195,275],cats=["Detección","Neutralización","UAV"];
+  var s='';
+  for(var i=2;i>=0;i--) s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R[i]+'" fill="'+(["#ECECEA","#F3F3F2","#F9F9F8"][i])+'" stroke="#E2E2E4"/>';
+  [-90,30,150].forEach(function(a){var r=a*Math.PI/180;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R[2]*Math.cos(r))+'" y2="'+(cy+R[2]*Math.sin(r))+'" stroke="#0B0B0C" stroke-width="1"/>';});
+  var ringN=["Probado","En despliegue","Emergente"];
+  ringN.forEach(function(n,i){var a=55*Math.PI/180,r=R[i]-9;s+='<text x="'+(cx+r*Math.cos(a))+'" y="'+(cy+r*Math.sin(a))+'" text-anchor="end" font-size="9.5" fill="#66666B" font-family="IBM Plex Mono,monospace" letter-spacing=".08em">'+n.toUpperCase()+'</text>';});
+  var lab=[["DETECCIÓN",-30],["NEUTRALIZACIÓN",90],["UAV",210]];
+  lab.forEach(function(l){var r=l[1]*Math.PI/180,x=cx+(R[2]+10)*Math.cos(r),y=cy+(R[2]+10)*Math.sin(r);var anchor=Math.cos(r)>0.3?"start":Math.cos(r)<-0.3?"end":"middle";s+='<text x="'+x+'" y="'+(y+(Math.sin(r)>0.5?14:Math.sin(r)<-0.5?-4:4))+'" text-anchor="'+anchor+'" font-size="11" fill="#0B0B0C" font-family="IBM Plex Mono,monospace" letter-spacing=".14em">'+l[0]+'</text>';});
+  var startA={"Detección":-90,"Neutralización":30,"UAV":150};
+  var cnt={};
+  M.forEach(function(m,i){
+    var key=m.cat+m.ring;cnt[key]=(cnt[key]||0)+1;
+    var same=M.filter(function(x){return x.cat===m.cat&&x.ring===m.ring;}).length;
+    var k=cnt[key];
+    var a=(startA[m.cat]+120*(k/(same+1)))*Math.PI/180;
+    var r0=m.ring?R[m.ring-1]:20,r1=R[m.ring];var rr=r0+(r1-r0)*(k%2?0.42:0.66);
+    var x=cx+rr*Math.cos(a),y=cy+rr*Math.sin(a);var z=m.rel==="alta"?11:8;
+    var shape=m.cat==="Detección"?'<circle cx="'+x+'" cy="'+y+'" r="'+z+'" fill="#0B0B0C" stroke="#FFFFFF" stroke-width="2"/>':m.cat==="Neutralización"?'<rect x="'+(x-z)+'" y="'+(y-z)+'" width="'+2*z+'" height="'+2*z+'" fill="#0B0B0C" stroke="#FFFFFF" stroke-width="2"/>':'<path d="M'+x+' '+(y-z*1.2)+'L'+(x+z*1.1)+' '+(y+z*0.8)+'L'+(x-z*1.1)+' '+(y+z*0.8)+'Z" fill="#0B0B0C" stroke="#FFFFFF" stroke-width="2"/>';
+    s+='<g class="blip" tabindex="0" role="button" aria-label="'+m.t+'" data-i="'+i+'">'+shape+'<text x="'+x+'" y="'+(y+(m.cat==="UAV"?4:3.5))+'" text-anchor="middle" font-size="9" fill="#FFFFFF" font-family="IBM Plex Mono,monospace" pointer-events="none">'+(i+1)+'</text></g>';
+  });
+  var svg=$("radar");svg.innerHTML=s;
+  svg.querySelectorAll(".blip").forEach(function(g){
+    var m=M[+g.dataset.i];
+    g.addEventListener("mousemove",function(e){showTip(e,"<b>"+m.id+" · "+m.t+"</b><br>"+m.cat+" · "+["Probado en combate","En despliegue","Emergente"][m.ring]+"<br>Relevancia Colombia: "+m.rel+"<br>Clic para abrir la ficha");});
+    g.addEventListener("mouseleave",hideTip);
+    var open=function(){sel=+g.dataset.i;hideTip();show("fichas");};
+    g.addEventListener("click",open);
+    g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+  });
+}
+
+/* ---------- Fichas ---------- */
+function checked(){var o={};document.querySelectorAll("#filters input").forEach(function(i){o[i.value]=i.checked;});return o;}
+function visible(){var c=checked();return M.filter(function(m){return c[m.cat]&&c[m.rel]&&m.th.some(function(t){return c[t];});});}
+function mat(n){var s='<span class="mat" aria-label="Madurez '+n+' de 5">';for(var i=1;i<=5;i++)s+='<i class="'+(i<=n?"on":"")+'"></i>';return s+'</span>';}
+function renderList(){
+  var v=visible();
+  document.querySelectorAll(".count").forEach(function(el){el.textContent=M.filter(function(m){return m.cat===el.dataset.c;}).length;});
+  $("n-vis").textContent=v.length+" de "+M.length;
+  if(!v.some(function(m){return M.indexOf(m)===sel;}))sel=v.length?M.indexOf(v[0]):-1;
+  var box=$("rows");box.innerHTML="";
+  if(!v.length)box.innerHTML='<div class="row" style="cursor:default;grid-template-columns:1fr"><span class="t">Ningún sistema coincide</span><span style="color:var(--sub);font-size:13px">Activa al menos una categoría, un teatro y un nivel de relevancia.</span></div>';
+  v.forEach(function(m){
+    var i=M.indexOf(m),d=document.createElement("div");d.className="row";d.tabIndex=0;d.setAttribute("role","option");d.setAttribute("aria-selected",i===sel?"true":"false");
+    d.innerHTML='<span class="id">'+(i+1)+'</span><span class="t">'+m.t+'</span><span class="c">'+m.src+' fuentes</span><div class="tags"><span class="tag solid">'+m.cat+'</span>'+m.th.map(function(t){return '<span class="tag">'+t+'</span>';}).join("")+'<span class="tag">Madurez'+mat(m.mat)+'</span></div>';
+    d.addEventListener("click",function(){sel=i;renderList();});
+    d.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();sel=i;renderList();}});
+    box.appendChild(d);
+  });
+  renderDoc();
+}
+function renderDoc(){
+  var el=$("doc");
+  if(sel<0){el.innerHTML='<p style="color:var(--sub)">Selecciona un sistema para ver su ficha.</p>';return;}
+  var m=M[sel];
+  el.innerHTML='<div><span class="label">'+m.id+' · '+m.kind+'</span><h2>'+m.t+'</h2></div>'+
+   '<div class="facts"><div><span class="label">Anillo</span><b>'+["Probado","En despliegue","Emergente"][m.ring]+'</b></div><div><span class="label">Madurez</span><b>'+m.mat+' / 5</b></div><div><span class="label">Teatros</span><b>'+m.th.length+'</b></div><div><span class="label">Fuentes</span><b>'+m.src+'</b></div></div>'+
+   '<section><span class="label">Uso observado</span><p>'+m.uso+'<sup>1,3</sup></p></section>'+
+   '<section><span class="label">Eficacia reportada</span><p>'+m.ef+'<sup>1,2</sup></p></section>'+
+   '<section class="co"><span class="label">Qué significa para Colombia</span><p>'+m.co+'</p></section>'+
+   '<section><span class="label">Línea de tiempo</span><div class="tl" style="--n:'+m.tl.length+';margin-top:22px">'+m.tl.map(function(t){return '<div><b>'+t[0]+'</b>'+t[1]+'</div>';}).join("")+'</div></section>'+
+   '<section><span class="label">Fuentes</span><div class="srcs" style="margin-top:6px"><div><span class="k">[1]</span><span>Informe de centro de análisis (RUSI o CSIS) · cita completa</span><span class="lic">Cita</span></div><div><span class="k">[2]</span><span>Oryx · registro de pérdidas por tipo de sistema</span><span class="lic">Por verificar</span></div><div><span class="k">[3]</span><span>UCDP y GDELT · eventos agregados por región y semana</span><span class="lic">CC BY 4.0</span></div></div></section>';
+}
+document.querySelectorAll("#filters input").forEach(function(i){i.addEventListener("change",renderList);});
+
+/* ---------- Tendencias ---------- */
+function renderTrends(){
+  var T=[["Ucrania",[22,31,40,52,61,70,78,86]],["Irán y región",[4,6,5,9,14,8,11,12]],["Israel–Gaza–Líbano",[12,18,24,21,27,19,16,15]]];
+  var q=["1T25","2T25","3T25","4T25","1T26","2T26","3T26","4T26"];
+  var max=100,w=380,h=170,X0=34,X1=w-6,Y0=8,Y1=h-22;
+  var sx=function(i){return X0+i*(X1-X0)/7;},sy=function(v){return Y1-v/max*(Y1-Y0);};
+  $("mult").innerHTML=T.map(function(t,k){
+    var d=t[1],line=d.map(function(v,i){return (i?"L":"M")+sx(i).toFixed(1)+" "+sy(v).toFixed(1);}).join(" ");
+    var g='';[0,50,100].forEach(function(v){g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+sy(v)+'" y2="'+sy(v)+'" stroke="#EFEFF0"/><text x="'+(X0-6)+'" y="'+(sy(v)+4)+'" text-anchor="end" font-size="10" fill="#66666B" font-family="IBM Plex Mono,monospace">'+v+'</text>';});
+    [0,3,7].forEach(function(i){g+='<text x="'+sx(i)+'" y="'+(h-6)+'" text-anchor="middle" font-size="10" fill="#66666B" font-family="IBM Plex Mono,monospace">'+q[i]+'</text>';});
+    g+='<path d="'+line+' L'+sx(7)+' '+Y1+' L'+X0+' '+Y1+'Z" fill="#0B0B0C" fill-opacity=".06"/><path d="'+line+'" fill="none" stroke="#0B0B0C" stroke-width="2"/>';
+    d.forEach(function(v,i){g+='<circle class="tp" data-k="'+k+'" data-i="'+i+'" cx="'+sx(i)+'" cy="'+sy(v)+'" r="'+(i===7?4:9)+'" fill="'+(i===7?"#0B0B0C":"transparent")+'"/>';});
+    var ch=d[7]-d[3];
+    return '<div class="m"><h3>'+t[0]+'</h3><div class="val"><span>Último trimestre</span><b>'+d[7]+' eventos · '+(ch>=0?"+":"")+ch+' en un año</b></div><svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+t[0]+': de '+d[0]+' a '+d[7]+' eventos por trimestre">'+g+'</svg></div>';
+  }).join("");
+  $("mult").querySelectorAll(".tp").forEach(function(c){c.addEventListener("mousemove",function(e){var t=T[+c.dataset.k],i=+c.dataset.i;showTip(e,t[0]+" · "+q[i]+"<br>"+t[1][i]+" eventos con drones (ejemplo)");});c.addEventListener("mouseleave",hideTip);});
+  var P=[["Detección óptica e IR",412],["Interferencia y spoofing",388],["Detección por radio",301],["Drones interceptores",214],["Detección acústica",162],["Enlaces resistentes a interferencia",149],["Energía dirigida",97]];
+  var pm=P[0][1];
+  $("pat").innerHTML=P.map(function(p){return '<div class="b"><span>'+p[0]+'</span><div class="track"><div class="fill" style="width:'+(p[1]/pm*100)+'%"></div></div><span class="n">'+p[1]+'</span></div>';}).join("");
+}
+
+/* ---------- Acceso ---------- */
+$("req").addEventListener("submit",function(e){
+  e.preventDefault();
+  var em=$("r-email").value.trim(),okEmail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em);
+  $("r-err").hidden=okEmail;
+  if(!okEmail){$("r-email").focus();return;}
+  if(!$("r-terms").checked){$("r-ok").hidden=false;$("r-ok").textContent="Para enviar la solicitud, acepta las condiciones de uso.";return;}
+  $("r-ok").hidden=false;
+  $("r-ok").innerHTML="<b>Solicitud lista (mockup).</b> En la versión real llegaría al equipo de Miracle para verificar la entidad. Aquí no se envía nada.";
+});
+
+/* ---------- Navegación ---------- */
+function show(v){
+  document.querySelectorAll(".view").forEach(function(s){s.hidden=s.id!=="v-"+v;});
+  document.querySelectorAll(".nav button").forEach(function(b){if(b.dataset.view===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  if(v==="fichas")renderList();
+  try{history.replaceState(null,"","#"+v);}catch(e){}
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav button").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.view);});});
+document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.go);});});
+/* =================== PRODUCTO 1 · IRS =================== */
+var W=[0.25,0.20,0.15,0.10,0.15,0.15];
+var CN=["Dependencia del proveedor","Riesgo de sanciones","Distancia geopolítica","Exposición cambiaria","Obsolescencia","Falta de alternativa nacional"];
+var PL=[
+ {n:"Helicóptero Mi-17",f:"Ejército",o:"Rusia",s:[100,95,85,40,70,60],nat:true},
+ {n:"Kfir C10/C12",f:"Fuerza Aeroespacial",o:"Israel",s:[95,20,90,50,90,70],nat:false},
+ {n:"UAV Hermes 450/900",f:"Fuerza Aeroespacial",o:"Israel",s:[90,15,90,45,55,65],nat:true},
+ {n:"Misil Spike",f:"Ejército",o:"Israel",s:[95,15,90,40,40,80],nat:false},
+ {n:"Submarino Tipo 209",f:"Armada",o:"Alemania",s:[85,5,10,40,85,60],nat:true},
+ {n:"Gripen E/F (contratado)",f:"Fuerza Aeroespacial",o:"Suecia",s:[90,10,20,85,10,70],nat:false},
+ {n:"UH-60 Black Hawk",f:"Ejército y Fuerza Aeroespacial",o:"EE. UU.",s:[85,5,10,40,30,55],nat:true},
+ {n:"C-295",f:"Fuerza Aeroespacial",o:"España",s:[85,5,10,40,25,55],nat:true},
+ {n:"A-29 Super Tucano",f:"Fuerza Aeroespacial",o:"Brasil",s:[80,5,10,35,50,50],nat:true},
+ {n:"Fusil Galil ACE",f:"Ejército",o:"Israel · licencia Indumil",s:[40,10,90,20,30,10],nat:false},
+ {n:"Patrullera OPV",f:"Armada",o:"Colombia · Cotecmar",s:[20,5,0,25,20,5],nat:false}
+];
+PL.forEach(function(p){p.irs=Math.round(p.s.reduce(function(a,v,i){return a+v*W[i];},0));});
+PL.sort(function(a,b){return b.irs-a.irs;});
+var SH={"643":["Rusia",0.08,"r"],"376":["Israel",0.28,"r"],"840":["EE. UU.",0.30,"s"],"752":["Suecia",0.06,"v"],"724":["España",0.07,"s"],"076":["Brasil",0.08,"s"],"276":["Alemania",0.07,"s"],"170":["Colombia",0.06,"n"]};
+var hhi=Object.keys(SH).reduce(function(a,k){return a+SH[k][1]*SH[k][1];},0);
+var risky=SH["643"][1]+SH["376"][1];
+var hiN=PL.filter(function(p){return p.irs>=65;}).length, natN=PL.filter(function(p){return p.nat;}).length;
+function fx2(x,d){return x.toLocaleString("es-CO",{minimumFractionDigits:d,maximumFractionDigits:d});}
+$("p-hhi").textContent=fx2(hhi,2);$("k-hhi").textContent=fx2(hhi,2);
+$("p-hi").textContent=hiN+" de "+PL.length;$("k-hi").textContent=hiN+" de "+PL.length;
+$("p-sh").textContent=Math.round(risky*100)+"%";$("k-nat").textContent=natN;
+var selP=0;
+function rng(seed){return function(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296;};}
+function gauss(r){var u=r()||1e-9,v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function ser(p){
+  var r=rng(17+selP*31),out=[],sig=p.s[3]/400,ps=p.s[1]/200,pr=p.s[2]/300;
+  for(var i=0;i<3000;i++){var x=gauss(r)*sig*100;if(r()<ps)x+=30+r()*50;if(r()<pr)x+=10+r()*30;out.push(x);}
+  out.sort(function(a,b){return a-b;});return out;
+}
+function renderIRS(){
+  $("irs-rows").innerHTML=PL.map(function(p,i){
+    var lv=p.irs>=65?'<span class="lvl hi">ALTO</span>':p.irs>=40?'<span class="lvl">MEDIO</span>':'<span class="lvl">BAJO</span>';
+    return '<div class="irs-row" role="option" tabindex="0" data-i="'+i+'" aria-selected="'+(i===selP)+'"><div><div class="t">'+p.n+lv+'</div><div class="o">'+p.o+' · '+p.f+'</div></div><div class="bar"><i style="width:'+p.irs+'%"></i></div><div class="v">'+p.irs+'</div></div>';
+  }).join("");
+  $("irs-rows").querySelectorAll(".irs-row").forEach(function(r){
+    var go=function(){selP=+r.dataset.i;renderIRS();};
+    r.addEventListener("click",go);r.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});
+  });
+  var p=PL[selP],sim=ser(p),p95=sim[Math.floor(sim.length*0.95)],p50=sim[Math.floor(sim.length*0.5)];
+  var mn=-30,mx=110,nb=28,bw=(mx-mn)/nb,bins=new Array(nb).fill(0);
+  sim.forEach(function(v){var k=Math.floor((Math.max(mn,Math.min(mx-0.01,v))-mn)/bw);bins[k]++;});
+  var bm=Math.max.apply(null,bins),X0=30,X1=500,Y0=10,Y1=150,sx=function(v){return X0+(v-mn)/(mx-mn)*(X1-X0);};
+  var g='<line x1="'+X0+'" x2="'+X1+'" y1="'+Y1+'" y2="'+Y1+'" stroke="#0B0B0C"/>';
+  bins.forEach(function(b,k){var x=sx(mn+k*bw),h=b/bm*(Y1-Y0);g+='<rect x="'+(x+1)+'" y="'+(Y1-h)+'" width="'+((X1-X0)/nb-2)+'" height="'+h+'" fill="'+(mn+k*bw>=p95?"#0B0B0C":"#C9C9CD")+'"/>';});
+  [-25,0,25,50,75,100].forEach(function(v){g+='<text x="'+sx(v)+'" y="'+(Y1+16)+'" text-anchor="middle" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+(v>0?"+":"")+v+'%</text>';});
+  g+='<line x1="'+sx(p95)+'" x2="'+sx(p95)+'" y1="'+Y0+'" y2="'+Y1+'" stroke="#0B0B0C" stroke-dasharray="3 3"/><text x="'+(sx(p95)+6)+'" y="'+(Y0+12)+'" font-size="11.5" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">SeR₉₅ +'+fx2(p95,0)+'%</text>';
+  $("irs-doc").innerHTML='<div><span class="label">'+p.o+' · '+p.f+'</span><h2>'+p.n+'</h2></div>'+
+    '<div class="facts"><div><span class="label">IRS</span><b>'+p.irs+' / 100</b></div><div><span class="label">SeR₉₅</span><b>+'+fx2(p95,0)+'%</b></div><div><span class="label">Mediana</span><b>'+(p50>=0?"+":"")+fx2(p50,0)+'%</b></div><div><span class="label">Alternativa nacional</span><b>'+(p.nat?"Posible":"No")+'</b></div></div>'+
+    '<div><span class="label">Componentes</span><div class="comp" style="margin-top:8px">'+p.s.map(function(v,i){return '<div class="c"><span>'+CN[i]+' <span style="color:var(--sub)">· '+Math.round(W[i]*100)+'%</span></span><div class="track"><i style="width:'+v+'%"></i></div><span class="n">'+v+'</span></div>';}).join("")+'</div></div>'+
+    '<div class="chartbox"><span class="label">Sostenimiento en Riesgo · 3.000 escenarios a 12 meses</span><svg viewBox="0 0 520 175" role="img" aria-label="Distribución del cambio en el costo de sostenimiento">'+g+'</svg><div class="map-note">Cambio del costo de sostenimiento frente al costo base, combinando choques cambiarios, sanción del proveedor y ruptura diplomática. Escenario ilustrativo.</div></div>';
+}
+/* ---- Gripen: sensibilidad cambiaria (datos públicos) ---- */
+(function(){
+  var eur=3.135e9,cop=16.5e12,base=cop/eur;
+  var X0=60,X1=500,Y0=14,Y1=180,mn=-0.2,mx=0.2,ymn=12,ymx=21;
+  var sx=function(d){return X0+(d-mn)/(mx-mn)*(X1-X0);},sy=function(v){return Y1-(v-ymn)/(ymx-ymn)*(Y1-Y0);};
+  var g='';[12,15,18,21].forEach(function(v){g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+sy(v)+'" y2="'+sy(v)+'" stroke="#EFEFF0"/><text x="'+(X0-8)+'" y="'+(sy(v)+4)+'" text-anchor="end" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+v+' bn</text>';});
+  [-0.2,-0.1,0,0.1,0.2].forEach(function(d){g+='<text x="'+sx(d)+'" y="'+(Y1+16)+'" text-anchor="middle" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+(d>0?"+":"")+Math.round(d*100)+'%</text>';});
+  g+='<text x="'+((X0+X1)/2)+'" y="'+(Y1+34)+'" text-anchor="middle" font-size="11" fill="#66666B">Variación del EUR/COP frente a la tasa implícita del contrato ('+fx2(base,0)+')</text>';
+  g+='<line x1="'+sx(mn)+'" y1="'+sy(cop*(1+mn)/1e12)+'" x2="'+sx(mx)+'" y2="'+sy(cop*(1+mx)/1e12)+'" stroke="#0B0B0C" stroke-width="2.5"/>';
+  g+='<circle cx="'+sx(0)+'" cy="'+sy(16.5)+'" r="5" fill="#0B0B0C" stroke="#FFFFFF" stroke-width="2"/><text x="'+(sx(0)+10)+'" y="'+(sy(16.5)-10)+'" font-size="11.5" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">COP 16,5 bn</text>';
+  g+='<text x="'+(sx(0.1)+6)+'" y="'+(sy(18.15)+18)+'" font-size="11" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">+10% → +1,65 bn</text>';
+  $("fx").innerHTML=g;
+window.MiracleMockup={show:show};
+})();
+
+/* ---- Mapa mundial (d3 + world-atlas) ---- */
+var worldData=null;
+function drawWorld(id,w,h,interactive){
+  var svg=$(id);if(!svg)return;
+  if(!window.d3||!window.topojson){svg.innerHTML='<text x="20" y="40" font-size="13" fill="#66666B">El mapa necesita conexión a internet para cargar d3 y la geometría mundial.</text>';return;}
+  var draw=function(world){
+    var land=topojson.feature(world,world.objects.countries);
+    var proj=d3.geoNaturalEarth1().fitExtent([[6,6],[w-6,h-6]],{type:"Sphere"});var path=d3.geoPath(proj);
+    var tone={r:"#0B0B0C",v:"#7A7A80",s:"#C9C9CD",n:"#0B0B0C"};
+    var s='<path d="'+path({type:"Sphere"})+'" fill="#FAFAF9" stroke="#E2E2E4"/>';
+    land.features.forEach(function(f){var k=f.id,sh=SH[k];var fill=k==="170"?"#0B0B0C":sh?(sh[2]==="r"?"#5A5A5F":sh[2]==="v"?"#9A9AA0":"#D8D8DB"):"#ECECEA";s+='<path class="country" data-id="'+k+'" d="'+(path(f)||"")+'" fill="'+fill+'"/>';});
+    var col=land.features.find(function(f){return f.id==="170";}),c0=proj(d3.geoCentroid(col));
+    Object.keys(SH).forEach(function(k){if(k==="170")return;var f=land.features.find(function(x){return x.id===k;});if(!f)return;var c1=proj(d3.geoCentroid(f));var mx=(c0[0]+c1[0])/2,my=Math.min(c0[1],c1[1])-Math.abs(c0[0]-c1[0])*0.22;var sh=SH[k];
+      s+='<path d="M'+c1[0].toFixed(1)+' '+c1[1].toFixed(1)+' Q'+mx.toFixed(1)+' '+my.toFixed(1)+' '+c0[0].toFixed(1)+' '+c0[1].toFixed(1)+'" fill="none" stroke="'+tone[sh[2]]+'" stroke-width="'+(1+sh[1]*22).toFixed(1)+'" stroke-opacity=".85" stroke-linecap="round"/><circle cx="'+c1[0]+'" cy="'+c1[1]+'" r="3" fill="#0B0B0C"/>';
+      if(interactive)s+='<text x="'+(c1[0]+6)+'" y="'+(c1[1]-6)+'" font-size="11" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">'+sh[0]+' '+Math.round(sh[1]*100)+'%</text>';});
+    s+='<circle cx="'+c0[0]+'" cy="'+c0[1]+'" r="5" fill="#0B0B0C" stroke="#FFFFFF" stroke-width="2"/>';
+    svg.innerHTML=s;
+    if(interactive){svg.querySelectorAll(".country").forEach(function(c){var sh=SH[c.dataset.id];if(!sh)return;c.style.cursor="pointer";c.addEventListener("mousemove",function(e){var n=PL.filter(function(p){return p.o.indexOf(sh[0])===0;}).map(function(p){return p.n;});showTip(e,"<b>"+sh[0]+"</b><br>"+Math.round(sh[1]*100)+"% del inventario (ilustrativo)<br>"+(sh[2]==="r"?"Ruptura diplomática o sanción":sh[2]==="v"?"Contrato en revisión":"Relación estable")+(n.length?"<br>"+n.join(" · "):""));});c.addEventListener("mouseleave",hideTip);});
+      $("world-note").textContent="Participación por país de origen: valores ilustrativos. En el producto real salen del registro de transferencias de SIPRI y de los contratos de SECOP II.";}
+  };
+  if(worldData){draw(worldData);return;}
+  fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(function(r){return r.json();}).then(function(w){worldData=w;draw(w);drawWorld(id==="world"?"world-p":"world",id==="world"?760:960,id==="world"?400:470,id!=="world");}).catch(function(){svg.innerHTML='<text x="20" y="40" font-size="13" fill="#66666B">No se pudo cargar la geometría del mapa. Revisa la conexión.</text>';});
+}
+
+/* =================== PRODUCTO 2 · ANTIDRON =================== */
+var DEP=[["San Andrés",0,0,2,"SAP"],["La Guajira",4,0,22,"LAG"],["Atlántico",2,1,8,"ATL"],["Magdalena",3,1,22,"MAG"],["Cesar",4,1,35,"CES"],["Córdoba",1,2,40,"COR"],["Sucre",2,2,25,"SUC"],["Bolívar",3,2,52,"BOL"],["Norte de Santander",4,2,88,"NSA"],["Chocó",0,3,44,"CHO"],["Antioquia",1,3,81,"ANT"],["Santander",2,3,30,"SAN"],["Boyacá",3,3,15,"BOY"],["Arauca",4,3,66,"ARA"],["Risaralda",0,4,18,"RIS"],["Caldas",1,4,20,"CAL"],["Cundinamarca",2,4,18,"CUN"],["Casanare",3,4,20,"CAS"],["Vichada",4,4,15,"VIC"],["Valle del Cauca",0,5,62,"VAC"],["Quindío",1,5,10,"QUI"],["Bogotá",2,5,12,"BOG"],["Meta",3,5,45,"MET"],["Guainía",4,5,10,"GUA"],["Cauca",0,6,92,"CAU"],["Tolima",1,6,38,"TOL"],["Huila",2,6,55,"HUI"],["Guaviare",3,6,70,"GUV"],["Vaupés",4,6,8,"VAU"],["Nariño",0,7,68,"NAR"],["Putumayo",1,7,48,"PUT"],["Caquetá",2,7,50,"CAQ"],["Amazonas",3,7,6,"AMA"]];
+var RAMP=["#F1F1F0","#CFCFD2","#9A9AA0","#5A5A5F","#0B0B0C"],RL=["0–19","20–39","40–59","60–79","80–100"];
+function cls(v){return Math.min(4,Math.floor(v/20));}
+var selD=24;
+function drawTiles(id,interactive){
+  var s='',S=62,G=4,X=12,Y=8;
+  DEP.forEach(function(d,i){var x=X+d[1]*(S+G),y=Y+d[2]*(S*0.78+G),c=cls(d[3]);var fg=c>=3?"#FFFFFF":"#0B0B0C";
+    var ab=d[4];
+    s+='<g class="tile" tabindex="'+(interactive?0:-1)+'" data-i="'+i+'" role="button" aria-label="'+d[0]+': '+d[3]+'"><rect x="'+x+'" y="'+y+'" width="'+S+'" height="'+(S*0.78)+'" fill="'+RAMP[c]+'" stroke="'+(interactive&&i===selD?"#0B0B0C":"#FFFFFF")+'" stroke-width="'+(interactive&&i===selD?3:1)+'"/><text x="'+(x+6)+'" y="'+(y+16)+'" font-size="10" fill="'+fg+'" font-family="IBM Plex Mono,monospace">'+ab+'</text><text x="'+(x+6)+'" y="'+(y+S*0.78-8)+'" font-size="13" fill="'+fg+'" font-family="IBM Plex Mono,monospace">'+d[3]+'</text></g>';});
+  var svg=$(id);svg.innerHTML=s;
+  svg.querySelectorAll(".tile").forEach(function(t){var d=DEP[+t.dataset.i];
+    t.addEventListener("mousemove",function(e){showTip(e,"<b>"+d[0]+"</b><br>Exposición "+d[3]+" / 100 (ejemplo)");});t.addEventListener("mouseleave",hideTip);
+    var go=function(){if(!interactive){show("dron");}selD=+t.dataset.i;drawTiles("tiles",true);depDetail();};
+    t.addEventListener("click",go);t.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});});
+}
+function ramp(id){$(id).innerHTML="Exposición "+RAMP.map(function(c,i){return '<i style="background:'+c+';border:1px solid #E2E2E4"></i>'+RL[i];}).join(" ");}
+function depDetail(){
+  var d=DEP[selD],tr=[0.62,0.66,0.7,0.74,0.8,0.86,0.93,1].map(function(f){return Math.round(d[3]*f);});
+  var w=300,h=50,pts=tr.map(function(v,i){return [4+i*(w-8)/7,h-4-v/100*(h-8)];}),line=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");
+  $("dep-detail").innerHTML='<b>'+d[0]+'</b> · exposición '+d[3]+' / 100 · tendencia de 8 meses (ejemplo)<svg viewBox="0 0 '+w+' '+h+'" style="display:block;width:100%;height:50px;margin-top:6px" aria-hidden="true"><path d="'+line+'" fill="none" stroke="#0B0B0C" stroke-width="2"/><circle cx="'+pts[7][0]+'" cy="'+pts[7][1]+'" r="3" fill="#0B0B0C"/></svg>';
+}
+function renderRank(){
+  var top=DEP.slice().sort(function(a,b){return b[3]-a[3];}).slice(0,8);
+  $("rank").innerHTML=top.map(function(d,i){return '<div><span class="k">'+String(i+1).padStart(2,"0")+'</span><span>'+d[0]+'</span><span class="bar"><i style="width:'+d[3]+'%"></i></span><span class="n">'+d[3]+'</span></div>';}).join("");
+  $("p-dep").textContent=DEP.filter(function(d){return d[3]>=60;}).length;
+}
+function drawClock(){
+  var T=[["Dron comercial con explosivo lanzado",2016.8,2018.5,false],["Ataque coordinado con varios drones",2018.2,2023.8,false],["FPV de ataque",2023.0,2025.4,false],["FPV con fibra óptica",2024.3,2027.0,true],["Guiado terminal autónomo",2025.2,2028.3,true]];
+  var X0=290,X1=1080,Y0=20,rowH=50,mn=2016,mx=2029,sx=function(v){return X0+(v-mn)/(mx-mn)*(X1-X0);};
+  var g='';for(var y=mn;y<=mx;y++){g+='<line x1="'+sx(y)+'" x2="'+sx(y)+'" y1="'+(Y0-6)+'" y2="'+(Y0+rowH*T.length)+'" stroke="'+(y===2026?"#0B0B0C":"#EFEFF0")+'" '+(y===2026?'stroke-dasharray="3 3"':'')+'/>';if(y%2===0||y===2026)g+='<text x="'+sx(y)+'" y="'+(Y0+rowH*T.length+18)+'" text-anchor="middle" font-size="11" fill="'+(y===2026?"#0B0B0C":"#66666B")+'" font-family="IBM Plex Mono,monospace">'+(y===2026?"Hoy":y)+'</text>';}
+  T.forEach(function(t,i){var y=Y0+i*rowH+rowH/2;g+='<text x="0" y="'+(y+4)+'" font-size="13.5" fill="#141416" font-family="IBM Plex Sans,sans-serif">'+t[0]+'</text>';
+    g+='<line x1="'+sx(t[1])+'" x2="'+sx(t[2])+'" y1="'+y+'" y2="'+y+'" stroke="#0B0B0C" stroke-width="2" '+(t[3]?'stroke-dasharray="5 4"':'')+'/>';
+    g+='<rect x="'+(sx(t[1])-5)+'" y="'+(y-5)+'" width="10" height="10" fill="#9A9AA0"/>';
+    g+='<circle cx="'+sx(t[2])+'" cy="'+y+'" r="6" fill="'+(t[3]?"#FFFFFF":"#0B0B0C")+'" stroke="#0B0B0C" stroke-width="2"/>';
+    g+='<text x="'+((sx(t[1])+sx(t[2]))/2)+'" y="'+(y-9)+'" text-anchor="middle" font-size="11" fill="#141416" font-family="IBM Plex Mono,monospace">'+fx2(t[2]-t[1],1)+' años'+(t[3]?' · estimado':'')+'</text>';});
+  g+='<g font-size="11" fill="#66666B" font-family="IBM Plex Sans,sans-serif"><rect x="0" y="'+(Y0+rowH*T.length+30)+'" width="10" height="10" fill="#9A9AA0"/><text x="16" y="'+(Y0+rowH*T.length+39)+'">Primer registro en otro teatro</text><circle cx="215" cy="'+(Y0+rowH*T.length+35)+'" r="5" fill="#0B0B0C"/><text x="226" y="'+(Y0+rowH*T.length+39)+'">Primer registro en Colombia</text><circle cx="420" cy="'+(Y0+rowH*T.length+35)+'" r="5" fill="#FFFFFF" stroke="#0B0B0C" stroke-width="2"/><text x="431" y="'+(Y0+rowH*T.length+39)+'">Llegada estimada</text></g>';
+  var sv=$("clock");sv.setAttribute("viewBox","0 0 1100 "+(Y0+rowH*T.length+50));sv.innerHTML=g;
+}
+function drawCover(){
+  var yrs=[2024,2025,2026,2027,2028,2029,2030],L=[["Inhibidor de radio",[85,80,70,55,42,33,28],"#0B0B0C",""],["Detección por radio pasiva",[80,76,66,52,40,32,27],"#7A7A80",""],["Detección óptica y acústica",[55,60,64,68,70,71,72],"#0B0B0C","6 4"]];
+  var X0=40,X1=500,Y0=14,Y1=230,sx=function(i){return X0+i*(X1-X0)/6;},sy=function(v){return Y1-v/100*(Y1-Y0);};
+  var g='';[0,25,50,75,100].forEach(function(v){g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+sy(v)+'" y2="'+sy(v)+'" stroke="'+(v===50?"#0B0B0C":"#EFEFF0")+'" '+(v===50?'stroke-dasharray="3 3"':'')+'/><text x="'+(X0-6)+'" y="'+(sy(v)+4)+'" text-anchor="end" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+v+'%</text>';});
+  yrs.forEach(function(y,i){g+='<text x="'+sx(i)+'" y="'+(Y1+16)+'" text-anchor="middle" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+y+'</text>';});
+  L.forEach(function(l){var d=l[1].map(function(v,i){return (i?"L":"M")+sx(i).toFixed(1)+" "+sy(v).toFixed(1);}).join(" ");g+='<path d="'+d+'" fill="none" stroke="'+l[2]+'" stroke-width="2.5" '+(l[3]?'stroke-dasharray="'+l[3]+'"':'')+'/>';
+    for(var i=1;i<l[1].length;i++){if(l[1][i-1]>=50&&l[1][i]<50){var f=(l[1][i-1]-50)/(l[1][i-1]-l[1][i]),x=sx(i-1)+f*(sx(i)-sx(i-1));g+='<circle cx="'+x+'" cy="'+sy(50)+'" r="4.5" fill="#FFFFFF" stroke="'+l[2]+'" stroke-width="2"/>';}}
+    var last=l[1][6];g+='<text x="'+(X1-4)+'" y="'+(sy(last)+(l[0].indexOf("pasiva")>-1?18:(l[0].indexOf("Inhibidor")>-1?-12:-8)))+'" text-anchor="end" font-size="11" fill="#141416">'+l[0]+'</text>';});
+  g+='<text x="'+(X0+4)+'" y="'+(sy(50)+15)+'" font-size="10.5" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">Umbral de vida media (50%)</text>';
+  $("cover").innerHTML=g;
+}
+function drawImports(){
+  var v=[7800,8100,7600,8400,8900,8200,8700,9100,8800,9400,9000,9300,9600,9200,9900,10100,9700,14800,10400,10200,10800,10600,11100,11300];
+  var X0=50,X1=510,Y0=14,Y1=230,mx=16000,bw=(X1-X0)/v.length;var sy=function(x){return Y1-x/mx*(Y1-Y0);};
+  var g='';[0,4000,8000,12000,16000].forEach(function(t){g+='<line x1="'+X0+'" x2="'+X1+'" y1="'+sy(t)+'" y2="'+sy(t)+'" stroke="#EFEFF0"/><text x="'+(X0-6)+'" y="'+(sy(t)+4)+'" text-anchor="end" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+(t/1000)+' mil</text>';});
+  v.forEach(function(x,i){var mean=0,sd=0,n=0;for(var j=Math.max(0,i-12);j<i;j++){mean+=v[j];n++;}if(n)mean/=n;for(j=Math.max(0,i-12);j<i;j++)sd+=(v[j]-mean)*(v[j]-mean);sd=n?Math.sqrt(sd/n):0;var alert=n>=12&&x>mean+2*sd;
+    g+='<rect x="'+(X0+i*bw+1)+'" y="'+sy(x)+'" width="'+(bw-2)+'" height="'+(Y1-sy(x))+'" fill="'+(alert?"#0B0B0C":"#C9C9CD")+'"/>';if(alert)g+='<text x="'+(X0+i*bw+bw/2)+'" y="'+(sy(x)-6)+'" text-anchor="middle" font-size="10.5" fill="#0B0B0C" font-family="IBM Plex Mono,monospace">Alerta</text>';});
+  ["Nov 24","Nov 25","Oct 26"].forEach(function(l,k){var i=[0,12,23][k];g+='<text x="'+(X0+i*bw+bw/2)+'" y="'+(Y1+16)+'" text-anchor="middle" font-size="10.5" fill="#66666B" font-family="IBM Plex Mono,monospace">'+l+'</text>';});
+  $("imports").innerHTML=g;
+}
+
+renderIRS();drawTiles("tiles-p",false);drawTiles("tiles",true);ramp("ramp-p");ramp("ramp");renderRank();depDetail();drawClock();drawCover();drawImports();
+drawWorld("world",960,470,true);
+renderRadar();renderList();renderTrends();
+var h=(location.hash||"").slice(1);if(["pano","irs","dron","radar","fichas","tend","fuentes","edicion","acceso","models"].indexOf(h)>-1)show(h);
+})();
+</script>
+<script src="fuentes-validacion.js"></script>
+<script src="miracle-registro.js"></script>
+<script src="miracle-modelos.js"></script>
+</body>
+</html>

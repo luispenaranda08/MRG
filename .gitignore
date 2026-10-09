@@ -1,0 +1,7 @@
+qa/browser-profile/
+.DS_Store
+.vercel/
+.vercel
+.env*
+referencias/
+.env*

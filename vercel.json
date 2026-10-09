@@ -1,0 +1,132 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/mirage",
+      "has": [
+        {
+          "type": "host",
+          "value": "hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/mirage",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget",
+      "has": [
+        {
+          "type": "host",
+          "value": "hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget-mockup",
+      "has": [
+        {
+          "type": "host",
+          "value": "hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget-mockup",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget-mockup.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/fintarget-mockup.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/mirage.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    },
+    {
+      "source": "/mirage.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hypertarget.tech"
+        }
+      ],
+      "destination": "https://mirage.hypertarget.tech/",
+      "permanent": true
+    }
+  ]
+}

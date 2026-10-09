@@ -1,0 +1,2 @@
+PASS: 20 SVG; viewBox 256; ajedrezado idéntico a FT; solo paths; un color; finales idénticos a v2.
+Escala geométrica a 16 px: cuadros 1 px, patas 2.25 px, cinta 2 px, hueco superior 3 px; franjas/cortes 1 px; dato negativo 1.5 px. No equivale a inspección visual.

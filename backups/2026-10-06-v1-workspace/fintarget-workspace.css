@@ -1,0 +1,42 @@
+
+/* Evolución 2026-10-06: la portada conserva sus tokens originales. */
+[hidden]{display:none!important}
+.workbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:20px}
+.workbar .trail{font:12px var(--f-mono);letter-spacing:.04em;color:var(--sub)}
+.workbar .controls{display:flex;gap:8px;flex-wrap:wrap}
+.workbar select,.workbar button{background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:7px 10px;font:12px var(--f-mono);border-radius:3px}
+.ws-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:16px}.ws-box{border:1px solid var(--line);background:var(--surface);padding:20px;margin-bottom:16px;border-radius:4px}
+.ws-box h2,.ws-box h3{margin:0 0 12px;font-size:17px}.ws-box p{color:var(--sub)}
+.ws-label{font:11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--sub)}
+.ws-table{width:100%;border-collapse:collapse}.ws-table th,.ws-table td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:12px}.ws-table th{font:11px var(--f-mono);text-transform:uppercase;color:var(--sub)}.ws-table button{background:none;color:var(--blue);border:0;text-align:left;cursor:pointer}.ws-table a,.ws-box a{color:var(--blue)}
+.ws-table tr.selected{background:var(--tint)}.ws-status{display:inline-block;padding:3px 7px;border:1px solid var(--line);font:10px var(--f-mono);border-radius:3px}
+.ws-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.ws-summary>div{border:1px solid var(--line);padding:16px}.ws-summary b{display:block;font:24px var(--f-mono);margin-top:8px}
+.ws-links{display:flex;gap:8px;flex-wrap:wrap}.ws-links button{padding:8px 12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.ws-note{border-left:3px solid var(--blue);padding:12px 16px;background:var(--tint);font-size:12px;margin:16px 0}
+body.terminal{--bg:#0B121C;--surface:#111D2B;--ink:#DDE7F0;--sub:#92A7BE;--line:#27384B;--line-2:#203044;--navy:#0B2540;--tint:#172B3F;--tint2:#142335;--white:#DDE7F0;--blue:#58B8EE;--warn-bg:#29251B;--warn:#D8C08B;color-scheme:dark}
+body.terminal .wrap{max-width:1600px;padding-top:0}body.terminal .head{margin:20px 0}body.terminal .head h1{font-size:28px}
+body.terminal .card,body.terminal .paper{border-radius:3px;background:var(--surface);color:var(--ink);box-shadow:none}
+body.terminal .hero{background:#173B56}body.terminal .paper .logo{color:var(--ink)}body.terminal .form input,body.terminal .form select{background:#0B1622;color:var(--ink);border-color:var(--line)}
+body.terminal .form .toggle{color:var(--ink)}body.terminal .macro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body.terminal .toc{background:var(--surface);border:1px solid var(--line);padding:16px}body.terminal .toc a{color:var(--sub)}
+body.terminal .btn.ghost,body.terminal .seg button{background:var(--surface);color:var(--ink)}
+body.terminal svg text{fill:#9DB6CE}body.terminal .site-foot{color:var(--sub)}
+.ws-range{display:block;width:100%;accent-color:var(--blue)}.ws-large{font:34px var(--f-mono);color:var(--ink)}
+@media(max-width:1050px){.top{height:auto;min-height:58px;flex-wrap:wrap;padding:10px 16px;gap:10px}.nav{height:36px;flex:1 1 100%;order:3}.search{width:240px}.ws-grid{grid-template-columns:1fr}body.terminal .macro{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.workbar{align-items:flex-start;flex-direction:column}.ws-summary{grid-template-columns:1fr}body.terminal .macro{grid-template-columns:1fr}.ws-box{padding:14px}.ws-table{min-width:640px}.ws-scroll{overflow:auto}.search{width:190px}}
+
+body.terminal .head h1,body.terminal h2,body.terminal h3,body.terminal h4,body.terminal .card .v,body.terminal .bignum{color:var(--ink)}
+body.terminal th,body.terminal thead,body.terminal .ws-table th{background:#172638;color:var(--sub)}
+body.terminal svg [stroke="#EEF3F7"],body.terminal svg [stroke="#DDE7F0"]{stroke:#2B3C50}
+body.terminal svg rect[fill="#E3F1FB"]{fill:#1A405B}
+body.terminal .hero .v{color:#FFFFFF}
+body.terminal .paper td,body.terminal .paper th{border-color:var(--line)}
+
+.ws-grid>*{min-width:0}.ws-scroll{max-width:100%}.ws-box{min-width:0}
+.top .nav{min-width:0;max-width:100%}
+@media(max-width:650px){
+ .ws-grid{grid-template-columns:minmax(0,1fr)}
+ .head>div{min-width:0;max-width:100%}
+ .meta{overflow-wrap:anywhere}
+ .workbar .trail{overflow-wrap:anywhere}
+}

@@ -1,0 +1,59 @@
+37 logos match (of 1432).
+
+Mark types
+  abstract                    8   21.6%
+  wordmark                    8   21.6%
+  combination                 8   21.6%
+  letterform                  6   16.2%
+  emblem                      4   10.8%
+  lettermark                  2    5.4%
+  pictorial                   1    2.7%
+
+Symbol type (combination marks)
+  abstract                    6   16.2%
+  pictorial                   2    5.4%
+
+Primary colour family
+  multi                      12   32.4%
+  blue                       11   29.7%
+  mono                        5   13.5%
+  red                         3    8.1%
+  green                       3    8.1%
+  orange                      3    8.1%
+
+Techniques
+  color-segments             10   27.0%
+  negative-space              9   24.3%
+  containment                 9   24.3%
+  overlap-transparency        6   16.2%
+  mirror-symmetry             4   10.8%
+  gradient                    4   10.8%
+  geometric-construction      3    8.1%
+  arrow                       3    8.1%
+  line-monoline               3    8.1%
+  dimensional-shading         2    5.4%
+  isometric-3d                2    5.4%
+  radial-symmetry             2    5.4%
+
+Geometry
+  circle                     13   35.1%
+  freeform                    6   16.2%
+  rounded-square              4   10.8%
+  square                      2    5.4%
+  diamond                     2    5.4%
+  radial                      2    5.4%
+  organic                     2    5.4%
+  triangle                    1    2.7%
+
+Type style (when type present)
+  geometric-sans              8   21.6%
+  display-custom              7   18.9%
+  grotesque-sans              4   10.8%
+  humanist-sans               1    2.7%
+  script                      1    2.7%
+  serif                       1    2.7%
+
+Colour count: 49% use 1-2 colours; gradients in 19%.
+Exemplary examples: patreon.svg, square.svg, ethereum.svg, adyen.svg, stripe.svg, mastercard.svg, cardano-icon.svg
+
+Reading: the most frequent types/colours/techniques are the category's conventions. Repeating them signals belonging; departing from them creates distinction.

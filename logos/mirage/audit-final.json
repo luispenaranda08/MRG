@@ -1,0 +1,208 @@
+[
+ {
+  "file": "concept-1.svg",
+  "bytes": 790,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 78,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "concept-2.svg",
+  "bytes": 607,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 65,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "concept-3.svg",
+  "bytes": 845,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 90,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "concept-4.svg",
+  "bytes": 825,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 83,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "concept-5.svg",
+  "bytes": 978,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 96,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "complexity",
+    "message": "96 anchor points (library median 53.0, p75 95.5). Check every point earns its place."
+   }
+  ]
+ }
+]

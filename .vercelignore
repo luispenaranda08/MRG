@@ -1,0 +1,17 @@
+# Solo se publica el sitio. Todo lo interno queda fuera.
+backups/
+qa/
+*.md
+.DS_Store
+# Miracle (defensa) no se publica en el sitio abierto
+miracle-*
+logos/concepts.html
+logos/concepts.png
+.env*
+.vercel/
+referencias/
+CODEX-*
+.claude/
+CODEX-*
+logos/mirage/
+logos/concepts/

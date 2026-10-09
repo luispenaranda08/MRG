@@ -1,0 +1,21 @@
+PASS: 32 símbolos SVG; viewBox 256; solo paths/title; una tinta; sin strokes, texto, raster, gradientes, filtros ni transformaciones.
+PASS: seis conceptos con nueve cuadrados de 16 exactamente como FT; dos reinterpretaciones documentadas.
+PASS: ocho finales idénticos a v2; inversiones con idéntica geometría y huecos reales.
+
+Área de tinta aproximada por integración vectorial (no prueba perceptual ni render):
+H: 15762; FT: 16729 unidades cuadradas.
+1: 14666; H ×0.93; FT ×0.877
+2: 13970; H ×0.886; FT ×0.835
+3: 14500; H ×0.92; FT ×0.867
+4: 15219; H ×0.965; FT ×0.91
+5: 16640; H ×1.056; FT ×0.995
+6: 14276; H ×0.906; FT ×0.853
+7: 14128; H ×0.896; FT ×0.845
+8: 17097; H ×1.085; FT ×1.022
+
+16 px (divisor 16): módulo=1 px; radio de remate=0.5 px; alto principal=9 px.
+1: bandas 1.5/1 px; cortes 1 px. 2: brazos 2/2.5 px; corte 1 px; desplazamiento 1 px.
+3: anillo 2 px; dato 2 px; distancia al anillo >1.08 px. 4: canal lateral 1.5 px; puerta 4.5 px; horizonte 2 px.
+5: hueco 5 px; paredes 2 px. 6: hombros 3 px; hueco 3 px; dato 5×2 px; separación al dato 1 px.
+7: duna negativa 6×3 px; pared superior 2.5 px; corte al ajedrezado 1.5 px. 8: cuadrados 1 px; canales 1 px; masa sólida 6×9 px.
+PENDIENTE: rasterización real a 16 px, irradiación, lectura espontánea, equilibrio óptico y comparación visual. No se inició ningún renderizador.

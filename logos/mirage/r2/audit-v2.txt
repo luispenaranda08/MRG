@@ -1,0 +1,56 @@
+
+=== r2-1-v2.svg  (611 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 66
+margins L24.0 R40.0 T56.0 B56.0 · bbox fill 0.422
+· INFO [off-centre-x] Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it.
+production-readiness score: 99/100 (heuristic)
+
+=== r2-2-v2.svg  (661 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 71
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== r2-3-v2.svg  (656 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 60
+margins L24.0 R32.0 T56.0 B56.0 · bbox fill 0.439
+· INFO [off-centre-x] Horizontal margins differ (left 24.0, right 32.0). Intentional optical centring? Otherwise centre it.
+production-readiness score: 99/100 (heuristic)
+
+=== r2-4-v2.svg  (576 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 62
+margins L24.0 R32.0 T56.0 B56.0 · bbox fill 0.439
+· INFO [off-centre-x] Horizontal margins differ (left 24.0, right 32.0). Intentional optical centring? Otherwise centre it.
+production-readiness score: 99/100 (heuristic)
+
+=== r2-5-v2.svg  (621 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 63
+margins L24.0 R40.0 T56.0 B56.0 · bbox fill 0.422
+· INFO [off-centre-x] Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it.
+production-readiness score: 99/100 (heuristic)
+
+=== r2-6-v2.svg  (637 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 67
+margins L24.0 R40.0 T56.0 B56.0 · bbox fill 0.422
+· INFO [off-centre-x] Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it.
+production-readiness score: 99/100 (heuristic)
+
+=== r2-7-v2.svg  (488 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 56
+margins L40.0 R40.0 T56.0 B56.0 · bbox fill 0.387
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== r2-8-v2.svg  (529 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 74
+margins L40.0 R40.0 T56.0 B56.0 · bbox fill 0.387
+✔ no issues found
+production-readiness score: 100/100 (heuristic)

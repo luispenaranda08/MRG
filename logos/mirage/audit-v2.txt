@@ -1,0 +1,35 @@
+
+=== concept-1-v2.svg  (790 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 78
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== concept-2-v2.svg  (607 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 65
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== concept-3-v2.svg  (845 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 90
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== concept-4-v2.svg  (825 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 83
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+✔ no issues found
+production-readiness score: 100/100 (heuristic)
+
+=== concept-5-v2.svg  (978 bytes)
+viewBox 0 0 256 256 · aspect 1.0 (square)
+colours 1: #111111 · gradients 0 · anchors 96
+margins L24.0 R24.0 T56.0 B56.0 · bbox fill 0.457
+· INFO [complexity] 96 anchor points (library median 53.0, p75 95.5). Check every point earns its place.
+production-readiness score: 99/100 (heuristic)

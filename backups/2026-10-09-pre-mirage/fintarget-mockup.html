@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FinTarget · Costo de capital Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* FinTarget V2 — mockup navegable. Paleta institucional: papel, tinta y azul marino; números en mono. */
+:root{
+  --top:#1F2124; --top-2:#2A2C30; --top-ink:#9EA2A8;
+  --primary:#1F2124; --primary-d:#000000; --link:#1F2124; --accent:#C8A24A; --accent-ink:#7D5F17;
+  --ink:#1F2124; --sub:#4A4D52; --mute:#6E7277; --line:rgba(31,33,36,.18); --line-2:rgba(31,33,36,.10);
+  --bg:#DADADA; --surface:#ECECEC; --surface-2:#E4E4E4; --tint:#E2E2E2; --hover:#E0E0E0;
+  --white:#FFFFFF; --warn-bg:#FBF3E2; --warn:#7A5600; --good:#1F6B45; --bad:#A3322A;
+  --c1:#BFC2C6; --c2:#9A9EA4; --c3:#73787F; --c4:#4A4E54; --c5:#1F2124;
+  --f-brand:"Hanken Grotesk",system-ui,sans-serif;
+  --f-head:"Hanken Grotesk",system-ui,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+::selection{background:var(--ink);color:var(--surface)}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+
+/* ---------- Barra superior ---------- */
+.top{position:sticky;top:0;z-index:30;background:var(--top);color:var(--white);display:flex;align-items:center;gap:22px;padding:0 24px;height:56px;border-bottom:1px solid #000}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-brand);font-weight:600;font-size:18px;letter-spacing:.01em;white-space:nowrap}
+.logo svg{width:36px;height:36px;margin-left:-6px}
+.nav{display:flex;gap:0;height:100%;overflow-x:auto;min-width:0}
+.nav button{all:unset;cursor:pointer;padding:0 12px;display:flex;align-items:center;gap:7px;color:var(--top-ink);font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+.nav button .fn{font:500 10.5px var(--f-mono);letter-spacing:.06em;color:var(--top-ink)}
+.nav button:hover{color:var(--white)}
+.nav button[aria-current="page"]{color:var(--white);border-bottom-color:var(--accent)}
+.nav button[aria-current="page"] .fn{color:var(--accent)}
+.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.demo{display:flex;align-items:center;gap:12px;background:var(--surface-2);color:var(--sub);font:400 11px/1.5 var(--f-mono);padding:6px 16px;border-bottom:1px solid var(--line)}
+.demo p{margin:0;flex:1;min-width:0}
+.notice-close{all:unset;cursor:pointer;display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:999px;color:var(--sub);font-size:20px}
+.notice-close:hover{background:var(--hover);color:var(--ink)}
+.notice-close:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.ht-back{font:400 11px var(--f-mono);text-transform:uppercase;color:var(--top-ink);white-space:nowrap;text-decoration:none}
+.ht-back:hover,.ht-back:focus-visible{color:var(--white)}
+.top :focus-visible{outline-color:var(--accent)}
+.nav button .fn,.crumbs{display:inline-flex;align-items:baseline;gap:.35em;font:400 11px/1.5 var(--f-mono);text-transform:uppercase;letter-spacing:.08em}
+.fn::before,.crumbs::before{content:"["}
+.fn::after,.crumbs::after{content:"]"}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:1400px;margin:0 auto;padding:22px 24px 48px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.head>div{min-width:0}
+.crumbs{font-size:12px;color:var(--sub);margin-bottom:4px}
+.crumbs .fn-tag{font:400 11px var(--f-mono);color:var(--accent-ink);background:var(--surface-2);padding:0 4px;border-radius:3px;letter-spacing:.06em}
+.head h1,.head h2{margin:0;font-family:var(--f-head);font-weight:400;font-size:30px;color:var(--ink);letter-spacing:-.02em;line-height:1.15}
+.meta{color:var(--sub);font-size:13px;margin-top:5px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--primary);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:500}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px}
+.seg button{all:unset;cursor:pointer;padding:6px 12px;border-radius:999px;font-weight:500;color:var(--sub);font-size:13px;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--primary);color:var(--white)}
+.seg button:focus-visible{outline:2px solid var(--link);outline-offset:1px}
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:var(--white);font-weight:600;font-size:13px;padding:8px 13px;border-radius:999px;white-space:nowrap}
+.btn:hover{background:var(--primary-d)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--sub)}
+.btn:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn svg{width:15px;height:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{padding:12px 14px;display:grid;gap:2px;min-width:0}
+.kpi .k{font-size:12px;color:var(--sub);display:flex;justify-content:space-between;gap:8px}
+.kpi .v{font-family:var(--f-mono);font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--sub)}
+.kpi svg{width:100%;height:30px;display:block;margin-top:4px}
+
+/* ---------- Tabla principal ---------- */
+.grid-main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.toolbar{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--primary);border-radius:999px;padding:4px 9px;font-size:12.5px;font-weight:500}
+.chip.add{background:transparent;border:1px dashed var(--line);color:var(--sub);cursor:pointer}
+.toolbar .right{margin-left:auto;display:flex;gap:6px;align-items:center;color:var(--sub);font-size:12.5px}
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:12px;font-weight:600;color:var(--sub);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface-2);white-space:nowrap;position:sticky;top:0}
+th button{all:unset;cursor:pointer}
+th button:hover{color:var(--ink)}
+th[aria-sort] button::after{content:" ↕";opacity:.4}
+th[aria-sort="ascending"] button::after{content:" ↑";opacity:1;color:var(--link)}
+th[aria-sort="descending"] button::after{content:" ↓";opacity:1;color:var(--link)}
+th:first-child,td:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line-2);text-align:right;font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+td.sec{font-family:var(--f-body);font-size:13.5px;font-weight:500}
+td.sec small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--sub);font-weight:400}
+#rows tr{cursor:pointer}
+#rows tr:hover{background:var(--hover)}
+#rows tr[aria-selected="true"]{background:var(--tint)}
+td.w{font-weight:500;color:var(--ink);font-size:14px}
+td.rng{width:170px}
+td.rng svg{display:block}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 14px;font-size:12px;color:var(--sub);background:var(--surface-2);border-top:1px solid var(--line);border-radius:0 0 10px 10px}
+
+/* ---------- Panel lateral ---------- */
+.side{display:grid;gap:12px;position:sticky;top:74px}
+.panel{padding:16px}
+.panel h3{margin:0;font-family:var(--f-head);font-weight:600;font-size:17px;color:var(--ink)}
+.panel .sub{font-size:12.5px;color:var(--sub);margin:2px 0 12px}
+.bignum{font-family:var(--f-mono);font-size:34px;color:var(--ink);line-height:1.1}
+.bignum small{display:block;font-size:12px;color:var(--sub);font-family:var(--f-body)}
+.stack{display:flex;height:12px;border-radius:3px;overflow:hidden;gap:2px;margin:12px 0 6px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--sub);flex-wrap:wrap}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.steps{display:grid;gap:7px;font-size:12.5px}
+.steps div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line-2);padding-bottom:6px}
+.steps b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+.memo{display:flex;gap:12px;align-items:center;background:var(--top);color:var(--white);border-radius:10px;padding:14px}
+.memo p{margin:2px 0 0;font-size:12.5px;color:var(--top-ink)}
+.memo b{font-size:14px}
+.memo .btn{margin-left:auto;padding:7px 11px;background:var(--surface);color:var(--ink)}
+.linkrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* ---------- Gráficos ---------- */
+.chart{padding:16px;min-width:0}
+.chart h3{margin:0 0 2px;font-size:15px;font-weight:600;color:var(--ink)}
+.chart .sub{font-size:12.5px;color:var(--sub);margin-bottom:10px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:fixed;pointer-events:none;background:var(--top);color:var(--white);font-size:12px;padding:7px 10px;border-radius:6px;font-family:var(--f-mono);z-index:80;max-width:340px;line-height:1.45;box-shadow:0 6px 18px -8px rgba(0,0,0,.4)}
+
+/* ---------- Calculadora ---------- */
+.calc{display:grid;grid-template-columns:380px minmax(0,1fr);gap:18px;align-items:start}
+.form{padding:18px;display:grid;gap:14px}
+.form h3{margin:0;font-family:var(--f-head);font-size:18px;font-weight:600;color:var(--ink)}
+.field{display:grid;gap:5px;min-width:0}
+.field label{font-size:12.5px;font-weight:500;color:var(--ink)}
+.field .hint{font-size:11.5px;color:var(--sub)}
+.field input,.field select{width:100%;min-width:0;font:inherit;font-family:var(--f-mono);font-size:13.5px;border:1px solid var(--line);border-radius:7px;padding:8px 10px;background:var(--surface);color:var(--ink)}
+.field select{font-family:var(--f-body)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:9px 10px}
+.toggle input{accent-color:var(--primary);width:16px;height:16px}
+.result{display:grid;gap:14px;min-width:0}
+.res-top{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.res-top .card{padding:12px 14px}
+.res-top .k{font-size:12px;color:var(--sub)}
+.res-top .v{font-family:var(--f-mono);font-size:22px;color:var(--ink)}
+.res-top .card.hero{background:var(--primary);border-color:var(--primary)}
+.res-top .card.hero .k{color:#9EA2A8}
+.res-top .card.hero .v{color:var(--white);font-size:26px}
+.paper{background:var(--white);border:1px solid var(--line);border-radius:3px;box-shadow:0 18px 40px -24px rgba(18,26,36,.45);padding:40px 46px;max-width:760px;font-size:13px;line-height:1.6}
+.paper .ph{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:18px;gap:12px}
+.paper .ph .logo{color:var(--ink);font-size:15px}
+.paper .ph .logo svg{width:28px;height:28px}
+.paper h2{font-family:var(--f-head);font-weight:600;font-size:22px;color:var(--ink);margin:0 0 4px}
+.paper h4{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:18px 0 6px}
+.paper table td,.paper table th{padding:6px 8px;font-size:12px}
+.paper .sig{margin-top:22px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:10px}
+.lock{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--sub)}
+
+/* ---------- Macro ---------- */
+.macro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mcard{padding:16px}
+.mcard .t{display:flex;justify-content:space-between;align-items:baseline}
+.mcard .t span{font-size:13px;color:var(--sub)}
+.mcard .t b{font-family:var(--f-mono);font-size:24px;color:var(--ink);font-weight:500}
+.mcard .d{font-size:12px;margin-top:2px}
+.up{color:var(--bad)} .down{color:var(--good)}
+.mcard svg{width:100%;height:90px;display:block;margin-top:10px}
+.mcard .src{font-size:11.5px;color:var(--sub);margin-top:6px}
+
+/* ---------- Metodología ---------- */
+.method{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.toc{position:sticky;top:74px;display:grid;gap:4px;font-size:13px}
+.toc a{color:var(--sub);text-decoration:none;padding:5px 10px;border-radius:6px}
+.toc a:hover{background:var(--tint);color:var(--ink)}
+.doc{max-width:860px;display:grid;gap:16px;min-width:0}
+.doc section{padding:20px 22px;min-width:0}
+.doc h2{margin:0 0 6px;font-family:var(--f-head);font-weight:600;font-size:20px;color:var(--ink)}
+.doc p{margin:0 0 8px;max-width:72ch}
+.eq{font-family:var(--f-mono);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:12px 14px;white-space:pre;overflow-x:auto;font-size:13px;line-height:1.8}
+.chg{display:grid;gap:8px;font-size:13px}
+.chg div{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:10px;border-bottom:1px solid var(--line-2);padding-bottom:8px}
+.chg b{font-family:var(--f-mono);font-weight:500;color:var(--primary)}
+.src-table td{font-family:var(--f-body);white-space:normal;text-align:left;vertical-align:top;font-size:12.5px}
+.src-table th{text-align:left}
+.src-table a{color:var(--link)}
+.status{display:inline-block;padding:2px 7px;border:1px solid var(--line);border-radius:4px;font:11px var(--f-mono);color:var(--sub);white-space:nowrap}
+
+/* ---------- Footer ---------- */
+.site-foot{border-top:1px solid var(--line);margin-top:32px;padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--sub);font-size:12.5px}
+.site-foot .ht{display:flex;align-items:center;gap:8px}
+
+@media (max-width:1100px){
+  .grid-main,.calc,.method{grid-template-columns:minmax(0,1fr)}
+  .side,.toc{position:static}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .macro,.res-top{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){.macro,.res-top,.kpis{grid-template-columns:minmax(0,1fr)}.wrap{padding:16px}.top{gap:12px;padding:0 16px}.paper{padding:24px 20px}}
+@media (prefers-reduced-motion:no-preference){tbody tr,.btn,.nav button{transition:background .12s,color .12s}}
+</style>
+<link rel="stylesheet" href="fintarget-analitica.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ft" viewBox="16 48 224 160"><path d="M24 56h16v16h-16ZM40 72h16v16h-16ZM24 88h16v16h-16ZM40 104h16v16h-16ZM24 120h16v16h-16ZM40 136h16v16h-16ZM24 152h16v16h-16ZM40 168h16v16h-16ZM24 184h16v16h-16ZM64 56H84A8 8 0 0 1 92 64V192A8 8 0 0 1 84 200H64A8 8 0 0 1 56 192V64A8 8 0 0 1 64 56ZM64 56H224A8 8 0 0 1 232 64V80A8 8 0 0 1 224 88H64A8 8 0 0 1 56 80V64A8 8 0 0 1 64 56ZM62 112H114A6 6 0 0 1 120 118V136A6 6 0 0 1 114 142H62A6 6 0 0 1 56 136V118A6 6 0 0 1 62 112ZM180 56H200A8 8 0 0 1 208 64V192A8 8 0 0 1 200 200H180A8 8 0 0 1 172 192V64A8 8 0 0 1 180 56Z"/></symbol>
+    <symbol id="ico-dl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 19h14"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <a class="ht-back" href="index.html">← HyperTarget</a>
+  <div class="logo"><svg fill="#FFFFFF" aria-hidden="true"><use href="#ft"/></svg>FinTarget</div>
+  <nav class="nav" aria-label="Secciones">
+    <button type="button" data-view="wacc" aria-current="page"><span class="fn">WACC</span>Costo de capital</button>
+    <button type="button" data-view="calc"><span class="fn">CALC</span>Calculadora</button>
+    <button type="button" data-view="dx"><span class="fn">DX</span>Tu empresa</button>
+    <button type="button" data-view="fa"><span class="fn">FA</span>Análisis V/H</button>
+    <button type="button" data-view="ga"><span class="fn">GA</span>Gerencia Analítica</button>
+    <button type="button" data-view="macro"><span class="fn">ECO</span>Macro</button>
+    <button type="button" data-view="method"><span class="fn">DOC</span>Método y fuentes</button>
+  </nav>
+  <div class="cmd" id="cmd">
+    <span class="cmd-ctx num" id="cmd-ctx" title="Empresa activa">TGLS</span>
+    <input id="q" type="text" autocomplete="off" spellcheck="false" placeholder="Comando: TGLS FA · ALTZ · WACC energía" aria-label="Línea de comandos" role="combobox" aria-expanded="false" aria-controls="cmd-list" aria-autocomplete="list">
+    <kbd>Ctrl K</kbd>
+    <div class="cmd-list" id="cmd-list" role="listbox" hidden></div>
+  </div>
+  
+</header>
+<div class="demo"><p>[ DATOS ILUSTRATIVOS · CORTE 30 SEP 2026 ]  Las tasas sectoriales y macro son ilustrativas mientras conectamos las fuentes oficiales. Los estados financieros de Tecnoglass, Ecopetrol y Visa son públicos.</p><button type="button" class="notice-close" aria-label="Cerrar aviso de datos ilustrativos">×</button></div>
+
+<main class="wrap">
+
+<!-- =============== COSTO DE CAPITAL =============== -->
+<section class="view" id="v-wacc" aria-labelledby="h-wacc">
+  <div class="head">
+    <div>
+      <div class="crumbs">Datos abiertos · Colombia · <span class="fn-tag">WACC</span></div>
+      <h1 id="h-wacc">Costo de capital por sector</h1>
+      <div class="meta"><span class="pill">[ ILUSTRATIVO ]</span><span>Corte 30 sep 2026</span><span>Metodología v1.0</span><span>12 sectores CIIU Rev. 4</span></div>
+    </div>
+    <div class="actions">
+      <div class="seg" role="group" aria-label="Moneda"><button type="button" data-cur="COP" aria-pressed="true">COP</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+      <div class="seg" role="group" aria-label="Base"><button type="button" data-real="0" aria-pressed="true">Nominal</button><button type="button" data-real="1" aria-pressed="false">Real</button></div>
+      <button type="button" class="btn ghost" id="dl-csv"><svg aria-hidden="true"><use href="#ico-dl"/></svg>CSV</button>
+      <button type="button" class="btn" disabled title="XLSX · [ PRÓXIMAMENTE ]"><svg aria-hidden="true"><use href="#ico-dl"/></svg>XLSX · [ PRÓXIMAMENTE ]</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid-main">
+    <div class="card" style="min-width:0">
+      <div class="toolbar">
+        <span class="chip">Tasa de impuestos 35%</span>
+        <span class="chip">Prima país: Damodaran</span>
+        <span class="chip">Rango: D/E × 0,6–1,5 · sensibilidad</span>
+        <span class="chip">λ = 1</span>
+        <button type="button" class="chip add">+ Filtro</button>
+        <div class="right"><span id="count">12 sectores</span></div>
+      </div>
+      <div class="tbl-scroll">
+        <table aria-label="WACC por sector">
+          <thead><tr>
+            <th aria-sort="none"><button type="button" data-sort="n">Sector</button></th>
+            <th aria-sort="none"><button type="button" data-sort="bu">β desap.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="de">D/E med.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="bl">β apal.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="ke">Ke</button></th>
+            <th aria-sort="none"><button type="button" data-sort="kd">Kd (1−t)</button></th>
+            <th aria-sort="descending"><button type="button" data-sort="w">WACC</button></th>
+            <th style="text-align:left">Rango de sensibilidad</th>
+          </tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="foot"><span id="scale"></span><span>Fuentes: Damodaran · Supersociedades · Superfinanciera · BanRep · DANE</span></div>
+    </div>
+
+    <aside class="side" aria-label="Detalle del sector">
+      <div class="card panel">
+        <h3 id="d-name">—</h3>
+        <div class="sub" id="d-ciiu">—</div>
+        <div class="bignum num" id="d-wacc">—</div>
+        <div class="stack" id="d-stack"></div>
+        <div class="legend"><span><i style="background:var(--c5)"></i>Patrimonio <b id="d-we"></b></span><span><i style="background:var(--c2)"></i>Deuda <b id="d-wd"></b></span></div>
+      </div>
+      <div class="card panel">
+        <h3>Cómo se calculó</h3>
+        <div class="sub">Método de abajo hacia arriba</div>
+        <div class="steps" id="d-steps"></div>
+        <div class="linkrow"><button type="button" class="btn ghost" data-go="calc">Calcular para una empresa →</button><button type="button" class="btn ghost" data-tool="BETA">Betas y pares</button></div>
+      </div>
+      <div class="memo">
+        <svg width="30" height="30" fill="#FFFFFF" aria-hidden="true"><use href="#ft"/></svg>
+        <div><b>Memo para el auditor</b><p>Borrador · revisión NIC 36 [ PRÓXIMAMENTE ]</p></div>
+        <button type="button" class="btn" data-go="calc">Generar</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- =============== CALCULADORA =============== -->
+<section class="view" id="v-calc" hidden aria-labelledby="h-calc">
+  <div class="head">
+    <div>
+      <div class="crumbs">Herramientas · Vol. 1.1 · <span class="fn-tag">CALC</span></div>
+      <h1 id="h-calc">WACC para empresa no cotizada</h1>
+      <div class="meta">Ingresa los datos de la empresa y obtén la tasa con su memo de metodología. Datos ilustrativos en los insumos sectoriales y de mercado.</div>
+    </div>
+    <div class="actions"><span class="lock"><span class="pill">[ PRÓXIMAMENTE ]</span>Memo en PDF</span><button type="button" class="btn ghost" id="calc-txt">Exportar borrador TXT</button></div>
+  </div>
+  <div class="calc">
+    <form class="card form" id="calc-form" novalidate>
+      <h3>Datos de la empresa</h3>
+      <div class="field"><label for="c-sector">Sector CIIU</label><select id="c-sector"></select></div>
+      <div class="row2">
+        <div class="field"><label for="c-debt">Deuda financiera (COP mm)</label><input id="c-debt" type="number" value="18500" min="0" step="100"></div>
+        <div class="field"><label for="c-eq">Patrimonio (COP mm)</label><input id="c-eq" type="number" value="31200" min="1" step="100"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="c-ebit">EBIT (COP mm)</label><input id="c-ebit" type="number" value="7400" step="100"></div>
+        <div class="field"><label for="c-int">Gastos financieros (COP mm)</label><input id="c-int" type="number" value="2100" min="0" step="10"></div>
+      </div>
+      <div class="field"><label for="c-tax">Tasa de impuestos (%)</label><input id="c-tax" type="number" value="35" min="0" max="50" step="0.5"><span class="hint">Tasa nominal de renta en Colombia: 35%</span></div>
+      <label class="toggle" for="c-total">Usar beta total (dueño no diversificado)<input id="c-total" type="checkbox"></label>
+      <label class="toggle" for="c-size">Agregar prima de tamaño (+2,0 pp)<input id="c-size" type="checkbox" checked></label>
+    </form>
+    <div class="result">
+      <div class="res-top">
+        <div class="card hero"><div class="k">WACC (COP nominal)</div><div class="v num" id="r-w">—</div></div>
+        <div class="card"><div class="k">Ke</div><div class="v num" id="r-ke">—</div></div>
+        <div class="card"><div class="k">Kd después de impuestos</div><div class="v num" id="r-kd">—</div></div>
+        <div class="card"><div class="k">Rating sintético</div><div class="v num" id="r-rt">—</div></div>
+      </div>
+      <article class="paper" aria-label="Vista previa del memo">
+        <div class="ph"><div class="logo"><svg fill="#1F2124" aria-hidden="true"><use href="#ft"/></svg>FinTarget</div><span class="num" style="font-size:11.5px;color:var(--sub)">Memo N.º FT-2026-0412 · Corte 30 sep 2026</span></div>
+        <h2>Memo de tasa de descuento</h2>
+        <div style="color:var(--sub)">Datos ilustrativos · tasa después de impuestos · reconciliación NIC 36 [ PRÓXIMAMENTE ]</div>
+        <h4>Conclusión</h4>
+        <p id="m-concl">—</p>
+        <h4>Supuestos</h4>
+        <table><tbody id="m-tbl"></tbody></table>
+        <h4>Método</h4>
+        <p>Beta bottom-up de comparables de mercados emergentes, re-apalancada con la estructura de capital de la empresa. Costo de la deuda por rating sintético según cobertura de intereses, contrastado con las tasas de crédito comercial publicadas por la Superfinanciera. Conversión a pesos por diferencial de inflación esperada.</p>
+        <div class="sig"><span>Propuesta FinTarget v1.0 · metodología en revisión académica</span><span>Página 1 de 3</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== ANÁLISIS VERTICAL Y HORIZONTAL =============== -->
+<section class="view" id="v-fa" hidden aria-labelledby="h-fa">
+  <div class="head">
+    <div>
+      <div class="crumbs">Análisis financiero · <span class="fn-tag">FA</span> · <span id="fa-crumb"></span></div>
+      <h1 id="h-fa">—</h1>
+      <div class="meta" id="fa-meta"></div>
+    </div>
+    <div class="actions">
+      <div class="seg" role="group" aria-label="Empresa" id="fa-co"></div>
+      <div class="seg" role="group" aria-label="Audiencia"><button type="button" data-aud="analista" aria-pressed="true">Analista</button><button type="button" data-aud="gerencia" aria-pressed="false">Gerencia</button></div>
+      <button type="button" class="btn ghost" id="fa-csv"><svg aria-hidden="true"><use href="#ico-dl"/></svg>CSV</button>
+      <button type="button" class="btn" id="fa-pres">Presentar a gerencia</button>
+    </div>
+  </div>
+
+  <div class="kpis kpis6" id="fa-kpis"></div>
+
+  <div id="fa-analyst">
+    <div class="grid-main">
+      <div class="card" style="min-width:0">
+        <div class="toolbar fa-tools">
+          <div class="seg" role="group" aria-label="Estado financiero" id="fa-st"><button type="button" data-st="bal" aria-pressed="true">Balance</button><button type="button" data-st="pyg" aria-pressed="false">Resultados</button></div>
+          <div class="seg" role="group" aria-label="Tipo de análisis" id="fa-mode"><button type="button" data-m="val" aria-pressed="false">Valores</button><button type="button" data-m="v" aria-pressed="true">Vertical</button><button type="button" data-m="h" aria-pressed="false">Horizontal</button><button type="button" data-m="i" aria-pressed="false">Índice</button></div>
+          <label class="inline-sel">Año foco <select id="fa-year"></select></label>
+          <div class="right" id="fa-unit"></div>
+        </div>
+        <div class="tbl-scroll"><table class="fa-table" aria-label="Estado financiero"><thead id="fa-thead"></thead><tbody id="fa-rows"></tbody></table></div>
+        <div class="foot"><span id="fa-legend"></span><span id="fa-src"></span></div>
+      </div>
+      <aside class="side" aria-label="Inspector de la cifra">
+        <div class="card panel" id="fa-insp"></div>
+        <div class="card panel"><h3>Calidad de datos</h3><div class="sub">Controles automáticos sobre la fuente</div><div id="fa-dq"></div></div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="fa-ger" hidden>
+    <div class="ger-grid">
+      <div class="card panel"><h3>Señales del período</h3><div class="sub" id="fa-sig-sub"></div><div id="fa-sig"></div></div>
+      <div class="card panel"><h3>Lectura del analista</h3><div class="sub">La escribe el analista en la vista Analista; aquí se muestra tal cual</div><div id="fa-notes-ro" class="notes-ro"></div></div>
+    </div>
+  </div>
+
+  <div class="sec-head"><h2>Gráficos para comité</h2><span id="fa-ch-sub"></span></div>
+  <div class="charts" id="fa-charts"></div>
+</section>
+
+<!-- =============== TU EMPRESA (DX) =============== -->
+<section class="view" id="v-dx" hidden aria-labelledby="h-dx">
+  <div class="head">
+    <div>
+      <div class="crumbs">Tu empresa · <span class="fn-tag">DX</span></div>
+      <h1 id="h-dx">Diagnóstico financiero de tu empresa</h1>
+      <div class="meta">Sube el balance y el estado de resultados, grande o pequeña. FinTarget arma el análisis vertical y horizontal, el costo de capital con la beta de su sector, la valoración y los documentos.</div>
+    </div>
+  </div>
+  <ol class="dx-steps" id="dx-steps" aria-label="Pasos"></ol>
+  <div id="dx-body"></div>
+</section>
+
+<!-- =============== GERENCIA ANALÍTICA =============== -->
+<section class="view" id="v-ga" hidden aria-labelledby="h-ga">
+  <div class="head">
+    <div>
+      <div class="crumbs">Herramientas · <span class="fn-tag">GA</span></div>
+      <h1 id="h-ga">Gerencia Analítica</h1>
+      <div class="meta" id="ga-meta"></div>
+    </div>
+    <div class="actions">
+      <input class="ga-q" id="ga-q" type="search" placeholder="Filtrar herramientas" aria-label="Filtrar herramientas">
+      <div class="seg" role="group" aria-label="Empresa" id="ga-co"></div>
+    </div>
+  </div>
+  <div class="ga-cats" id="ga-cats" role="group" aria-label="Familias"></div>
+  <div class="ga-layout">
+    <nav class="card ga-list" id="ga-list" aria-label="Herramientas"></nav>
+    <div class="card ga-work" id="ga-work" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- =============== MACRO =============== -->
+<section class="view" id="v-macro" hidden aria-labelledby="h-macro">
+  <div class="head">
+    <div><div class="crumbs">Datos de apoyo · <span class="fn-tag">ECO</span></div><h1 id="h-macro">Macro Colombia</h1><div class="meta">Series que alimentan el costo de capital · últimos 12 meses · Datos ilustrativos</div></div>
+    <div class="actions"><button type="button" class="btn ghost" data-go="method"><svg aria-hidden="true"><use href="#ico-dl"/></svg>Registro de series</button></div>
+  </div>
+  <div class="macro" id="macro"></div>
+  <div class="card chart" style="margin-top:16px">
+    <h3>Qué mueve el WACC mediano</h3>
+    <div class="sub">Efecto de subir 1 punto porcentual cada insumo, con todo lo demás constante · <span id="mx-cur"></span></div>
+    <div class="tbl-scroll"><table class="mx-table"><thead><tr><th>Insumo</th><th>Valor actual</th><th>Choque</th><th>WACC mediano</th><th>Cambio</th><th style="text-align:left">Efecto</th></tr></thead><tbody id="mx-rows"></tbody></table></div>
+  </div>
+</section>
+
+<!-- =============== MÉTODO Y FUENTES =============== -->
+<section class="view" id="v-method" hidden aria-labelledby="h-method">
+  <div class="head"><div><div class="crumbs">Documentación · <span class="fn-tag">DOC</span></div><h1 id="h-method">Método y fuentes</h1><div class="meta">Cómo se calcula cada cifra de FinTarget y de dónde sale</div></div></div>
+  <div class="method">
+    <nav class="toc" aria-label="Contenido"><a href="#m1">1. Beta bottom-up</a><a href="#m2">2. Estructura de capital</a><a href="#m3">3. Costo del patrimonio</a><a href="#m4">4. Costo de la deuda</a><a href="#m5">5. De dólares a pesos</a><a href="#m6">6. Validación</a><a href="#m8">7. Análisis vertical y horizontal</a><a href="#m9">8. Calidad de datos</a><a href="#m10">9. Registro de fuentes</a><a href="#m7">Registro de versiones</a></nav>
+    <div class="doc">
+      <section class="card" id="m1"><h2>1. Beta bottom-up</h2><p>La Bolsa de Colombia tiene pocas acciones líquidas. Una beta por regresión sobre esas acciones sale sesgada hacia cero, y muchos sectores no tienen ninguna empresa listada. Por eso partimos de betas desapalancadas de comparables de mercados emergentes, corregidas por caja, y las asignamos a cada sector CIIU con un mapeo publicado.</p></section>
+      <section class="card" id="m2"><h2>2. Estructura de capital</h2><p>Re-apalancamos con la mediana de deuda sobre patrimonio de cada sector según los estados financieros reportados a Supersociedades. Por ahora el rango es una sensibilidad con D/E × 0,6 y D/E × 1,5. Los percentiles reales requieren una muestra observada.</p><div class="eq">βL = βu × [ 1 + (1 − t) × D/E ]</div></section>
+      <section class="card" id="m3"><h2>3. Costo del patrimonio</h2><p>Partimos de la tasa del bono del Tesoro de EE. UU. a 10 años y sumamos la prima de mercado maduro y la prima país. Así evitamos contar el riesgo país dos veces, como pasa al mezclar TES con prima país.</p><div class="eq">Ke(USD) = Rf + βL × ERP + λ × CRP</div></section>
+      <section class="card" id="m4"><h2>4. Costo de la deuda</h2><p>Asignamos un rating sintético según la cobertura de intereses (EBIT sobre gastos financieros) y le sumamos su diferencial. Contrastamos el resultado con las tasas de crédito comercial que publica la Superfinanciera.</p><div class="eq">Kd = Rf + CRP + spread(rating sintético)
+WACC = E/V × Ke + D/V × Kd × (1 − t)</div></section>
+      <section class="card" id="m5"><h2>5. De dólares a pesos</h2><div class="eq">WACC(COP) = (1 + WACC(USD)) × (1 + π COP) / (1 + π USD) − 1</div></section>
+      <section class="card" id="m6"><h2>6. Validación</h2><p>Cada corte se compara con las betas por regresión de Ecopetrol, ISA, GEB y Bancolombia, con el WACC regulatorio de la CREG y con las tasas de descuento que las empresas revelan en sus notas de deterioro.</p></section>
+      <section class="card" id="m8"><h2>7. Análisis vertical y horizontal</h2><p>El análisis vertical expresa cada partida como porcentaje del activo total (balance) o de los ingresos (resultados) del mismo año. El horizontal mide la variación anual, el índice con base 2021 = 100 y la tasa compuesta de crecimiento del período. La vista FA aplica el estándar de las skills VerticalAnalysis y RatioAnalysis: NIC 1 para la estructura de los estados y las guías del CFA Institute para la lectura del balance y de los indicadores.</p><div class="eq">Vertical  = partida(t) / base(t)
+Horizontal = partida(t) / partida(t−1) − 1
+Índice    = partida(t) / partida(2021) × 100
+CAGR      = (partida(2025) / partida(2021))^(1/4) − 1</div></section>
+      <section class="card" id="m9"><h2>8. Calidad de datos</h2><p>Antes de mostrar una cifra, FinTarget corre cuatro controles: cuadre contable (activo = pasivo + patrimonio), suma de partidas contra cada subtotal, saltos de escala (una partida mil veces menor que en los otros años suele ser un error de unidades en la fuente) y contraste con la fuente primaria cuando se conoce una diferencia. El dato dudoso no se corrige en silencio: se marca en la celda y se explica en el inspector.</p></section>
+      <section class="card" id="m10"><h2>9. Registro de fuentes</h2><p>Fuente localizada no es lo mismo que fuente conectada, y acceso público no es lo mismo que licencia de redistribución.</p><input id="source-query" class="ga-q" type="search" placeholder="Filtrar por fuente, insumo o estado" aria-label="Filtrar fuentes" style="margin:6px 0 12px;width:100%"><div class="tbl-scroll"><table class="src-table"><thead><tr><th>Fuente</th><th>Estado</th><th>Insumo</th><th>Frecuencia</th><th>Límite</th></tr></thead><tbody id="source-rows"></tbody></table></div></section>
+      <section class="card" id="m7"><h2>Registro de versiones</h2><div class="chg"><div><b>v1.0</b><span>Planeada · 12 sectores · Datos ilustrativos; metodología en revisión académica.</span></div><div><b>v1.1</b><span>Planeada · Calculadora para empresa no cotizada y dataset de tasas NIC 36.</span></div><div><b>Versión 0.2 · 6 oct 2026</b><span>Análisis vertical y horizontal con estados financieros públicos, Gerencia Analítica, línea de comandos y modo presentación.</span></div><div><b>Versión 0.3 · 7 oct 2026</b><span>Diagnóstico de la empresa del usuario a partir de su balance y PyG, con Excel de 13 hojas.</span></div></div></section>
+    </div>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="ht"><svg width="22" height="22" viewBox="0 0 96 90" fill="#1F2124" aria-hidden="true"><path d="M0 0h10v10H0ZM10 10h10v10H10ZM0 20h10v10H0ZM10 30h10v10H10ZM0 40h10v10H0ZM10 50h10v10H10ZM0 60h10v10H0ZM10 70h10v10H10ZM0 80h10v10H0Z"/><rect x="20" y="0" width="24" height="90" rx="5"/><rect x="72" y="0" width="24" height="90" rx="5"/><rect x="20" y="34" width="76" height="22"/></svg>FinTarget es un producto de HyperTarget</div>
+  <span>Datos abiertos con metodología pública · Barranquilla, Colombia</span>
+</footer>
+</main>
+
+<div class="pres" id="pres" hidden role="dialog" aria-modal="true" aria-label="Presentación para gerencia">
+  <div class="pres-bar"><span id="pres-title"></span><div class="actions"><button type="button" class="btn ghost" id="pres-print">Imprimir / PDF</button><button type="button" class="btn ghost" id="pres-prev" aria-label="Diapositiva anterior">←</button><span class="num" id="pres-n"></span><button type="button" class="btn ghost" id="pres-next" aria-label="Diapositiva siguiente">→</button><button type="button" class="btn" id="pres-close">Cerrar · Esc</button></div></div>
+  <div class="pres-stage" id="pres-stage"></div>
+</div>
+<div class="print-deck" id="print-deck" aria-hidden="true"></div>
+<div class="tip" id="tip" hidden></div>
+<nav class="mnav" aria-label="Secciones principales"><button type="button" data-view="wacc"><span>WACC</span>Capital</button><button type="button" data-view="dx"><span>DX</span>Tu empresa</button><button type="button" data-view="fa"><span>FA</span>Análisis</button><button type="button" data-view="ga"><span>GA</span>Herramientas</button><button type="button" data-view="calc"><span>CALC</span>Calculadora</button></nav>
+
+<script>
+(function(){
+"use strict";
+(function(){
+  var banner=document.querySelector(".demo"),close=banner.querySelector(".notice-close"),key="fintarget-illustrative-notice-dismissed";
+  try{banner.hidden=localStorage.getItem(key)==="1";}catch(e){}
+  close.addEventListener("click",function(){
+    banner.hidden=true;
+    try{localStorage.setItem(key,"1");}catch(e){}
+  });
+})();
+var P={rf:4.2,crp:3.0,erp:4.3,t:0.35,piCOP:3.6,piUSD:2.4};
+var S=[
+ {n:"Energía eléctrica",c:"CIIU 3511 · 3514",bu:0.45,de:0.80,sp:1.6},
+ {n:"Petróleo y gas",c:"CIIU 0610 · 1921",bu:0.85,de:0.45,sp:2.0},
+ {n:"Minería",c:"CIIU 0510 · 0710",bu:0.95,de:0.30,sp:2.6},
+ {n:"Construcción e infraestructura",c:"CIIU 4111 · 4210",bu:0.80,de:0.60,sp:2.8},
+ {n:"Cemento y materiales",c:"CIIU 2394 · 2395",bu:0.75,de:0.50,sp:2.2},
+ {n:"Alimentos",c:"CIIU 1011 · 1089",bu:0.60,de:0.40,sp:1.9},
+ {n:"Bebidas",c:"CIIU 1104",bu:0.65,de:0.30,sp:1.8},
+ {n:"Comercio minorista",c:"CIIU 4711 · 4719",bu:0.80,de:0.50,sp:2.4},
+ {n:"Telecomunicaciones",c:"CIIU 6110 · 6120",bu:0.55,de:0.90,sp:2.1},
+ {n:"Transporte y logística",c:"CIIU 4923 · 5229",bu:0.70,de:0.70,sp:2.9},
+ {n:"Salud",c:"CIIU 8610 · 8621",bu:0.75,de:0.40,sp:2.7},
+ {n:"Software y servicios TI",c:"CIIU 6201 · 6202",bu:1.10,de:0.10,sp:3.3}
+];
+var st={cur:"COP",real:false,sel:0,sort:"w",dir:-1,q:""};
+var $=function(id){return document.getElementById(id);};
+function fx(x,d){d=d==null?1:d;return x.toLocaleString("es-CO",{minimumFractionDigits:d,maximumFractionDigits:d});}
+function conv(x,cur,real){
+  cur=cur||st.cur; real=real==null?st.real:real;
+  var v=x/100;
+  if(cur==="COP") v=(1+v)*(1+P.piCOP/100)/(1+P.piUSD/100)-1;
+  if(real) v=(1+v)/(1+(cur==="COP"?P.piCOP:P.piUSD)/100)-1;
+  return v*100;
+}
+function calc(s,de,o){
+  o=o||{};
+  var t=o.t==null?P.t:o.t;
+  var bl=s.bu*(1+(1-t)*de);
+  if(o.total) bl=bl/0.45;
+  var keU=P.rf+bl*P.erp+P.crp+(o.size?2.0:0);
+  // Demo: CRP se reutiliza como spread de deuda; separar en el motor real.
+  var kdGrossUSD=P.rf+P.crp+(o.sp==null?s.sp:o.sp);
+  var cur=o.cur||st.cur, real=o.real==null?st.real:o.real;
+  var keNom=conv(keU,cur,false),kdNom=conv(kdGrossUSD,cur,false)*(1-t);
+  var we=1/(1+de),wd=de/(1+de),wNom=we*keNom+wd*kdNom;
+  var pi=(cur==="COP"?P.piCOP:P.piUSD)/100;
+  function display(x){return real?((1+x/100)/(1+pi)-1)*100:x;}
+  return {bl:bl,keU:keU,ke:display(keNom),kd:display(kdNom),w:display(wNom),we:we,wd:wd};
+}
+function rowsData(){
+  return S.map(function(s,i){
+    var m=calc(s,s.de),a=calc(s,s.de*0.6),b=calc(s,s.de*1.5);
+    return {i:i,s:s,m:m,lo:Math.min(a.w,b.w,m.w),hi:Math.max(a.w,b.w,m.w)};
+  });
+}
+function median(a){a=a.slice().sort(function(x,y){return x-y;});var n=a.length;return n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2;}
+
+/* ---------- tooltip: cualquier elemento con data-tip ---------- */
+var tip=$("tip");
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;var x=e.clientX+14,y=e.clientY+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;if(y+tip.offsetHeight>innerHeight-8)y=e.clientY-tip.offsetHeight-14;tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.hidden=true;}
+document.addEventListener("mousemove",function(e){var el=e.target.closest&&e.target.closest("[data-tip]");if(el)showTip(e,el.getAttribute("data-tip"));else if(!tip.hidden&&!e.target.closest(".rng"))hideTip();});
+document.addEventListener("scroll",hideTip,true);
+
+/* ---------- KPIs con sparkline ---------- */
+function spark(vals){
+  var w=200,h=30,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),r=mx-mn||1;
+  var pts=vals.map(function(v,i){return [2+i*(w-4)/(vals.length-1),h-3-(v-mn)/r*(h-8)];});
+  var d=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");
+  var l=pts[pts.length-1];
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+' L'+l[0]+' '+h+' L2 '+h+'Z" fill="var(--c4)" fill-opacity=".08"/><path d="'+d+'" fill="none" stroke="var(--c4)" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="'+l[0]+'" cy="'+l[1]+'" r="2.6" fill="var(--accent-ink)"/></svg>';
+}
+function renderKPIs(){
+  var mid=median(rowsData().map(function(r){return r.m.w;}));
+  var k=[
+    ["Rf · Tesoro EE. UU. 10a",fx(P.rf)+"%","USD · corte 30 sep",[4.6,4.5,4.3,4.4,4.2,4.1,4.3,4.2]],
+    ["Prima país (CRP)",fx(P.crp)+"%","Damodaran",[3.3,3.2,3.4,3.2,3.1,3.0,3.1,3.0]],
+    ["ERP mercado maduro",fx(P.erp)+"%","Implícito",[4.6,4.5,4.4,4.4,4.3,4.3,4.2,4.3]],
+    ["Inflación esperada",fx(P.piCOP)+"%","COP · 12 meses",[5.4,5.0,4.7,4.3,4.1,3.9,3.7,3.6]],
+    ["WACC mediano · "+st.cur,fx(mid)+"%",st.real?"Real":"Nominal",[13.1,12.9,12.6,12.7,12.4,12.2,12.3,mid].map(function(v,i){return i<7?v+(st.cur==="USD"?-1.2:0):v;})]
+  ];
+  $("kpis").innerHTML=k.map(function(x){return '<div class="card kpi"><div class="k"><span>'+x[0]+'</span></div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+' · Datos ilustrativos</div>'+spark(x[3])+'</div>';}).join("");
+}
+
+/* ---------- Tabla ---------- */
+function renderTable(){
+  var rows=rowsData().filter(function(r){return !st.q||(r.s.n+" "+r.s.c).toLowerCase().indexOf(st.q)>-1;});
+  var key=st.sort;
+  rows.sort(function(a,b){
+    var va=key==="n"?a.s.n:key==="bu"?a.s.bu:key==="de"?a.s.de:a.m[key];
+    var vb=key==="n"?b.s.n:key==="bu"?b.s.bu:key==="de"?b.s.de:b.m[key];
+    return (va>vb?1:va<vb?-1:0)*st.dir;
+  });
+  var all=rowsData();
+  var mn=Math.floor(Math.min.apply(null,all.map(function(r){return r.lo;}))-0.5);
+  var mx=Math.ceil(Math.max.apply(null,all.map(function(r){return r.hi;}))+0.5);
+  var W=170,sx=function(v){return 6+(v-mn)/(mx-mn)*(W-12);};
+  $("scale").textContent="Barra de rango en escala común: "+mn+"% a "+mx+"%";
+  $("count").textContent=rows.length+(rows.length===1?" sector":" sectores");
+  var tb=$("rows");tb.innerHTML="";
+  if(!rows.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;font-family:var(--f-body);color:var(--sub);padding:28px">Ningún sector coincide con "'+st.q+'". Prueba con otro nombre o código CIIU.</td></tr>';}
+  rows.forEach(function(r){
+    var tr=document.createElement("tr");tr.tabIndex=0;tr.setAttribute("aria-selected",r.i===st.sel?"true":"false");
+    var x1=sx(r.lo),x2=sx(r.hi),xm=sx(r.m.w);
+    tr.innerHTML='<td class="sec">'+r.s.n+'<small>'+r.s.c+'</small></td><td>'+fx(r.s.bu,2)+'</td><td>'+fx(r.s.de,2)+'</td><td>'+fx(r.m.bl,2)+'</td><td>'+fx(r.m.ke)+'%</td><td>'+fx(r.m.kd)+'%</td><td class="w">'+fx(r.m.w)+'%</td>'+
+      '<td class="rng" data-tip="'+r.s.n+'<br>Sensibilidad: '+fx(r.lo)+'% – '+fx(r.hi)+'%<br>Mediana: '+fx(r.m.w)+'%"><svg width="'+W+'" height="20" aria-hidden="true"><line x1="6" x2="'+(W-6)+'" y1="10" y2="10" stroke="var(--line)" stroke-width="2"/><rect x="'+x1+'" y="5" width="'+Math.max(x2-x1,4)+'" height="10" rx="5" fill="var(--c2)"/><circle cx="'+xm+'" cy="10" r="3.5" fill="var(--accent-ink)" stroke="#FFFFFF" stroke-width="1.5"/></svg></td>';
+    tr.addEventListener("click",function(){st.sel=r.i;renderTable();});
+    tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();st.sel=r.i;renderTable();}});
+    tb.appendChild(tr);
+  });
+  document.querySelectorAll("#v-wacc th[aria-sort]").forEach(function(th){var k=th.querySelector("button").dataset.sort;th.setAttribute("aria-sort",k===st.sort?(st.dir>0?"ascending":"descending"):"none");});
+  renderSide();
+}
+function renderSide(){
+  var r=rowsData()[st.sel];
+  $("d-name").textContent=r.s.n;
+  $("d-ciiu").textContent=r.s.c+" · "+st.cur+" "+(st.real?"real":"nominal");
+  $("d-wacc").innerHTML=fx(r.m.w)+"%<small>WACC mediano · rango "+fx(r.lo)+"% – "+fx(r.hi)+"%</small>";
+  $("d-stack").innerHTML='<span style="width:'+(r.m.we*100)+'%;background:var(--c5)"></span><span style="width:'+(r.m.wd*100)+'%;background:var(--c2)"></span>';
+  $("d-we").textContent=fx(r.m.we*100,0)+"%";$("d-wd").textContent=fx(r.m.wd*100,0)+"%";
+  $("d-steps").innerHTML=[["β desapalancada (comparables EM)",fx(r.s.bu,2)],["D/E mediana · Supersociedades",fx(r.s.de,2)],["β re-apalancada (Hamada)",fx(r.m.bl,2)],["Ke",fx(r.m.ke)+"%"],["Kd después de impuestos",fx(r.m.kd)+"%"],["WACC",fx(r.m.w)+"%"]].map(function(p){return '<div><span>'+p[0]+'</span><b>'+p[1]+'</b></div>';}).join("");
+}
+document.querySelectorAll("#v-wacc th button[data-sort]").forEach(function(b){b.addEventListener("click",function(){var k=b.dataset.sort;if(st.sort===k)st.dir*=-1;else{st.sort=k;st.dir=k==="n"?1:-1;}renderTable();});});
+document.querySelectorAll("[data-cur]").forEach(function(b){b.addEventListener("click",function(){st.cur=b.dataset.cur;document.querySelectorAll("[data-cur]").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.cur===st.cur?"true":"false");});renderAll();});});
+document.querySelectorAll("[data-real]").forEach(function(b){b.addEventListener("click",function(){st.real=b.dataset.real==="1";document.querySelectorAll("[data-real]").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.real===(st.real?"1":"0")?"true":"false");});renderAll();});});
+
+/* ---------- Descargas ---------- */
+function download(name,data,type){var u=URL.createObjectURL(new Blob(["﻿",data],{type:type}));var a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);}
+$("dl-csv").addEventListener("click",function(){download("fintarget-sectores-2026-09-30.csv","estado;sector;moneda;base;beta;de;ke;kd_neto;wacc;sens_min;sens_max\n"+rowsData().map(function(r){return ["ilustrativo",r.s.n,st.cur,st.real?"real":"nominal",r.m.bl.toFixed(4),r.s.de,r.m.ke.toFixed(4),r.m.kd.toFixed(4),r.m.w.toFixed(4),r.lo.toFixed(4),r.hi.toFixed(4)].join(";");}).join("\n"),"text/csv;charset=utf-8");});
+$("calc-txt").addEventListener("click",function(){download("fintarget-memo-borrador.txt",document.querySelector(".paper").innerText+"\n\nBORRADOR · Datos ilustrativos con corte 30 sep 2026. Metodología en revisión académica. No usar como tasa de descuento definitiva sin validar los insumos.","text/plain;charset=utf-8");});
+
+/* ---------- Calculadora ---------- */
+var sel=$("c-sector");sel.innerHTML=S.map(function(s,i){return '<option value="'+i+'">'+s.n+' · '+s.c.replace("CIIU ","")+'</option>';}).join("");sel.value="3";
+function rating(icr){var T=[[8.5,"AAA",0.7],[6.5,"AA",0.9],[5.5,"A+",1.1],[4.25,"A",1.3],[3,"A−",1.6],[2.5,"BBB",2.0],[2.25,"BB+",2.5],[2,"BB",3.0],[1.75,"B+",3.6],[1.5,"B",4.5],[1.25,"B−",5.5],[0.8,"CCC",8.0],[-1e9,"CC",11]];for(var i=0;i<T.length;i++)if(icr>=T[i][0])return T[i];}
+function renderCalc(){
+  var s=S[+sel.value],D=+$("c-debt").value||0,E=Math.max(1,+$("c-eq").value||1),ebit=+$("c-ebit").value||0,it=Math.max(0.01,+$("c-int").value||0.01),t=(+$("c-tax").value||0)/100;
+  var de=D/E,icr=ebit/it,rt=rating(icr);
+  var m=calc(s,de,{t:t,sp:rt[2],total:$("c-total").checked,size:$("c-size").checked,cur:"COP",real:false});
+  $("r-w").textContent=fx(m.w)+"%";$("r-ke").textContent=fx(m.ke)+"%";$("r-kd").textContent=fx(m.kd)+"%";$("r-rt").textContent=rt[1];
+  $("m-concl").innerHTML="Datos ilustrativos · La tasa después de impuestos para la Empresa de ejemplo S.A.S., sector "+s.n.toLowerCase()+", es <b class='num'>"+fx(m.w)+"%</b> en pesos nominales, con un rango razonable de "+fx(m.w-0.8)+"% a "+fx(m.w+0.8)+"% según la estructura de capital.";
+  $("m-tbl").innerHTML=[["Beta desapalancada del sector",fx(s.bu,2)],["D/E de la empresa",fx(de,2)],["Beta re-apalancada"+($("c-total").checked?" (beta total)":""),fx(m.bl,2)],["Rf + ERP + prima país",fx(P.rf)+"% + "+fx(P.erp)+"% + "+fx(P.crp)+"%"],["Prima de tamaño",$("c-size").checked?"2,0 pp":"No aplica"],["Cobertura de intereses → rating",fx(icr,2)+"x → "+rt[1]],["Ke / Kd después de impuestos (COP)",fx(m.ke)+"% / "+fx(m.kd)+"%"],["Pesos patrimonio / deuda",fx(m.we*100,0)+"% / "+fx(m.wd*100,0)+"%"]].map(function(r){return '<tr><td style="text-align:left;font-family:var(--f-body)">'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join("");
+}
+$("calc-form").addEventListener("input",renderCalc);$("calc-form").addEventListener("submit",function(e){e.preventDefault();});
+
+/* ---------- Macro ---------- */
+function renderMacro(){
+  var M=[["TRM","4.012","COP por USD",-1.8,[4380,4310,4255,4190,4230,4150,4120,4085,4060,4110,4045,4012],"BanRep"],
+    ["Tasa de política","8,25%","Banco de la República",-0.25,[10.75,10.25,9.75,9.5,9.5,9.25,9.25,9.0,8.75,8.5,8.5,8.25],"BanRep"],
+    ["Inflación anual","4,6%","IPC, septiembre",-0.2,[6.9,6.5,6.1,5.8,5.5,5.3,5.2,5.0,4.9,4.8,4.8,4.6],"DANE"],
+    ["TES 10 años","10,9%","Tasa de negociación",0.2,[10.2,10.4,10.6,10.3,10.8,11.1,11.0,10.7,10.9,11.2,10.7,10.9],"BanRep"],
+    ["IBR 3 meses","8,1%","Indicador bancario",-0.2,[10.5,10.0,9.7,9.4,9.3,9.1,9.0,8.8,8.6,8.4,8.3,8.1],"BanRep"],
+    ["Brent","US$ 74","Por barril",2.1,[82,79,85,78,74,72,76,70,68,71,72,74],"EIA"]];
+  $("macro").innerHTML=M.map(function(m){
+    var v=m[4],w=300,h=90,mn=Math.min.apply(null,v),mx=Math.max.apply(null,v),r=mx-mn||1;
+    var pts=v.map(function(y,j){return [4+j*(w-8)/(v.length-1),h-6-(y-mn)/r*(h-16)];});
+    var d=pts.map(function(p,j){return (j?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");var l=pts[pts.length-1];
+    var cls=m[3]>0?"up":"down",sign=m[3]>0?"+":"";
+    return '<div class="card mcard"><div class="t"><span>'+m[0]+'</span><b>'+m[1]+'</b></div><div class="d"><span class="'+cls+'">'+sign+fx(m[3])+(m[0]==="TRM"||m[0]==="Brent"?"%":" pp")+'</span> <span style="color:var(--sub)">· '+m[2]+' · 12 meses</span></div><svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img" aria-label="'+m[0]+'"><line x1="4" x2="'+(w-4)+'" y1="'+(h-6)+'" y2="'+(h-6)+'" stroke="var(--line-2)"/><path d="'+d+' L'+l[0]+' '+(h-6)+' L4 '+(h-6)+'Z" fill="var(--c4)" fill-opacity=".08"/><path d="'+d+'" fill="none" stroke="var(--c4)" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="'+l[0]+'" cy="'+l[1]+'" r="3.5" fill="var(--accent-ink)"/></svg><div class="src">Datos ilustrativos · Fuente de referencia: '+m[5]+'</div></div>';
+  }).join("");
+  var base=median(rowsData().map(function(r){return r.m.w;}));
+  var shocks=[["Rf · Tesoro EE. UU. 10a","rf"],["Prima de mercado (ERP)","erp"],["Prima país (CRP)","crp"],["Inflación esperada COP","piCOP"],["Tasa de impuestos","t"]];
+  $("mx-cur").textContent=st.cur+" "+(st.real?"real":"nominal");
+  var out=shocks.map(function(s){var k=s[1],old=P[k];P[k]=k==="t"?old+0.01:old+1;var w=median(rowsData().map(function(r){return r.m.w;}));P[k]=old;return {l:s[0],v:k==="t"?fx(old*100,0)+"%":fx(old)+"%",w:w,d:(w-base)*100};});
+  var mxAbs=Math.max.apply(null,out.map(function(o){return Math.abs(o.d);}))||1;
+  $("mx-rows").innerHTML=out.map(function(o){var wpx=Math.round(Math.abs(o.d)/mxAbs*120);return '<tr><td style="font-family:var(--f-body)">'+o.l+'</td><td>'+o.v+'</td><td>+1 pp</td><td>'+fx(o.w,2)+'%</td><td>'+(o.d>=0?"+":"−")+fx(Math.abs(o.d),0)+' pb</td><td style="text-align:left"><span class="mx-bar'+(o.d<0?" neg":"")+'" style="width:'+wpx+'px"></span></td></tr>';}).join("");
+}
+
+/* ---------- Registro de fuentes ---------- */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function renderSources(){
+  var src=(window.HyperTargetSources||[]).filter(function(s){return s.product==="FinTarget";}),q=$("source-query").value.toLowerCase();
+  $("source-rows").innerHTML=src.filter(function(s){return (s.name+" "+s.input+" "+s.status).toLowerCase().indexOf(q)>-1;}).map(function(s){return '<tr><td><a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.name)+' ↗</a></td><td><span class="status">'+esc(s.status)+'</span></td><td>'+esc(s.input)+'</td><td>'+esc(s.frequency)+'</td><td>'+esc(s.limit)+'</td></tr>';}).join("")||'<tr><td colspan="5">Sin coincidencias.</td></tr>';
+}
+$("source-query").addEventListener("input",renderSources);
+
+/* ---------- Navegación ---------- */
+var VIEWS=["wacc","calc","dx","fa","ga","macro","method"],ALIAS={sector:"wacc",compare:"ga",issuers:"fa",data:"method"},hooks={};
+function show(v){
+  v=ALIAS[v]||v;if(VIEWS.indexOf(v)<0)v="wacc";
+  document.querySelectorAll(".view").forEach(function(s){s.hidden=s.id!=="v-"+v;});
+  document.querySelectorAll(".nav button,.mnav button").forEach(function(b){if(b.dataset.view===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  if(v==="calc")renderCalc();if(v==="macro")renderMacro();
+  if(hooks[v])hooks[v]();
+  try{history.replaceState(null,"","#"+v);}catch(e){}
+  window.scrollTo(0,0);hideTip();
+}
+document.querySelectorAll(".nav button,.mnav button").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.view);});});
+document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){if(b.dataset.go==="calc")sel.value=String(st.sel);show(b.dataset.go);});});
+function renderAll(){renderKPIs();renderTable();if(!$("v-macro").hidden)renderMacro();if(hooks.cur)hooks.cur();}
+renderAll();renderCalc();renderSources();
+window.FinTargetMockup={show:show,st:st,S:S,P:P,calc:calc,conv:conv,rowsData:rowsData,renderAll:renderAll,renderTable:renderTable,fx:fx,esc:esc,median:median,download:download,hooks:hooks,initial:(location.hash||"").slice(1)};
+})();
+</script>
+<script src="fuentes-validacion.js"></script>
+<script src="fintarget-empresas.js"></script>
+<script src="fintarget-analitica.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="fintarget-dx.js"></script>
+</body>
+</html>

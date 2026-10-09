@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FinTarget · Costo de capital Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* FinTarget V1 — mockup navegable. Azul HyperTarget, tablas densas, números en mono. Datos de ejemplo. */
+:root{
+  --blue:#128ED6; --blue-d:#0A6FAE; --blue-l:#9FD0F0; --tint:#E3F1FB; --tint2:#F2F8FC;
+  --navy:#0B2540; --navy-2:#16344F; --ink:#0F2236; --sub:#5A6F86; --line:#DDE7F0; --line-2:#EEF3F7;
+  --bg:#F2F7FB; --surface:#FFFFFF; --white:#FFFFFF; --warn-bg:#FFF4D6; --warn:#7A5600;
+  --good:#1F7A4D; --bad:#B4372F;
+  --f-brand:"Archivo","Arial Black",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- Barra superior ---------- */
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:var(--white);display:flex;align-items:center;gap:24px;padding:0 24px;height:58px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-brand);font-weight:800;font-size:18px;letter-spacing:.01em;white-space:nowrap}
+.logo svg{width:38px;height:38px;margin-left:-6px}
+.nav{display:flex;gap:2px;height:100%;overflow-x:auto}
+.nav button{all:unset;cursor:pointer;padding:0 13px;display:flex;align-items:center;color:#B9CBDD;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+.nav button:hover{color:var(--white)}
+.nav button[aria-current="page"]{color:var(--white);border-bottom-color:var(--blue)}
+.nav button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--navy-2);border-radius:8px;padding:0 10px;height:34px;width:300px;color:#8EA7BF}
+.search input{all:unset;flex:1;color:var(--white);font-size:13px}
+.search input::placeholder{color:#8EA7BF}
+.search kbd{font-family:var(--f-mono);font-size:11px;color:#8EA7BF;border:1px solid #2A4A68;border-radius:4px;padding:1px 5px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-weight:600;font-size:12px}
+.demo{background:var(--warn-bg);color:var(--warn);font-size:12.5px;text-align:center;padding:6px 16px}
+.demo b{font-weight:600}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:1360px;margin:0 auto;padding:22px 24px 48px}
+.view[hidden]{display:none}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.crumbs{font-size:12px;color:var(--sub);margin-bottom:4px}
+.head h1{margin:0;font-family:var(--f-brand);font-weight:800;font-size:26px;color:var(--navy);letter-spacing:-.005em}
+.meta{color:var(--sub);font-size:13px;margin-top:4px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--blue-d);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:500}
+.pill.ok::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:2px}
+.seg button{all:unset;cursor:pointer;padding:6px 12px;border-radius:7px;font-weight:500;color:var(--sub);font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--white)}
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:var(--white);font-weight:600;font-size:13px;padding:8px 13px;border-radius:9px}
+.btn:hover{background:var(--blue-d)}
+.btn.ghost{background:var(--surface);color:var(--navy);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--sub)}
+.btn svg{width:15px;height:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{padding:12px 14px;display:grid;gap:2px}
+.kpi .k{font-size:12px;color:var(--sub);display:flex;justify-content:space-between}
+.kpi .v{font-family:var(--f-mono);font-size:22px;color:var(--navy);font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--sub)}
+.kpi svg{width:100%;height:30px;display:block;margin-top:4px}
+
+/* ---------- Tabla principal ---------- */
+.grid-main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.toolbar{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--blue-d);border-radius:7px;padding:4px 9px;font-size:12.5px;font-weight:500}
+.chip.add{background:transparent;border:1px dashed var(--line);color:var(--sub);cursor:pointer}
+.toolbar .right{margin-left:auto;display:flex;gap:6px;align-items:center;color:var(--sub);font-size:12.5px}
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-size:12px;font-weight:600;color:var(--sub);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);background:#F8FBFD;white-space:nowrap;position:sticky;top:0}
+th button{all:unset;cursor:pointer}
+th button:hover{color:var(--navy)}
+th[aria-sort] button::after{content:" ↕";opacity:.4}
+th[aria-sort="ascending"] button::after{content:" ↑";opacity:1;color:var(--blue)}
+th[aria-sort="descending"] button::after{content:" ↓";opacity:1;color:var(--blue)}
+th:first-child,td:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line-2);text-align:right;font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+td.sec{font-family:var(--f-body);font-size:13.5px;font-weight:500}
+td.sec small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--sub);font-weight:400}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:#F5FAFE}
+tbody tr[aria-selected="true"]{background:var(--tint)}
+td.w{font-weight:500;color:var(--navy);font-size:14px}
+td.rng{width:170px}
+td.rng svg{display:block}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 14px;font-size:12px;color:var(--sub);background:#F8FBFD;border-top:1px solid var(--line);border-radius:0 0 12px 12px}
+
+/* ---------- Panel lateral ---------- */
+.side{display:grid;gap:12px;position:sticky;top:76px}
+.panel{padding:16px}
+.panel h3{margin:0;font-family:var(--f-brand);font-weight:700;font-size:16px;color:var(--navy)}
+.panel .sub{font-size:12.5px;color:var(--sub);margin:2px 0 12px}
+.bignum{font-family:var(--f-mono);font-size:34px;color:var(--navy);line-height:1.1}
+.bignum small{display:block;font-size:12px;color:var(--sub);font-family:var(--f-body)}
+.stack{display:flex;height:12px;border-radius:4px;overflow:hidden;gap:2px;margin:12px 0 6px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--sub)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.steps{display:grid;gap:7px;font-size:12.5px}
+.steps div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.steps b{font-family:var(--f-mono);font-weight:500;color:var(--navy)}
+.memo{display:flex;gap:12px;align-items:center;background:var(--navy);color:var(--white);border-radius:12px;padding:14px}
+.memo p{margin:2px 0 0;font-size:12.5px;color:#B9CBDD}
+.memo b{font-size:14px}
+.memo .btn{margin-left:auto;padding:7px 11px}
+
+/* ---------- Sector ---------- */
+.two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.chart{padding:16px}
+.chart h3{margin:0 0 2px;font-size:15px;font-weight:600;color:var(--navy)}
+.chart .sub{font-size:12.5px;color:var(--sub);margin-bottom:10px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:fixed;pointer-events:none;background:var(--navy);color:var(--white);font-size:12px;padding:6px 9px;border-radius:7px;font-family:var(--f-mono);z-index:50;white-space:nowrap}
+.tip[hidden]{display:none}
+.sector-pick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sector-pick button{all:unset;cursor:pointer;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;color:var(--sub)}
+.sector-pick button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.peer{width:100%}
+.peer td,.peer th{padding:7px 10px}
+
+/* ---------- Calculadora ---------- */
+.calc{display:grid;grid-template-columns:380px minmax(0,1fr);gap:18px;align-items:start}
+.form{padding:18px;display:grid;gap:14px}
+.form h3{margin:0;font-family:var(--f-brand);font-size:17px;color:var(--navy)}
+.field{display:grid;gap:5px}
+.field label{font-size:12.5px;font-weight:500;color:var(--ink)}
+.field .hint{font-size:11.5px;color:var(--sub)}
+.field{min-width:0}
+.field input,.field select{width:100%;min-width:0;font:inherit;font-family:var(--f-mono);font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface);color:var(--ink)}
+.field select{font-family:var(--f-body)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+.toggle input{accent-color:var(--blue);width:16px;height:16px}
+.result{display:grid;gap:14px}
+.res-top{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.res-top .card{padding:12px 14px}
+.res-top .k{font-size:12px;color:var(--sub)}
+.res-top .v{font-family:var(--f-mono);font-size:22px;color:var(--navy)}
+.res-top .card.hero{background:var(--navy);border-color:var(--navy)}
+.res-top .card.hero .k{color:#B9CBDD}
+.res-top .card.hero .v{color:var(--white);font-size:26px}
+.paper{background:var(--white);border:1px solid var(--line);border-radius:4px;box-shadow:0 18px 40px -22px rgba(11,37,64,.45);padding:40px 46px;max-width:760px;font-size:13px;line-height:1.6}
+.paper .ph{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:18px}
+.paper .ph .logo{color:var(--navy);font-size:15px}
+.paper .ph .logo svg{width:30px;height:30px}
+.paper h2{font-family:var(--f-brand);font-size:20px;color:var(--navy);margin:0 0 4px}
+.paper h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:18px 0 6px}
+.paper table td,.paper table th{padding:6px 8px;font-size:12px}
+.paper .sig{margin-top:22px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:10px}
+.lock{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--sub)}
+
+/* ---------- Macro ---------- */
+.macro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.mcard{padding:16px}
+.mcard .t{display:flex;justify-content:space-between;align-items:baseline}
+.mcard .t span{font-size:13px;color:var(--sub)}
+.mcard .t b{font-family:var(--f-mono);font-size:24px;color:var(--navy);font-weight:500}
+.mcard .d{font-size:12px;margin-top:2px}
+.up{color:var(--bad)} .down{color:var(--good)}
+.mcard svg{width:100%;height:90px;display:block;margin-top:10px}
+.mcard .src{font-size:11.5px;color:var(--sub);margin-top:6px}
+
+/* ---------- Metodología ---------- */
+.method{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.toc{position:sticky;top:76px;display:grid;gap:4px;font-size:13px}
+.toc a{color:var(--sub);text-decoration:none;padding:5px 10px;border-radius:7px}
+.toc a:hover{background:var(--tint);color:var(--navy)}
+.doc{max-width:760px;display:grid;gap:16px}
+.doc section{padding:20px 22px}
+.doc h2{margin:0 0 6px;font-family:var(--f-brand);font-size:18px;color:var(--navy)}
+.doc p{margin:0 0 8px;max-width:68ch}
+.eq{font-family:var(--f-mono);background:var(--tint2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;white-space:pre;overflow-x:auto;font-size:13px;line-height:1.8}
+.chg{display:grid;gap:8px;font-size:13px}
+.chg div{display:grid;grid-template-columns:90px 1fr;gap:10px;border-bottom:1px solid var(--line-2);padding-bottom:8px}
+.chg b{font-family:var(--f-mono);font-weight:500;color:var(--blue-d)}
+
+/* ---------- Footer ---------- */
+.site-foot{border-top:1px solid var(--line);margin-top:32px;padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--sub);font-size:12.5px}
+.site-foot .ht{display:flex;align-items:center;gap:8px}
+
+@media (max-width:1100px){
+  .grid-main,.calc,.two,.method{grid-template-columns:1fr}
+  .side,.toc{position:static}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .macro,.three,.res-top{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .search{display:none}
+}
+@media (max-width:620px){.macro,.three,.res-top,.kpis{grid-template-columns:1fr}.wrap{padding:16px}.top{gap:12px;padding:0 16px}}
+@media (prefers-reduced-motion:no-preference){tbody tr,.btn,.nav button{transition:background .12s,color .12s}}
+</style>
+<link rel="stylesheet" href="fintarget-workspace.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ft" viewBox="16 48 224 160"><path d="M24 56h16v16h-16ZM40 72h16v16h-16ZM24 88h16v16h-16ZM40 104h16v16h-16ZM24 120h16v16h-16ZM40 136h16v16h-16ZM24 152h16v16h-16ZM40 168h16v16h-16ZM24 184h16v16h-16ZM64 56H84A8 8 0 0 1 92 64V192A8 8 0 0 1 84 200H64A8 8 0 0 1 56 192V64A8 8 0 0 1 64 56ZM64 56H224A8 8 0 0 1 232 64V80A8 8 0 0 1 224 88H64A8 8 0 0 1 56 80V64A8 8 0 0 1 64 56ZM62 112H114A6 6 0 0 1 120 118V136A6 6 0 0 1 114 142H62A6 6 0 0 1 56 136V118A6 6 0 0 1 62 112ZM180 56H200A8 8 0 0 1 208 64V192A8 8 0 0 1 200 200H180A8 8 0 0 1 172 192V64A8 8 0 0 1 180 56Z"/></symbol>
+    <symbol id="ico-dl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 19h14"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="logo"><svg fill="#FFFFFF" aria-hidden="true"><use href="#ft"/></svg>FinTarget</div>
+  <nav class="nav" aria-label="Secciones">
+    <button type="button" data-view="wacc" aria-current="page">Costo de capital</button>
+    <button type="button" data-view="sector">Sector</button>
+    <button type="button" data-view="calc">Calculadora</button>
+    <button type="button" data-view="macro">Macro</button>
+    <button type="button" data-view="compare">Comparar</button>
+<button type="button" data-view="issuers">Emisores</button>
+<button type="button" data-view="method">Metodología</button>
+<button type="button" data-view="data">Datos</button>
+  </nav>
+  <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Buscar sector CIIU o emisor"><kbd>⌘K</kbd></label>
+  <div class="avatar" aria-label="Cuenta">LP</div>
+</header>
+<div class="demo"><b>Mockup V1</b> · Todas las cifras son de ejemplo para mostrar el diseño. No son estimaciones reales.</div>
+
+<main class="wrap">
+
+<!-- =============== COSTO DE CAPITAL =============== -->
+<section class="view" id="v-wacc" aria-labelledby="h-wacc">
+  <div class="head">
+    <div>
+      <div class="crumbs">Datos abiertos · Colombia</div>
+      <h1 id="h-wacc">Costo de capital por sector</h1>
+      <div class="meta"><span class="pill">Ejemplo</span><span>Corte 30 sep 2026</span><span>Metodología v1.0</span><span>12 sectores CIIU Rev. 4</span></div>
+    </div>
+    <div class="actions">
+      <div class="seg" role="group" aria-label="Moneda"><button type="button" data-cur="COP" aria-pressed="true">COP</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+      <div class="seg" role="group" aria-label="Base"><button type="button" data-real="0" aria-pressed="true">Nominal</button><button type="button" data-real="1" aria-pressed="false">Real</button></div>
+      <button type="button" class="btn ghost"><svg aria-hidden="true"><use href="#ico-dl"/></svg>CSV</button>
+      <button type="button" class="btn"><svg aria-hidden="true"><use href="#ico-dl"/></svg>Descargar XLSX</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid-main">
+    <div class="card" style="min-width:0">
+      <div class="toolbar">
+        <span class="chip">Tasa de impuestos 35%</span>
+        <span class="chip">Prima país: Damodaran</span>
+        <span class="chip">Rango: D/E × 0,6–1,5 · demo</span>
+        <span class="chip">λ = 1</span>
+        <button type="button" class="chip add">+ Filtro</button>
+        <div class="right"><span id="count">12 sectores</span></div>
+      </div>
+      <div class="tbl-scroll">
+        <table aria-label="WACC por sector">
+          <thead><tr>
+            <th aria-sort="none"><button type="button" data-sort="n">Sector</button></th>
+            <th aria-sort="none"><button type="button" data-sort="bu">β desap.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="de">D/E med.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="bl">β apal.</button></th>
+            <th aria-sort="none"><button type="button" data-sort="ke">Ke</button></th>
+            <th aria-sort="none"><button type="button" data-sort="kd">Kd (1−t)</button></th>
+            <th aria-sort="descending"><button type="button" data-sort="w">WACC</button></th>
+            <th style="text-align:left">Rango sensibilidad demo</th>
+          </tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="foot"><span id="scale"></span><span>Fuentes: Damodaran · Supersociedades · Superfinanciera · BanRep · DANE</span></div>
+    </div>
+
+    <aside class="side" aria-label="Detalle del sector">
+      <div class="card panel">
+        <h3 id="d-name">—</h3>
+        <div class="sub" id="d-ciiu">—</div>
+        <div class="bignum num" id="d-wacc">—</div>
+        <div class="stack" id="d-stack"></div>
+        <div class="legend"><span><i style="background:var(--navy)"></i>Patrimonio <b id="d-we"></b></span><span><i style="background:var(--blue)"></i>Deuda <b id="d-wd"></b></span></div>
+      </div>
+      <div class="card panel">
+        <h3>Cómo se calculó</h3>
+        <div class="sub">Método de abajo hacia arriba</div>
+        <div class="steps" id="d-steps"></div>
+        <div style="margin-top:12px"><button type="button" class="btn ghost" data-go="sector">Ver análisis del sector →</button></div>
+      </div>
+      <div class="memo">
+        <svg width="30" height="30" fill="#128ED6" aria-hidden="true"><use href="#ft"/></svg>
+        <div><b>Memo para el auditor</b><p>Borrador · revisión NIC 36 pendiente</p></div>
+        <button type="button" class="btn" data-go="calc">Generar</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- =============== SECTOR =============== -->
+<section class="view" id="v-sector" hidden aria-labelledby="h-sector"><div class="ws-note">DEMO · cifras y series ilustrativas · metodología pendiente de validación. <button type="button" data-open="data" class="btn ghost">Fuentes</button> <button type="button" data-open="compare" class="btn ghost">Comparar</button></div>
+  <div class="head">
+    <div>
+      <div class="crumbs">Costo de capital › Sector</div>
+      <h1 id="h-sector">Energía eléctrica</h1>
+      <div class="meta"><span id="s-ciiu"></span><span id="s-cur"></span></div>
+    </div>
+    <div class="actions"><button type="button" class="btn ghost" data-go="wacc">← Volver a la tabla</button><button type="button" class="btn"><svg aria-hidden="true"><use href="#ico-dl"/></svg>Ficha del sector</button></div>
+  </div>
+  <div class="sector-pick" id="pick" role="group" aria-label="Elegir sector"></div>
+  <div class="two">
+    <div class="card chart">
+      <h3>Sensibilidad del WACC al apalancamiento</h3>
+      <div class="sub">WACC según D/E, con la mediana y el rango sensibilidad demo del sector marcados</div>
+      <svg id="c-sens" viewBox="0 0 640 300" role="img" aria-label="Curva de WACC según D/E"></svg>
+    </div>
+    <div class="card chart">
+      <h3>De la tasa libre de riesgo al Ke</h3>
+      <div class="sub">Cada barra suma un componente</div>
+      <svg id="c-water" viewBox="0 0 420 300" role="img" aria-label="Composición del costo del patrimonio"></svg>
+    </div>
+  </div>
+  <div class="two" style="margin-top:18px">
+    <div class="card chart">
+      <h3>WACC trimestral</h3>
+      <div class="sub">Mediana del sector, últimos 12 trimestres</div>
+      <svg id="c-hist" viewBox="0 0 640 240" role="img" aria-label="Serie trimestral del WACC"></svg>
+    </div>
+    <div class="card chart">
+      <h3>Validación con emisores líquidos</h3>
+      <div class="sub">Beta por regresión contra la beta bottom-up</div>
+      <table class="peer"><thead><tr><th>Emisor</th><th>β regresión</th><th>β bottom-up</th><th>Dif.</th></tr></thead><tbody id="peers"></tbody></table>
+      <p style="font-size:12px;color:var(--sub);margin:10px 0 0">Una regresión con poca liquidez sesga la beta hacia cero. Por eso FinTarget usa la beta bottom-up y publica esta tabla como control.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== CALCULADORA =============== -->
+<section class="view" id="v-calc" hidden aria-labelledby="h-calc"><div class="ws-note">DEMO · cifras y series ilustrativas · metodología pendiente de validación. <button type="button" data-open="data" class="btn ghost">Fuentes</button> <button type="button" data-open="compare" class="btn ghost">Comparar</button></div><div class="ws-links"><button type="button" class="ws-snapshot">Exportar borrador TXT · demo</button></div>
+  <div class="head">
+    <div>
+      <div class="crumbs">Herramientas · Vol. 1.1</div>
+      <h1 id="h-calc">WACC para empresa no cotizada</h1>
+      <div class="meta">Ingresa los datos de la empresa y obtén la tasa con su memo de metodología.</div>
+    </div>
+    <div class="lock"><span class="pill">Plan Pro</span>Prototipo · exportación PDF pendiente</div>
+  </div>
+  <div class="calc">
+    <form class="card form" id="calc-form" novalidate>
+      <h3>Datos de la empresa</h3>
+      <div class="field"><label for="c-sector">Sector CIIU</label><select id="c-sector"></select></div>
+      <div class="row2">
+        <div class="field"><label for="c-debt">Deuda financiera (COP mm)</label><input id="c-debt" type="number" value="18500" min="0" step="100"></div>
+        <div class="field"><label for="c-eq">Patrimonio (COP mm)</label><input id="c-eq" type="number" value="31200" min="1" step="100"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="c-ebit">EBIT (COP mm)</label><input id="c-ebit" type="number" value="7400" step="100"></div>
+        <div class="field"><label for="c-int">Gastos financieros (COP mm)</label><input id="c-int" type="number" value="2100" min="0" step="10"></div>
+      </div>
+      <div class="field"><label for="c-tax">Tasa de impuestos (%)</label><input id="c-tax" type="number" value="35" min="0" max="50" step="0.5"><span class="hint">Tasa nominal de renta en Colombia: 35%</span></div>
+      <label class="toggle" for="c-total">Usar beta total (dueño no diversificado)<input id="c-total" type="checkbox"></label>
+      <label class="toggle" for="c-size">Agregar prima de tamaño (+2,0 pp)<input id="c-size" type="checkbox" checked></label>
+    </form>
+    <div class="result">
+      <div class="res-top">
+        <div class="card hero"><div class="k">WACC (COP nominal)</div><div class="v num" id="r-w">—</div></div>
+        <div class="card"><div class="k">Ke</div><div class="v num" id="r-ke">—</div></div>
+        <div class="card"><div class="k">Kd después de impuestos</div><div class="v num" id="r-kd">—</div></div>
+        <div class="card"><div class="k">Rating sintético</div><div class="v num" id="r-rt">—</div></div>
+      </div>
+      <article class="paper" aria-label="Vista previa del memo">
+        <div class="ph"><div class="logo"><svg fill="#0B2540" aria-hidden="true"><use href="#ft"/></svg>FinTarget</div><span class="num" style="font-size:11.5px;color:var(--sub)">Memo N.º FT-2026-0412 · Corte 30 sep 2026</span></div>
+        <h2>Memo de tasa de descuento</h2>
+        <div style="color:var(--sub)">Ejemplo de tasa después de impuestos · reconciliación NIC 36 pendiente</div>
+        <h4>Conclusión</h4>
+        <p id="m-concl">—</p>
+        <h4>Supuestos</h4>
+        <table><tbody id="m-tbl"></tbody></table>
+        <h4>Método</h4>
+        <p>Beta bottom-up de comparables de mercados emergentes, re-apalancada con la estructura de capital de la empresa. Costo de la deuda por rating sintético según cobertura de intereses, contrastado con las tasas de crédito comercial publicadas por la Superfinanciera. Conversión a pesos por diferencial de inflación esperada.</p>
+        <div class="sig"><span>Propuesta FinTarget v1.0 · revisión académica pendiente</span><span>Página 1 de 3</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== MACRO =============== -->
+<section class="view" id="v-macro" hidden aria-labelledby="h-macro"><div class="ws-note">DEMO · cifras y series ilustrativas · metodología pendiente de validación. <button type="button" data-open="data" class="btn ghost">Fuentes</button> <button type="button" data-open="compare" class="btn ghost">Comparar</button></div>
+  <div class="head">
+    <div><div class="crumbs">Datos de apoyo</div><h1 id="h-macro">Macro Colombia</h1><div class="meta">Series que alimentan el costo de capital · últimos 24 meses</div></div>
+    <div class="actions"><button type="button" class="btn ghost"><svg aria-hidden="true"><use href="#ico-dl"/></svg>Todas las series</button></div>
+  </div>
+  <div class="macro" id="macro"></div>
+</section>
+
+<!-- =============== METODOLOGÍA =============== -->
+<section class="view" id="v-method" hidden aria-labelledby="h-method"><div class="ws-note">DEMO · cifras y series ilustrativas · metodología pendiente de validación. <button type="button" data-open="data" class="btn ghost">Fuentes</button> <button type="button" data-open="compare" class="btn ghost">Comparar</button></div>
+  <div class="head"><div><div class="crumbs">Documentación</div><h1 id="h-method">Metodología v1.0</h1><div class="meta">Cómo se calcula cada cifra de FinTarget</div></div></div>
+  <div class="method">
+    <nav class="toc" aria-label="Contenido"><a href="#m1">1. Beta bottom-up</a><a href="#m2">2. Estructura de capital</a><a href="#m3">3. Costo del patrimonio</a><a href="#m4">4. Costo de la deuda</a><a href="#m5">5. De dólares a pesos</a><a href="#m6">6. Validación</a><a href="#m7">Historial de versiones</a></nav>
+    <div class="doc">
+      <section class="card" id="m1"><h2>1. Beta bottom-up</h2><p>La Bolsa de Colombia tiene pocas acciones líquidas. Una beta por regresión sobre esas acciones sale sesgada hacia cero, y muchos sectores no tienen ninguna empresa listada. Por eso partimos de betas desapalancadas de comparables de mercados emergentes, corregidas por caja, y las asignamos a cada sector CIIU con un mapeo publicado.</p></section>
+      <section class="card" id="m2"><h2>2. Estructura de capital</h2><p>Re-apalancamos con la mediana de deuda sobre patrimonio de cada sector según los estados financieros reportados a Supersociedades. En este prototipo el rango es una sensibilidad con D/E × 0,6 y D/E × 1,5. Los percentiles reales requieren una muestra observada.</p><div class="eq">βL = βu × [ 1 + (1 − t) × D/E ]</div></section>
+      <section class="card" id="m3"><h2>3. Costo del patrimonio</h2><p>Partimos de la tasa del bono del Tesoro de EE. UU. a 10 años y sumamos la prima de mercado maduro y la prima país. Así evitamos contar el riesgo país dos veces, como pasa al mezclar TES con prima país.</p><div class="eq">Ke(USD) = Rf + βL × ERP + λ × CRP</div></section>
+      <section class="card" id="m4"><h2>4. Costo de la deuda</h2><p>Asignamos un rating sintético según la cobertura de intereses (EBIT sobre gastos financieros) y le sumamos su diferencial. Contrastamos el resultado con las tasas de crédito comercial que publica la Superfinanciera.</p><div class="eq">Kd = Rf + CRP + spread(rating sintético)
+WACC = E/V × Ke + D/V × Kd × (1 − t)</div></section>
+      <section class="card" id="m5"><h2>5. De dólares a pesos</h2><div class="eq">WACC(COP) = (1 + WACC(USD)) × (1 + π COP) / (1 + π USD) − 1</div></section>
+      <section class="card" id="m6"><h2>6. Validación</h2><p>Cada corte se compara con las betas por regresión de Ecopetrol, ISA, GEB y Bancolombia, con el WACC regulatorio de la CREG y con las tasas de descuento que las empresas revelan en sus notas de deterioro.</p></section>
+      <section class="card" id="m7"><h2>Historial de versiones</h2><div class="chg"><div><b>v1.0</b><span>Planeada · 12 sectores de ejemplo; revisión académica pendiente.</span></div><div><b>v1.1</b><span>Planeada · Calculadora para empresa no cotizada y dataset de tasas NIC 36.</span></div></div></section>
+    </div>
+  </div>
+</section>
+
+
+<section class="view" id="v-compare" hidden aria-labelledby="h-compare">
+<div class="head"><div><div class="crumbs">Análisis / sectores / escenarios</div><h1 id="h-compare">Comparar. Explicar. Decidir.</h1><div class="meta">Mismos supuestos, sectores distintos · cálculo ilustrativo en el navegador</div></div><span class="ws-status">Escenario no publicado</span></div>
+<div class="ws-grid"><div><div class="ws-summary"><div><span class="ws-label">Universo</span><b>12 sectores</b></div><div><span class="ws-label">Contexto</span><b id="compare-currency">COP</b></div><div><span class="ws-label">Estado</span><b>Demo</b></div></div>
+<div class="ws-box" style="margin-top:16px"><h2>Sensibilidad a la prima país</h2><p>Shock aditivo en Ke (USD), λ = 1. Kd permanece fijo en este ejercicio. Elige sectores y compara el efecto sobre el WACC.</p><label for="compare-shock">Cambio CRP <strong id="compare-shock-value">0.0 pp</strong></label><input class="ws-range" id="compare-shock" type="range" min="-2" max="4" step=".1" value="0"><div class="ws-scroll"><table class="ws-table"><thead><tr><th>Sector</th><th>Base</th><th>Escenario</th><th>Δ WACC</th><th>βL</th><th>D/E</th></tr></thead><tbody id="compare-rows"></tbody></table></div><p id="compare-empty" hidden>Selecciona al menos un sector.</p></div>
+<div class="ws-note">Base y escenarios usan cifras de ejemplo. Un escenario de crédito conjunto necesitará modelar el spread soberano de deuda por separado de la CRP de equity.</div></div>
+<aside><div class="ws-box"><span class="ws-label">Universo de comparación</span><h2>Sectores CIIU</h2><label for="compare-sectors">Selección múltiple · Ctrl / Cmd + clic</label><select id="compare-sectors" multiple size="12" style="width:100%;margin-top:12px;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px"></select></div><div class="ws-box"><h3>De resultado a evidencia</h3><p>Sector → pares → βu → estructura de capital → Ke / Kd → WACC → versión.</p><div class="ws-links"><button data-open="data">Ver fuentes</button><button data-open="method">Ver método</button></div></div></aside></div>
+</section>
+<section class="view" id="v-issuers" hidden aria-labelledby="h-issuers"><div class="head"><div><div class="crumbs">Explorador / objetos financieros</div><h1 id="h-issuers">Emisores Colombia</h1><div class="meta">Lista y detalle conectado · fundamentales, capital y evidencia</div></div></div><div class="ws-grid"><div class="ws-box"><label for="issuer-query">Buscar emisor o tipo</label><input id="issuer-query" type="search" placeholder="Ecopetrol, financiero…" style="display:block;margin:12px 0;padding:10px;width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line)"><div class="ws-scroll"><table class="ws-table"><thead><tr><th>Emisor</th><th>Tipo</th><th>Método</th><th>Origen</th><th>Datos</th></tr></thead><tbody id="issuer-rows"></tbody></table></div></div><aside class="ws-box" id="issuer-detail"><span class="ws-label">Inspector</span><h2>Selecciona un emisor</h2><p>Cada entidad tiene un perímetro, moneda, fuente y método. Las cifras llegarán con su corte y versión.</p><div class="ws-note">Bancos y aseguradoras: Ke como medida principal. El universo SEC no representa todo el mercado colombiano.</div></aside></div></section>
+<section class="view" id="v-data" hidden aria-labelledby="h-data"><div class="head"><div><div class="crumbs">Gobernanza / disponibilidad / evidencia</div><h1 id="h-data">Registro de datos</h1><div class="meta">Revisión documental · 6 oct 2026 · ninguna fuente está conectada</div></div></div><div class="ws-summary"><div><span class="ws-label">Fuente localizada</span><b>≠ ingesta</b></div><div><span class="ws-label">Acceso público</span><b>≠ licencia</b></div><div><span class="ws-label">Resultado</span><b>Versionado</b></div></div><div class="ws-box" style="margin-top:16px"><label for="source-query">Filtrar por fuente, insumo o estado</label><input id="source-query" type="search" style="margin:12px;padding:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line)"><div class="ws-scroll"><table class="ws-table"><thead><tr><th>Fuente</th><th>Disponibilidad</th><th>Insumo</th><th>Frecuencia</th><th>Límite / validación pendiente</th></tr></thead><tbody id="source-rows"></tbody></table></div></div><div class="ws-note">Cada observación deberá registrar fecha económica, publicación, extracción, unidad, moneda, licencia, hash de fuente y versión. El dato faltante se conserva como faltante.</div></section>
+
+<footer class="site-foot">
+  <div class="ht"><svg width="22" height="22" viewBox="0 0 96 90" fill="#128ED6" aria-hidden="true"><path d="M0 0h10v10H0ZM10 10h10v10H10ZM0 20h10v10H0ZM10 30h10v10H10ZM0 40h10v10H0ZM10 50h10v10H10ZM0 60h10v10H0ZM10 70h10v10H10ZM0 80h10v10H0Z"/><rect x="20" y="0" width="24" height="90" rx="5"/><rect x="72" y="0" width="24" height="90" rx="5"/><rect x="20" y="34" width="76" height="22"/></svg>FinTarget es un producto de HyperTarget</div>
+  <span>Datos abiertos con metodología pública · Barranquilla, Colombia</span>
+</footer>
+</main>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var P={rf:4.2,crp:3.0,erp:4.3,t:0.35,piCOP:3.6,piUSD:2.4};
+var S=[
+ {n:"Energía eléctrica",c:"CIIU 3511 · 3514",bu:0.45,de:0.80,sp:1.6},
+ {n:"Petróleo y gas",c:"CIIU 0610 · 1921",bu:0.85,de:0.45,sp:2.0},
+ {n:"Minería",c:"CIIU 0510 · 0710",bu:0.95,de:0.30,sp:2.6},
+ {n:"Construcción e infraestructura",c:"CIIU 4111 · 4210",bu:0.80,de:0.60,sp:2.8},
+ {n:"Cemento y materiales",c:"CIIU 2394 · 2395",bu:0.75,de:0.50,sp:2.2},
+ {n:"Alimentos",c:"CIIU 1011 · 1089",bu:0.60,de:0.40,sp:1.9},
+ {n:"Bebidas",c:"CIIU 1104",bu:0.65,de:0.30,sp:1.8},
+ {n:"Comercio minorista",c:"CIIU 4711 · 4719",bu:0.80,de:0.50,sp:2.4},
+ {n:"Telecomunicaciones",c:"CIIU 6110 · 6120",bu:0.55,de:0.90,sp:2.1},
+ {n:"Transporte y logística",c:"CIIU 4923 · 5229",bu:0.70,de:0.70,sp:2.9},
+ {n:"Salud",c:"CIIU 8610 · 8621",bu:0.75,de:0.40,sp:2.7},
+ {n:"Software y servicios TI",c:"CIIU 6201 · 6202",bu:1.10,de:0.10,sp:3.3}
+];
+var st={cur:"COP",real:false,sel:0,sort:"w",dir:-1,q:""};
+var $=function(id){return document.getElementById(id);};
+function fx(x,d){d=d==null?1:d;return x.toLocaleString("es-CO",{minimumFractionDigits:d,maximumFractionDigits:d});}
+function conv(x,cur,real){
+  cur=cur||st.cur; real=real==null?st.real:real;
+  var v=x/100;
+  if(cur==="COP") v=(1+v)*(1+P.piCOP/100)/(1+P.piUSD/100)-1;
+  if(real) v=(1+v)/(1+(cur==="COP"?P.piCOP:P.piUSD)/100)-1;
+  return v*100;
+}
+function calc(s,de,o){
+  o=o||{};
+  var t=o.t==null?P.t:o.t;
+  var bl=s.bu*(1+(1-t)*de);
+  if(o.total) bl=bl/0.45;
+  var keU=P.rf+bl*P.erp+P.crp+(o.size?2.0:0);
+  // Demo: CRP se reutiliza como spread de deuda; separar en el motor real.
+  var kdGrossUSD=P.rf+P.crp+(o.sp==null?s.sp:o.sp);
+  var cur=o.cur||st.cur, real=o.real==null?st.real:o.real;
+  var keNom=conv(keU,cur,false),kdNom=conv(kdGrossUSD,cur,false)*(1-t);
+  var we=1/(1+de),wd=de/(1+de),wNom=we*keNom+wd*kdNom;
+  var pi=(cur==="COP"?P.piCOP:P.piUSD)/100;
+  function display(x){return real?((1+x/100)/(1+pi)-1)*100:x;}
+  return {bl:bl,keU:keU,ke:display(keNom),kd:display(kdNom),w:display(wNom),we:we,wd:wd};
+}
+function rowsData(){
+  return S.map(function(s,i){
+    var m=calc(s,s.de),a=calc(s,s.de*0.6),b=calc(s,s.de*1.5);
+    return {i:i,s:s,m:m,lo:Math.min(a.w,b.w,m.w),hi:Math.max(a.w,b.w,m.w)};
+  });
+}
+/* ---------- tooltip ---------- */
+var tip=$("tip");
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;var x=e.clientX+14,y=e.clientY+14;if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-14;tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.hidden=true;}
+
+/* ---------- KPIs con sparkline ---------- */
+function spark(vals){
+  var w=200,h=30,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),r=mx-mn||1;
+  var pts=vals.map(function(v,i){return [2+i*(w-4)/(vals.length-1),h-3-(v-mn)/r*(h-8)];});
+  var d=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");
+  var l=pts[pts.length-1];
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+' L'+l[0]+' '+h+' L2 '+h+'Z" fill="#128ED6" fill-opacity=".1"/><path d="'+d+'" fill="none" stroke="#128ED6" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="'+l[0]+'" cy="'+l[1]+'" r="2.6" fill="#0B2540"/></svg>';
+}
+function renderKPIs(){
+  var med=rowsData().map(function(r){return r.m.w;}).sort(function(a,b){return a-b;});
+  var mid=(med[5]+med[6])/2;
+  var k=[
+    ["Rf · Tesoro EE. UU. 10a",fx(P.rf)+"%","USD · corte 30 sep",[4.6,4.5,4.3,4.4,4.2,4.1,4.3,4.2]],
+    ["Prima país (CRP)",fx(P.crp)+"%","Damodaran",[3.3,3.2,3.4,3.2,3.1,3.0,3.1,3.0]],
+    ["ERP mercado maduro",fx(P.erp)+"%","Implícito",[4.6,4.5,4.4,4.4,4.3,4.3,4.2,4.3]],
+    ["Inflación esperada",fx(P.piCOP)+"%","COP · 12 meses",[5.4,5.0,4.7,4.3,4.1,3.9,3.7,3.6]],
+    ["WACC mediano · "+st.cur,fx(mid)+"%",st.real?"Real":"Nominal",[13.1,12.9,12.6,12.7,12.4,12.2,12.3,mid].map(function(v,i){return i<7?v+(st.cur==="USD"?-1.2:0):v;})]
+  ];
+  $("kpis").innerHTML=k.map(function(x){return '<div class="card kpi"><div class="k"><span>'+x[0]+'</span></div><div class="v">'+x[1]+'</div><div class="s">'+x[2]+'</div>'+spark(x[3])+'</div>';}).join("");
+}
+
+/* ---------- Tabla ---------- */
+function renderTable(){
+  var rows=rowsData().filter(function(r){return !st.q||(r.s.n+" "+r.s.c).toLowerCase().indexOf(st.q)>-1;});
+  var key=st.sort;
+  rows.sort(function(a,b){
+    var va=key==="n"?a.s.n:key==="bu"?a.s.bu:key==="de"?a.s.de:a.m[key];
+    var vb=key==="n"?b.s.n:key==="bu"?b.s.bu:key==="de"?b.s.de:b.m[key];
+    return (va>vb?1:va<vb?-1:0)*st.dir;
+  });
+  var all=rowsData();
+  var mn=Math.floor(Math.min.apply(null,all.map(function(r){return r.lo;}))-0.5);
+  var mx=Math.ceil(Math.max.apply(null,all.map(function(r){return r.hi;}))+0.5);
+  var W=170,sx=function(v){return 6+(v-mn)/(mx-mn)*(W-12);};
+  $("scale").textContent="Barra de rango en escala común: "+mn+"% a "+mx+"%";
+  $("count").textContent=rows.length+(rows.length===1?" sector":" sectores");
+  var tb=$("rows");tb.innerHTML="";
+  if(!rows.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;font-family:var(--f-body);color:var(--sub);padding:28px">Ningún sector coincide con "'+st.q+'". Prueba con otro nombre o código CIIU.</td></tr>';}
+  rows.forEach(function(r){
+    var tr=document.createElement("tr");tr.tabIndex=0;tr.setAttribute("aria-selected",r.i===st.sel?"true":"false");
+    var x1=sx(r.lo),x2=sx(r.hi),xm=sx(r.m.w);
+    tr.innerHTML='<td class="sec">'+r.s.n+'<small>'+r.s.c+'</small></td><td>'+fx(r.s.bu,2)+'</td><td>'+fx(r.s.de,2)+'</td><td>'+fx(r.m.bl,2)+'</td><td>'+fx(r.m.ke)+'%</td><td>'+fx(r.m.kd)+'%</td><td class="w">'+fx(r.m.w)+'%</td>'+
+      '<td class="rng"><svg width="'+W+'" height="20" aria-hidden="true"><line x1="6" x2="'+(W-6)+'" y1="10" y2="10" stroke="#DDE7F0" stroke-width="2"/><rect x="'+x1+'" y="5" width="'+Math.max(x2-x1,4)+'" height="10" rx="5" fill="#9FD0F0"/><circle cx="'+xm+'" cy="10" r="3.5" fill="#0B2540" stroke="#FFFFFF" stroke-width="1.5"/></svg></td>';
+    var svg=tr.querySelector("td.rng");
+    svg.addEventListener("mousemove",function(e){showTip(e,r.s.n+"<br>sensibilidad demo: "+fx(r.lo)+"% – "+fx(r.hi)+"%<br>Mediana: "+fx(r.m.w)+"%");});
+    svg.addEventListener("mouseleave",hideTip);
+    tr.addEventListener("click",function(){st.sel=r.i;renderTable();});
+    tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();st.sel=r.i;renderTable();}});
+    tb.appendChild(tr);
+  });
+  document.querySelectorAll("th[aria-sort]").forEach(function(th){var k=th.querySelector("button").dataset.sort;th.setAttribute("aria-sort",k===st.sort?(st.dir>0?"ascending":"descending"):"none");});
+  renderSide();
+}
+function renderSide(){
+  var r=rowsData()[st.sel];
+  $("d-name").textContent=r.s.n;
+  $("d-ciiu").textContent=r.s.c+" · "+st.cur+" "+(st.real?"real":"nominal");
+  $("d-wacc").innerHTML=fx(r.m.w)+"%<small>WACC mediano · rango "+fx(r.lo)+"% – "+fx(r.hi)+"%</small>";
+  $("d-stack").innerHTML='<span style="width:'+(r.m.we*100)+'%;background:#0B2540"></span><span style="width:'+(r.m.wd*100)+'%;background:#128ED6"></span>';
+  $("d-we").textContent=fx(r.m.we*100,0)+"%";$("d-wd").textContent=fx(r.m.wd*100,0)+"%";
+  $("d-steps").innerHTML=[["β desapalancada (comparables EM)",fx(r.s.bu,2)],["D/E mediana · Supersociedades",fx(r.s.de,2)],["β re-apalancada (Hamada)",fx(r.m.bl,2)],["Ke",fx(r.m.ke)+"%"],["Kd después de impuestos",fx(r.m.kd)+"%"],["WACC",fx(r.m.w)+"%"]].map(function(p){return '<div><span>'+p[0]+'</span><b>'+p[1]+'</b></div>';}).join("");
+}
+document.querySelectorAll("th button[data-sort]").forEach(function(b){b.addEventListener("click",function(){var k=b.dataset.sort;if(st.sort===k)st.dir*=-1;else{st.sort=k;st.dir=k==="n"?1:-1;}renderTable();});});
+document.querySelectorAll("[data-cur]").forEach(function(b){b.addEventListener("click",function(){st.cur=b.dataset.cur;document.querySelectorAll("[data-cur]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderAll();});});
+document.querySelectorAll("[data-real]").forEach(function(b){b.addEventListener("click",function(){st.real=b.dataset.real==="1";document.querySelectorAll("[data-real]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderAll();});});
+$("q").addEventListener("input",function(e){st.q=e.target.value.trim().toLowerCase();if($("v-wacc").hidden)show("wacc");renderTable();});
+document.addEventListener("keydown",function(e){if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();$("q").focus();}});
+
+/* ---------- Sector ---------- */
+function axis(svg,x0,x1,y0,y1,yt,fmt){
+  var s="";
+  yt.forEach(function(v){var y=y1-(v-yt[0])/(yt[yt.length-1]-yt[0])*(y1-y0);s+='<line x1="'+x0+'" x2="'+x1+'" y1="'+y+'" y2="'+y+'" stroke="#EEF3F7"/><text x="'+(x0-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="#5A6F86" font-family="IBM Plex Mono,monospace">'+fmt(v)+'</text>';});
+  return s;
+}
+function niceTicks(mn,mx,n){var step=Math.max(0.5,Math.ceil((mx-mn)/n*2)/2);var a=Math.floor(mn/step)*step,t=[];for(var v=a;v<=mx+step*0.001+step;v+=step){t.push(+v.toFixed(2));if(v>=mx)break;}return t;}
+function renderSector(){
+  var s=S[st.sel],r=rowsData()[st.sel];
+  $("h-sector").textContent=s.n;$("s-ciiu").textContent=s.c;$("s-cur").textContent=st.cur+" "+(st.real?"real":"nominal")+" · corte 30 sep 2026";
+  $("pick").innerHTML=S.map(function(x,i){return '<button type="button" aria-pressed="'+(i===st.sel)+'" data-i="'+i+'">'+x.n+'</button>';}).join("");
+  $("pick").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){st.sel=+b.dataset.i;renderSector();renderTable();});});
+  /* Sensibilidad */
+  var X0=56,X1=620,Y0=16,Y1=260,deMax=2;
+  var pts=[];for(var d=0;d<=deMax+1e-9;d+=0.05){pts.push([d,calc(s,d).w]);}
+  var ys=pts.map(function(p){return p[1];});
+  var yt=niceTicks(Math.min.apply(null,ys),Math.max.apply(null,ys),5);
+  var sx=function(d){return X0+d/deMax*(X1-X0);},sy=function(v){return Y1-(v-yt[0])/(yt[yt.length-1]-yt[0])*(Y1-Y0);};
+  var g=axis(null,X0,X1,Y0,Y1,yt,function(v){return fx(v)+"%";});
+  [0,0.5,1,1.5,2].forEach(function(d){g+='<text x="'+sx(d)+'" y="'+(Y1+18)+'" text-anchor="middle" font-size="11" fill="#5A6F86" font-family="IBM Plex Mono,monospace">'+fx(d,1)+'</text>';});
+  g+='<text x="'+((X0+X1)/2)+'" y="'+(Y1+36)+'" text-anchor="middle" font-size="11.5" fill="#5A6F86">Deuda / patrimonio (D/E)</text>';
+  g+='<rect x="'+sx(s.de*0.6)+'" y="'+Y0+'" width="'+(sx(s.de*1.5)-sx(s.de*0.6))+'" height="'+(Y1-Y0)+'" fill="#E3F1FB"/>';
+  g+='<text x="'+(sx(s.de*0.6)+6)+'" y="'+(Y0+14)+'" font-size="11" fill="#0A6FAE">sensibilidad demo del sector</text>';
+  var dd=pts.map(function(p,i){return (i?"L":"M")+sx(p[0]).toFixed(1)+" "+sy(p[1]).toFixed(1);}).join(" ");
+  g+='<path d="'+dd+'" fill="none" stroke="#128ED6" stroke-width="2.5"/>';
+  g+='<circle cx="'+sx(s.de)+'" cy="'+sy(r.m.w)+'" r="6" fill="#0B2540" stroke="#FFFFFF" stroke-width="2"/>';
+  g+='<text x="'+(sx(s.de)+10)+'" y="'+(sy(r.m.w)-10)+'" font-size="12" fill="#0B2540" font-family="IBM Plex Mono,monospace">Mediana '+fx(r.m.w)+'%</text>';
+  g+='<line id="xh" x1="0" x2="0" y1="'+Y0+'" y2="'+Y1+'" stroke="#0B2540" stroke-dasharray="3 3" visibility="hidden"/><circle id="xd" r="4" fill="#128ED6" visibility="hidden"/>';
+  g+='<rect x="'+X0+'" y="'+Y0+'" width="'+(X1-X0)+'" height="'+(Y1-Y0)+'" fill="transparent" id="hit"/>';
+  var sv=$("c-sens");sv.innerHTML=g;
+  var hit=sv.querySelector("#hit");
+  hit.addEventListener("mousemove",function(e){var b=sv.getBoundingClientRect(),vx=(e.clientX-b.left)/b.width*640;var d=Math.max(0,Math.min(deMax,(vx-X0)/(X1-X0)*deMax));var w=calc(s,d).w;var xh=sv.querySelector("#xh"),xd=sv.querySelector("#xd");xh.setAttribute("x1",sx(d));xh.setAttribute("x2",sx(d));xh.setAttribute("visibility","visible");xd.setAttribute("cx",sx(d));xd.setAttribute("cy",sy(w));xd.setAttribute("visibility","visible");showTip(e,"D/E "+fx(d,2)+" → WACC "+fx(w)+"%");});
+  hit.addEventListener("mouseleave",function(){sv.querySelector("#xh").setAttribute("visibility","hidden");sv.querySelector("#xd").setAttribute("visibility","hidden");hideTip();});
+  /* Cascada Ke (en USD para mostrar componentes) */
+  var comps=[["Rf",P.rf],["β×ERP",r.m.bl*P.erp],["CRP",P.crp]];
+  var keU=P.rf+r.m.bl*P.erp+P.crp;var adj=r.m.ke-keU;
+  if(Math.abs(adj)>0.05) comps.push([st.cur==="COP"?"A COP":"Ajuste",adj]);
+  var top=Math.ceil((Math.max(r.m.ke,keU)+1)/2)*2;var WX0=40,WX1=410,WY0=20,WY1=250;var n=comps.length+1;var bw=(WX1-WX0)/n*0.62,gap=(WX1-WX0)/n;
+  var wy=function(v){return WY1-v/top*(WY1-WY0);};
+  var w="";[0,top/2,top].forEach(function(v){w+='<line x1="'+WX0+'" x2="'+WX1+'" y1="'+wy(v)+'" y2="'+wy(v)+'" stroke="#EEF3F7"/><text x="'+(WX0-6)+'" y="'+(wy(v)+4)+'" text-anchor="end" font-size="11" fill="#5A6F86" font-family="IBM Plex Mono,monospace">'+fx(v,0)+'%</text>';});
+  var acc=0;comps.forEach(function(c,i){var a=acc,b=acc+c[1];acc=b;var x=WX0+i*gap+(gap-bw)/2;var y=wy(Math.max(a,b)),h=Math.abs(wy(a)-wy(b));
+    w+='<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+Math.max(h,1)+'" rx="3" fill="'+(c[1]<0?"#9FD0F0":"#128ED6")+'"/><text x="'+(x+bw/2)+'" y="'+(y-6)+'" text-anchor="middle" font-size="11.5" fill="#0F2236" font-family="IBM Plex Mono,monospace">'+(c[1]>0&&i?"+":"")+fx(c[1])+'</text><text x="'+(x+bw/2)+'" y="'+(WY1+16)+'" text-anchor="middle" font-size="11" fill="#5A6F86">'+c[0]+'</text>';});
+  var xk=WX0+comps.length*gap+(gap-bw)/2;w+='<rect x="'+xk+'" y="'+wy(r.m.ke)+'" width="'+bw+'" height="'+(WY1-wy(r.m.ke))+'" rx="3" fill="#0B2540"/><text x="'+(xk+bw/2)+'" y="'+(wy(r.m.ke)-6)+'" text-anchor="middle" font-size="12" font-weight="600" fill="#0B2540" font-family="IBM Plex Mono,monospace">'+fx(r.m.ke)+'%</text><text x="'+(xk+bw/2)+'" y="'+(WY1+16)+'" text-anchor="middle" font-size="11" fill="#0B2540" font-weight="600">Ke</text>';
+  $("c-water").innerHTML=w;
+  /* Serie trimestral */
+  var base=r.m.w,ser=[1.3,1.1,1.25,0.9,0.7,0.85,0.6,0.4,0.5,0.25,0.15,0].map(function(d,i){return base+d+Math.sin(i*1.7)*0.08;});
+  var lab=["4T23","1T24","2T24","3T24","4T24","1T25","2T25","3T25","4T25","1T26","2T26","3T26"];
+  var HX0=56,HX1=620,HY0=14,HY1=200;var ht=niceTicks(Math.min.apply(null,ser),Math.max.apply(null,ser),4);
+  var hx=function(i){return HX0+i*(HX1-HX0)/(ser.length-1);},hy=function(v){return HY1-(v-ht[0])/(ht[ht.length-1]-ht[0])*(HY1-HY0);};
+  var h=axis(null,HX0,HX1,HY0,HY1,ht,function(v){return fx(v)+"%";});
+  lab.forEach(function(l,i){if(i%2===1)h+='<text x="'+hx(i)+'" y="'+(HY1+18)+'" text-anchor="middle" font-size="11" fill="#5A6F86" font-family="IBM Plex Mono,monospace">'+l+'</text>';});
+  var hd=ser.map(function(v,i){return (i?"L":"M")+hx(i).toFixed(1)+" "+hy(v).toFixed(1);}).join(" ");
+  h+='<path d="'+hd+' L'+hx(ser.length-1)+' '+HY1+' L'+HX0+' '+HY1+'Z" fill="#128ED6" fill-opacity=".1"/><path d="'+hd+'" fill="none" stroke="#128ED6" stroke-width="2.5"/>';
+  ser.forEach(function(v,i){h+='<circle cx="'+hx(i)+'" cy="'+hy(v)+'" r="'+(i===ser.length-1?5:9)+'" fill="'+(i===ser.length-1?"#0B2540":"transparent")+'" data-i="'+i+'" class="hp"/>';});
+  $("c-hist").innerHTML=h;
+  $("c-hist").querySelectorAll(".hp").forEach(function(c){c.addEventListener("mousemove",function(e){var i=+c.dataset.i;showTip(e,lab[i]+" · "+fx(ser[i])+"%");});c.addEventListener("mouseleave",hideTip);});
+  /* Pares */
+  var peers=[["Ecopetrol","0,62","0,94"],["ISA","0,38","0,58"],["GEB","0,41","0,61"],["Bancolombia","0,71","0,98"]];
+  $("peers").innerHTML=peers.map(function(p){var d=(parseFloat(p[2].replace(",","."))-parseFloat(p[1].replace(",","."))).toFixed(2).replace(".",",");return '<tr><td style="font-family:var(--f-body)">'+p[0]+'</td><td>'+p[1]+'</td><td>'+p[2]+'</td><td>+'+d+'</td></tr>';}).join("");
+}
+
+/* ---------- Calculadora ---------- */
+var sel=$("c-sector");sel.innerHTML=S.map(function(s,i){return '<option value="'+i+'">'+s.n+' · '+s.c.replace("CIIU ","")+'</option>';}).join("");sel.value="3";
+function rating(icr){var T=[[8.5,"AAA",0.7],[6.5,"AA",0.9],[5.5,"A+",1.1],[4.25,"A",1.3],[3,"A−",1.6],[2.5,"BBB",2.0],[2.25,"BB+",2.5],[2,"BB",3.0],[1.75,"B+",3.6],[1.5,"B",4.5],[1.25,"B−",5.5],[0.8,"CCC",8.0],[-1e9,"CC",11]];for(var i=0;i<T.length;i++)if(icr>=T[i][0])return T[i];}
+function renderCalc(){
+  var s=S[+sel.value],D=+$("c-debt").value||0,E=Math.max(1,+$("c-eq").value||1),ebit=+$("c-ebit").value||0,it=Math.max(0.01,+$("c-int").value||0.01),t=(+$("c-tax").value||0)/100;
+  var de=D/E,icr=ebit/it,rt=rating(icr);
+  var m=calc(s,de,{t:t,sp:rt[2],total:$("c-total").checked,size:$("c-size").checked,cur:"COP",real:false});
+  $("r-w").textContent=fx(m.w)+"%";$("r-ke").textContent=fx(m.ke)+"%";$("r-kd").textContent=fx(m.kd)+"%";$("r-rt").textContent=rt[1];
+  $("m-concl").innerHTML="La tasa de ejemplo después de impuestos para la Empresa de ejemplo S.A.S., sector "+s.n.toLowerCase()+", es <b class='num'>"+fx(m.w)+"%</b> en pesos nominales, con un rango razonable de "+fx(m.w-0.8)+"% a "+fx(m.w+0.8)+"% según la estructura de capital.";
+  $("m-tbl").innerHTML=[["Beta desapalancada del sector",fx(s.bu,2)],["D/E de la empresa",fx(de,2)],["Beta re-apalancada"+($("c-total").checked?" (beta total)":""),fx(m.bl,2)],["Rf + ERP + prima país",fx(P.rf)+"% + "+fx(P.erp)+"% + "+fx(P.crp)+"%"],["Prima de tamaño",$("c-size").checked?"2,0 pp":"No aplica"],["Cobertura de intereses → rating",fx(icr,2)+"x → "+rt[1]],["Ke / Kd después de impuestos (COP)",fx(m.ke)+"% / "+fx(m.kd)+"%"],["Pesos patrimonio / deuda",fx(m.we*100,0)+"% / "+fx(m.wd*100,0)+"%"]].map(function(r){return '<tr><td style="text-align:left;font-family:var(--f-body)">'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join("");
+}
+$("calc-form").addEventListener("input",renderCalc);$("calc-form").addEventListener("submit",function(e){e.preventDefault();});
+
+/* ---------- Macro ---------- */
+function renderMacro(){
+  var M=[["TRM","4.012","COP por USD",-1.8,[4380,4310,4255,4190,4230,4150,4120,4085,4060,4110,4045,4012],"BanRep"],
+    ["Tasa de política","8,25%","Banco de la República",-0.25,[10.75,10.25,9.75,9.5,9.5,9.25,9.25,9.0,8.75,8.5,8.5,8.25],"BanRep"],
+    ["Inflación anual","4,6%","IPC, septiembre",-0.2,[6.9,6.5,6.1,5.8,5.5,5.3,5.2,5.0,4.9,4.8,4.8,4.6],"DANE"],
+    ["TES 10 años","10,9%","Tasa de negociación",0.2,[10.2,10.4,10.6,10.3,10.8,11.1,11.0,10.7,10.9,11.2,10.7,10.9],"BanRep"],
+    ["IBR 3 meses","8,1%","Indicador bancario",-0.2,[10.5,10.0,9.7,9.4,9.3,9.1,9.0,8.8,8.6,8.4,8.3,8.1],"BanRep"],
+    ["Brent","US$ 74","Por barril",2.1,[82,79,85,78,74,72,76,70,68,71,72,74],"EIA"]];
+  $("macro").innerHTML=M.map(function(m,i){
+    var v=m[4],w=300,h=90,mn=Math.min.apply(null,v),mx=Math.max.apply(null,v),r=mx-mn||1;
+    var pts=v.map(function(y,j){return [4+j*(w-8)/(v.length-1),h-6-(y-mn)/r*(h-16)];});
+    var d=pts.map(function(p,j){return (j?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");var l=pts[pts.length-1];
+    var cls=m[3]>0?"up":"down",sign=m[3]>0?"+":"";
+    return '<div class="card mcard"><div class="t"><span>'+m[0]+'</span><b>'+m[1]+'</b></div><div class="d"><span class="'+cls+'">'+sign+fx(m[3])+(m[0]==="TRM"||m[0]==="Brent"?"%":" pp")+'</span> <span style="color:var(--sub)">· '+m[2]+' · 12 meses</span></div><svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img" aria-label="'+m[0]+'"><line x1="4" x2="'+(w-4)+'" y1="'+(h-6)+'" y2="'+(h-6)+'" stroke="#EEF3F7"/><path d="'+d+' L'+l[0]+' '+(h-6)+' L4 '+(h-6)+'Z" fill="#128ED6" fill-opacity=".1"/><path d="'+d+'" fill="none" stroke="#128ED6" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="'+l[0]+'" cy="'+l[1]+'" r="3.5" fill="#0B2540"/></svg><div class="src">Fuente: '+m[5]+' · ejemplo</div></div>';
+  }).join("");
+}
+
+/* ---------- Navegación ---------- */
+function show(v){
+  document.querySelectorAll(".view").forEach(function(s){s.hidden=s.id!=="v-"+v;});
+  document.querySelectorAll(".nav button").forEach(function(b){if(b.dataset.view===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  if(v==="sector")renderSector();if(v==="calc")renderCalc();
+  try{history.replaceState(null,"","#"+v);}catch(e){}
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav button").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.view);});});
+document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){show(b.dataset.go);});});
+function renderAll(){renderKPIs();renderTable();if(!$("v-sector").hidden)renderSector();}
+renderAll();renderMacro();renderCalc();
+var h=(location.hash||"").slice(1);if(["wacc","sector","calc","macro","method","compare","issuers","data"].indexOf(h)>-1)show(h);
+window.FinTargetMockup={show:show,st:st,S:S,P:P,calc:calc,conv:conv,rowsData:rowsData,renderAll:renderAll,renderSector:renderSector};
+})();
+</script>
+<script src="fuentes-validacion.js"></script>
+<script src="fintarget-workspace.js"></script>
+</body>
+</html>

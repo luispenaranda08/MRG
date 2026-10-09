@@ -1,0 +1,11 @@
+# Mirage · construcción previa a los SVG
+
+Supuesto: se conserva literalmente el ajedrezado de ref-ft.svg y mi-m-h.svg: nueve cuadrados de 16, x=24/40, y=56+16n. ht-h.svg tiene ese mismo ritmo pero desplazado 16 a la derecha; no se altera ninguna referencia. La letra ocupa x=56…232, y=56…200, como FT. Patas de 36, radios 8, negro #111. Sin tipografía ni diagonales en V.
+
+1. **Escalón verificable.** Una única silueta ortogonal redondeada: dos patas de 36 y una cinta central que baja un escalón y vuelve a subir. El hueco superior tiene 48 de ancho; la cinta central mide 32 de alto. v1 usa un hueco superior de 32 y cinta de 40; v2 abre el hueco a 48 y reduce la cinta a 32.
+2. **Doble arco.** Dos arcos exteriores circulares de radio 44 sobre patas de 36; dos huecos interiores abiertos hacia abajo, de radio 18; apoyo central de 32. Es una m geométrica, una exploración deliberada de caja baja. v1 tiene apoyos exteriores de 40, huecos de 32; v2 iguala los apoyos exteriores con FT y abre los huecos a 36. Los radios exteriores son la idea del centro, no los remates de las patas (radio 8).
+3. **Líneas de calor.** Dos hombros separados en la fila y=56…88, una franja central y=104…136 y dos patas en y=152…200; todos sus extremos tienen radio 8. La M se reconoce por la envolvente escalonada entre filas; el vacío corta la letra horizontalmente. v1 usa cortes de 8; v2 cortes de 16, equivalentes a un píxel a 16 px.
+4. **Dato contrastado.** La silueta escalonada envuelve un único cuadrado negativo de 24 en el centro: el dato tiene un lugar propio y no se confunde con la masa. Hueco superior de 48, cinta de 64 y remates de radio 8. v1 deja un dato de 12; v2 lo abre a 24 con paredes de 16 arriba y abajo. El cuadrado es un hueco real con evenodd, nunca una forma blanca superpuesta.
+5. **Reflejo medido.** La M de escalón conserva las patas y su cinta central; debajo se repite el centro en dos franjas de 16 que se acortan de 48 a 32. Evoca un reflejo que pierde presencia mediante longitud, sin grises ni degradados. v1 deja 8 entre franjas; v2 deja 24 y 16 para separar claramente los ecos al reducir.
+
+Los paths se construyen antes de auditar. Los finales son copias exactas de v2; v1 y v2 se preservan. Las versiones invertidas son pruebas conceptuales en blanco, sin kit ni corrección óptica final de irradiación.

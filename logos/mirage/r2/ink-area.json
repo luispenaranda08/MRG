@@ -1,0 +1,57 @@
+{
+  "method": "vector polylines; 0.5-unit scan integration; union across paths; no raster",
+  "references": {
+    "ht-h": 15762.479529934884,
+    "ref-ft": 16728.828584942836
+  },
+  "concepts": [
+    {
+      "concept": 1,
+      "ink_area_approx": 14666,
+      "ratio_H": 0.93,
+      "ratio_FT": 0.877
+    },
+    {
+      "concept": 2,
+      "ink_area_approx": 13970,
+      "ratio_H": 0.886,
+      "ratio_FT": 0.835
+    },
+    {
+      "concept": 3,
+      "ink_area_approx": 14500,
+      "ratio_H": 0.92,
+      "ratio_FT": 0.867
+    },
+    {
+      "concept": 4,
+      "ink_area_approx": 15219,
+      "ratio_H": 0.965,
+      "ratio_FT": 0.91
+    },
+    {
+      "concept": 5,
+      "ink_area_approx": 16640,
+      "ratio_H": 1.056,
+      "ratio_FT": 0.995
+    },
+    {
+      "concept": 6,
+      "ink_area_approx": 14276,
+      "ratio_H": 0.906,
+      "ratio_FT": 0.853
+    },
+    {
+      "concept": 7,
+      "ink_area_approx": 14128,
+      "ratio_H": 0.896,
+      "ratio_FT": 0.845
+    },
+    {
+      "concept": 8,
+      "ink_area_approx": 17097,
+      "ratio_H": 1.085,
+      "ratio_FT": 1.022
+    }
+  ]
+}

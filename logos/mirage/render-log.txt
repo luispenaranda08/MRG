@@ -1,0 +1,2 @@
+wrote logos/mirage/concepts.svg
+PNG skipped (no renderer; see render_png.py --which) — show the SVG instead

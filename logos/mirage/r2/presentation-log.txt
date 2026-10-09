@@ -1,0 +1,6 @@
+Render desactivado expresamente por CODEX-LOGO-MIRAGE-2.md; solo lámina vectorial.
+wrote /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/logos/mirage/r2/concepts.svg
+PNG skipped (no renderer; see render_png.py --which) — show the SVG instead
+wrote /Users/oswaldomonsalvo/Downloads/hypertarget-mockups/logos/mirage/r2/preview.html  (8 logo(s), 7 reference(s)) — open it in a browser
+
+Escritos concepts.svg, concepts.html y preview.html. Ningún renderizador iniciado.

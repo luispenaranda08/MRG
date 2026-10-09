@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title">
+<title id="title">Mirage · Reflejo desplazado</title>
+<path fill="#111" d="M24 56h16v16h-16ZM40 72h16v16h-16ZM24 88h16v16h-16ZM40 104h16v16h-16ZM24 120h16v16h-16ZM40 136h16v16h-16ZM24 152h16v16h-16ZM40 168h16v16h-16ZM24 184h16v16h-16Z"/>
+<path fill="#111" d="M72 56H216V88H112V120H72ZM88 136H128V168H232V200H88Z"/>
+</svg>

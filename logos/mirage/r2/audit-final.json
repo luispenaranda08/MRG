@@ -1,0 +1,352 @@
+[
+ {
+  "file": "r2-1.svg",
+  "bytes": 611,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 66,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   216.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 40.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.422,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "off-centre-x",
+    "message": "Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it."
+   }
+  ]
+ },
+ {
+  "file": "r2-2.svg",
+  "bytes": 661,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 71,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   232.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 24.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.457,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "r2-3.svg",
+  "bytes": 656,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 60,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   224.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 32.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.439,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "off-centre-x",
+    "message": "Horizontal margins differ (left 24.0, right 32.0). Intentional optical centring? Otherwise centre it."
+   }
+  ]
+ },
+ {
+  "file": "r2-4.svg",
+  "bytes": 576,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 62,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   224.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 32.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.439,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "off-centre-x",
+    "message": "Horizontal margins differ (left 24.0, right 32.0). Intentional optical centring? Otherwise centre it."
+   }
+  ]
+ },
+ {
+  "file": "r2-5.svg",
+  "bytes": 621,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 63,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   216.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 40.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.422,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "off-centre-x",
+    "message": "Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it."
+   }
+  ]
+ },
+ {
+  "file": "r2-6.svg",
+  "bytes": 637,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 67,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   24.0,
+   56.0,
+   216.0,
+   200.0
+  ],
+  "margins": {
+   "left": 24.0,
+   "right": 40.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.422,
+  "score": 99,
+  "findings": [
+   {
+    "level": "INFO",
+    "code": "off-centre-x",
+    "message": "Horizontal margins differ (left 24.0, right 40.0). Intentional optical centring? Otherwise centre it."
+   }
+  ]
+ },
+ {
+  "file": "r2-7.svg",
+  "bytes": 488,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 56,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   40.0,
+   56.0,
+   216.0,
+   200.0
+  ],
+  "margins": {
+   "left": 40.0,
+   "right": 40.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.387,
+  "score": 100,
+  "findings": []
+ },
+ {
+  "file": "r2-8.svg",
+  "bytes": 529,
+  "viewBox": [
+   0.0,
+   0.0,
+   256.0,
+   256.0
+  ],
+  "aspect": 1.0,
+  "aspect_class": "square",
+  "colors": [
+   "#111111"
+  ],
+  "gradients": 0,
+  "anchors": 74,
+  "library_anchor_percentiles": {
+   "p10": 21.0,
+   "p25": 31.0,
+   "median": 53.0,
+   "p75": 95.5,
+   "p90": 194.0,
+   "p95": 274.0
+  },
+  "content_bbox": [
+   40.0,
+   56.0,
+   216.0,
+   200.0
+  ],
+  "margins": {
+   "left": 40.0,
+   "right": 40.0,
+   "top": 56.0,
+   "bottom": 56.0
+  },
+  "bbox_fill_ratio": 0.387,
+  "score": 100,
+  "findings": []
+ }
+]

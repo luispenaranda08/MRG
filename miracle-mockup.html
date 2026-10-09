@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Miracle · Inteligencia de defensa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="miracle-v3.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="mi" viewBox="0 0 256 256"><path d="M128 14C138.6 80 176 117.4 242 128C176 138.6 138.6 176 128 242C117.4 176 80 138.6 14 128C80 117.4 117.4 80 128 14Z"/><path style="fill:var(--knock,#fff)" d="M98.3 102.1h5.8v5.8h-5.8ZM104.1 107.8h5.8v5.8h-5.8ZM98.3 113.6h5.8v5.8h-5.8ZM104.1 119.4h5.8v5.8h-5.8ZM98.3 125.1h5.8v5.8h-5.8ZM104.1 130.9h5.8v5.8h-5.8ZM98.3 136.6h5.8v5.8h-5.8ZM104.1 142.4h5.8v5.8h-5.8ZM98.3 148.2h5.8v5.8h-5.8ZM109.8 102.1h14.4v51.8h-14.4ZM147.3 102.1h14.4v51.8h-14.4ZM123.9 122.2h23.8v11.5h-23.8Z"/></symbol>
+</defs></svg>
+
+<header class="top">
+  <div class="bar">
+    <div class="logo"><svg fill="#FFFFFF" style="--knock:#0B0B0C" aria-hidden="true"><use href="#mi"/></svg>MIRACLE</div>
+    <nav class="nav" aria-label="Secciones">
+      <button type="button" data-view="brf" aria-current="page"><span class="fn">BRF</span>Brief</button>
+      <button type="button" data-view="st"><span class="fn">ST</span>Riesgo de ataques</button>
+      <button type="button" data-view="trf"><span class="fn">TRF</span>Transferencia</button>
+      <button type="button" data-view="tea"><span class="fn">TEA</span>Teatros</button>
+      <button type="button" data-view="mnt"><span class="fn">MNT</span>Sostenimiento</button>
+      <button type="button" data-view="lab"><span class="fn">LAB</span>Modelos</button>
+      <button type="button" data-view="ont"><span class="fn">ONT</span>Ontología</button>
+      <button type="button" data-view="dat"><span class="fn">DAT</span>Datos</button>
+      <button type="button" data-view="gov"><span class="fn">GOV</span>Gobernanza</button>
+    </nav>
+    <div class="cmd"><input id="cmd" type="text" autocomplete="off" spellcheck="false" placeholder="Comando: ST CAUCA · TEA UCRANIA · MNT MI-17" aria-label="Línea de comandos" role="combobox" aria-expanded="false" aria-controls="cmd-list"><kbd>Ctrl K</kbd><div class="cmd-list" id="cmd-list" role="listbox" hidden></div></div>
+    <button type="button" class="access" id="pres-open">Presentar al Ministerio</button>
+  </div>
+</header>
+<div class="band"><span>Fuentes abiertas e institucionales · análisis agregado · sin datos personales</span><span>Corte <b>6 oct 2026</b> · semana <b>41</b></span></div>
+<div class="demo">Mockup · datos sintéticos y resultados esperados. Las fuentes listadas en Datos son reales.</div>
+
+<main class="wrap">
+
+<section class="view" id="v-brf" aria-labelledby="h-brf">
+  <div class="head"><div><span class="label">Brief · Ministerio de Defensa Nacional</span><h1 id="h-brf">Colombia tiene pocos datos de ataques. El mundo tiene millones. Miracle aprende de ambos.</h1><p>Modelos entrenados con lo que ya ocurrió en Ucrania, Irán, Myanmar, el Sahel y otros cinco teatros, ajustados a Colombia para anticipar dónde crece el riesgo de ataques y qué flota puede quedar en tierra.</p></div><div class="actions"><button type="button" class="btn" data-pres="1">Presentar</button><button type="button" class="btn ghost" data-go="st">Ver riesgo de ataques →</button></div></div>
+  <div id="brf-body"></div>
+</section>
+
+<section class="view" id="v-st" hidden aria-labelledby="h-st">
+  <div class="head"><div><span class="label">ST · Prevención</span><h1 id="h-st">Riesgo espaciotemporal de ataques</h1><p>Probabilidad de al menos un ataque documentado por celda de ~40 km y por departamento, con su incertidumbre. Apoya la priorización de prevención y protección; no es una alerta táctica.</p></div></div>
+  <div id="st-body"></div>
+</section>
+
+<section class="view" id="v-trf" hidden aria-labelledby="h-trf">
+  <div class="head"><div><span class="label">TRF · Aprendizaje por transferencia</span><h1 id="h-trf">Lo que Ucrania, Myanmar y el Sahel le enseñan a Colombia</h1><p>Los eventos de otros teatros se armonizan en una ontología común, entrenan un modelo base y ese modelo se ajusta con los datos colombianos. Así un modelo con pocos eventos locales rinde como uno con varias veces más datos.</p></div></div>
+  <div id="trf-body"></div>
+</section>
+
+<section class="view" id="v-tea" hidden aria-labelledby="h-tea">
+  <div class="head"><div><span class="label">TEA · Evidencia global</span><h1 id="h-tea">Teatros de conflicto</h1><p>Nueve teatros con sus series, mezcla de tácticas, lecciones transferibles y el desempeño del modelo en cada uno.</p></div></div>
+  <div id="tea-body"></div>
+</section>
+
+<section class="view" id="v-mnt" hidden aria-labelledby="h-mnt">
+  <div class="head"><div><span class="label">MNT · Sostenimiento y mantenimiento</span><h1 id="h-mnt">Qué flota puede quedar en tierra y cuánto costaría evitarlo</h1><p>Colombia sí tiene datos de mantenimiento: órdenes de trabajo, horas de vuelo, contratos y sanciones. Con ellos se estima la disponibilidad a 12 meses, la falla de componentes y el costo en riesgo.</p></div></div>
+  <div id="mnt-body"></div>
+</section>
+
+<section class="view" id="v-lab" hidden aria-labelledby="h-lab">
+  <div class="head"><div><span class="label">LAB · Ciencia de decisión</span><h1 id="h-lab">Modelos en producción</h1><p>Once modelos con su ficha: objetivo, datos, validación, métricas frente a baselines, calibración, deriva y límites de uso.</p></div></div>
+  <div id="lab-body"></div>
+</section>
+
+<section class="view" id="v-ont" hidden aria-labelledby="h-ont">
+  <div class="head"><div><span class="label">ONT · Objetos y relaciones</span><h1 id="h-ont">Ontología de Miracle</h1><p>Cada cifra se explica: de la fuente al evento, del evento a la celda, de la celda al modelo, del pronóstico a la decisión humana que se tomó con él.</p></div></div>
+  <div id="ont-body"></div>
+</section>
+
+<section class="view" id="v-dat" hidden aria-labelledby="h-dat">
+  <div class="head"><div><span class="label">DAT · Datos</span><h1 id="h-dat">Fuentes, cobertura y calidad</h1><p>Qué entra, con qué frecuencia, con qué licencia y cómo se controla su calidad antes de llegar a un modelo.</p></div></div>
+  <div id="dat-body"></div>
+</section>
+
+<section class="view" id="v-gov" hidden aria-labelledby="h-gov">
+  <div class="head"><div><span class="label">GOV · Gobernanza</span><h1 id="h-gov">Líneas rojas, acceso y auditoría</h1><p>Un producto de defensa, no de ataque. Las reglas viven en el sistema: quién ve qué, qué nunca se publica y quién firma cada uso.</p></div></div>
+  <div id="gov-body"></div>
+</section>
+
+<footer class="site-foot"><div class="ht"><svg width="20" height="20" fill="#0B0B0C" style="--knock:#FFFFFF" aria-hidden="true"><use href="#mi"/></svg>Miracle es un producto de HyperTarget</div><span>Barranquilla, Colombia</span></footer>
+</main>
+
+<nav class="mnav" aria-label="Secciones principales"><button type="button" data-view="brf"><span>BRF</span>Brief</button><button type="button" data-view="st"><span>ST</span>Ataques</button><button type="button" data-view="trf"><span>TRF</span>Transferir</button><button type="button" data-view="mnt"><span>MNT</span>Flota</button><button type="button" data-view="lab"><span>LAB</span>Modelos</button></nav>
+
+<div class="pres" id="pres" hidden role="dialog" aria-modal="true" aria-label="Presentación para el Ministerio">
+  <div class="pres-bar"><span id="pres-title">Miracle · presentación para el Ministerio de Defensa</span><div class="actions"><button type="button" class="btn ghost" id="pres-print">Imprimir / PDF</button><button type="button" class="btn ghost" id="pres-prev" aria-label="Anterior">←</button><span class="mono" id="pres-n"></span><button type="button" class="btn ghost" id="pres-next" aria-label="Siguiente">→</button><button type="button" class="btn" id="pres-close">Cerrar · Esc</button></div></div>
+  <div class="pres-stage" id="pres-stage"></div>
+</div>
+<div class="print-deck" id="print-deck" aria-hidden="true"></div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="miracle-datos.js"></script>
+<script src="miracle-app.js"></script>
+</body>
+</html>
