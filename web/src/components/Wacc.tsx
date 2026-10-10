@@ -1,0 +1,44 @@
+"use client";
+import { useMemo, useRef, useState } from "react";
+import { useDatos } from "./Mirage";
+import { Cifra } from "./Cifra";
+import { celda, fmt, numero, waccSector, type Sector, type Celda } from "@/lib/api";
+import { nombreArchivo } from "@/lib/nombres";
+import { download, exportCSV, exportTable } from "@/lib/excel";
+const labels: Record<string, string> = { rf_usd: "Rf · Tesoro USD", erp_maduro: "Prima de mercado", spread_soberano: "Spread soberano", lambda: "λ · Volatilidad relativa", crp: "Prima país · Mirage", crp_damodaran: "Prima país · Damodaran", inflacion_cop: "Inflación COP", inflacion_usd: "Inflación USD", tasa_impuesto: "Tarifa de renta" };
+const cols = ["CIIU", "Sector", "Empresas", "βu", "D/E", "βL", "Ke COP", "Kd COP", "WACC"];
+export function Wacc() {
+    const d = useDatos(), [empresa, setEmpresa] = useState(""), [q, setQ] = useState(""), [currency, setCurrency] = useState("COP"), [mode, setMode] = useState("nominal"), [sort, setSort] = useState({ col: 2, asc: false }), [selected, setSelected] = useState<Sector | null>(null), [error, setError] = useState(""), [busy, setBusy] = useState(false);
+    const opener = useRef<HTMLButtonElement | null>(null), close = useRef<HTMLButtonElement | null>(null);
+    const values = (s: Sector): (string | Celda)[] => [s.ciiu_division, s.nombre, s.empresas, s.beta_desapalancada, s.de, s.beta_apalancada, s.ke, s.kd, waccSector(s, currency, mode)];
+    const rows = useMemo(() => d.sectores.filter(s => `${s.nombre} ${s.ciiu_division}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(q.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())).sort((a, b) => { const cell = (s: Sector) => [s.ciiu_division, s.nombre, s.empresas, s.beta_desapalancada, s.de, s.beta_apalancada, s.ke, s.kd, waccSector(s, currency, mode)][sort.col]; const x = cell(a), y = cell(b), vx = typeof x === "string" ? x : numero(x), vy = typeof y === "string" ? y : numero(y); if (vx === null)
+        return vy === null ? 0 : 1; if (vy === null)
+        return -1; return (typeof vx === "number" && typeof vy === "number" ? vx - vy : String(vx).localeCompare(String(vy), "es", { numeric: true })) * (sort.asc ? 1 : -1); }), [d.sectores, q, sort, currency, mode]);
+    const dismiss = () => { setSelected(null); opener.current?.focus(); };
+    async function xlsx() { setBusy(true); setError(""); try {
+        await exportTable(d, [...cols.slice(0, -1), `WACC ${currency} ${mode}`, "p25 COP nominal", "p75 COP nominal"], rows.map(s => [...values(s), ...s.wacc_rango]), "WACC", empresa);
+    }
+    catch (e) {
+        setError(String(e));
+    }
+    finally {
+        setBusy(false);
+    } }
+    return <><div className="heading"><div><p className="eyebrow">[ WACC ] / MERCADO COLOMBIANO</p><h1>Costo de capital</h1>{d.meta.estado && <p className="estado" role="note">{d.meta.estado}</p>}<p className="muted">Corte {d.meta.corte} · Metodología {d.meta.version} · {fmt(celda(d.sectores.length, "num", "nota"))} sectores</p></div><a href="#fuentes" className="text-link">Fuentes verificables ↗</a></div><label className="company-field">Empresa o proyecto (opcional)<input value={empresa} onChange={e => setEmpresa(e.target.value)}/></label><section className="parameters" aria-label="Parámetros de mercado">{Object.entries(d.parametros).map(([k, v]) => <article key={k} className={`card parameter ${v.tono === "alerta" ? "tono-alerta" : ""}`}><h2>{labels[k] || k}</h2><Cifra celda={v}/><p className="source">{v.fuente} {v.corte && `· ${v.corte}`}</p>{v.tono === "alerta" && <p className="alert">{v.nota}</p>}</article>)}</section><section className="card table-card"><div className="toolbar"><label className="search">Buscar sector o CIIU<input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Nombre o código…"/></label><div className="switch" role="group" aria-label="Moneda">{["COP", "USD"].map(v => <button key={v} aria-pressed={currency === v} onClick={() => setCurrency(v)}>{v}</button>)}</div><div className="switch" role="group" aria-label="Tipo de tasa">{["nominal", "real"].map(v => <button key={v} aria-pressed={mode === v} onClick={() => setMode(v)}>{v}</button>)}</div><button onClick={() => exportCSV([...cols.slice(0, -1), `WACC ${currency} ${mode}`, "p25 COP nominal", "p75 COP nominal"], rows.map(s => [...values(s), ...s.wacc_rango]), empresa)}>↓ CSV</button><button onClick={() => download(["Mirage · WACC", ...(empresa.trim() ? [`Empresa o proyecto: ${empresa.trim()}`] : []), `Corte: ${d.meta.corte}`, ...rows.map(s => `${s.ciiu_division} · ${s.nombre}: ${fmt(waccSector(s, currency, mode))}`), d.meta.aviso].join("\n"), nombreArchivo("WACC", empresa, undefined, "txt"), "text/plain;charset=utf-8")}>↓ Memo TXT</button><button disabled={busy} onClick={xlsx}>{busy ? "Preparando…" : "↓ Excel"}</button></div>{error && <p role="alert">{error}</p>}<p className="table-note">Ke y Kd en COP nominal. Rangos p25–p75 en COP nominal; las tasas WACC usan la moneda y modalidad seleccionadas.</p><div className="table-scroll" tabIndex={0} aria-label="Tabla de sectores, desplazable"><table><caption className="sr-only">Costo de capital por sector · {currency} {mode}</caption><thead><tr>{cols.map((c, i) => <th key={c} scope="col" aria-sort={sort.col === i ? (sort.asc ? "ascending" : "descending") : "none"}><button onClick={() => setSort({ col: i, asc: sort.col === i ? !sort.asc : true })}>{c}{sort.col === i ? (sort.asc ? " ↑" : " ↓") : " ↕"}</button></th>)}</tr></thead><tbody>{rows.map(s => <tr key={s.ciiu_division}><td>{s.ciiu_division}</td><th scope="row"><button className="sector-link" onClick={e => { opener.current = e.currentTarget; setSelected(s); setTimeout(() => close.current?.focus(), 0); }}>{s.nombre}<span>Ver sector →</span></button></th>{values(s).slice(2).map((v, i) => <td key={i}><Cifra celda={v as Celda}/>{i === 6 && currency === "COP" && mode === "nominal" && <Range sector={s}/>}</td>)}</tr>)}</tbody></table>{!rows.length && <p className="empty">No hay sectores que coincidan con la búsqueda.</p>}</div><div className="table-foot"><span>{rows.length} de {d.sectores.length} sectores</span><span>Seleccione un sector para explorar sus fuentes y método.</span></div></section>{selected && <div className="overlay" onClick={dismiss}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="sector-title" onClick={e => e.stopPropagation()} onKeyDown={e => { if (e.key === "Escape")
+        dismiss(); if (e.key === "Tab") {
+        const els = e.currentTarget.querySelectorAll<HTMLElement>('button, a[href], [tabindex="0"]');
+        const first = els[0], last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last?.focus();
+        }
+        else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first?.focus();
+        }
+    } }}><button className="close" ref={close} onClick={dismiss} aria-label="Cerrar panel del sector">×</button><p className="eyebrow">[ CIIU {selected.ciiu_division} ]</p><h2 id="sector-title">{selected.nombre}</h2><p>WACC {currency} {mode}</p><Cifra celda={waccSector(selected, currency, mode)}/><h3>Desglose por tamaño</h3><div className="table-scroll"><table><thead><tr><th scope="col">Indicador</th>{Object.keys(selected.por_tamano).map(t => <th key={t} scope="col">{t}</th>)}</tr></thead><tbody>{([['empresas', 'Empresas'], ['beta_apalancada', 'βL'], ['de', 'D/E'], ['kd', 'Kd COP']] as const).map(([k, l]) => <tr key={k}><th scope="row">{l}</th>{Object.values(selected.por_tamano).map((t, i) => <td key={i}><Cifra celda={t[k]}/></td>)}</tr>)}</tbody></table></div><h3>Ancla de Damodaran</h3><p>{selected.damodaran.industria}</p><dl>{([['empresas_emergentes', 'Empresas emergentes'], ['empresas_latam', 'Latinoamericanas'], ['empresas_colombia', 'Colombianas'], ['pct_latam', 'Representación latinoamericana'], ['beta_apalancada', 'β apalancada de referencia'], ['diferencia_mirage_vs_damodaran', 'Diferencia β Mirage / Damodaran']] as const).map(([k, l]) => <div key={k}><dt>{l}</dt><dd><Cifra celda={selected.damodaran[k]}/></dd></div>)}</dl><h3>Pasos del método</h3><ol className="steps">{d.metodo.pasos.map(p => <li key={p}>{p}</li>)}</ol></aside></div>}</>;
+}
+function Range({ sector: s }: {
+    sector: Sector;
+}) { const [a, b] = s.wacc_rango.map(numero), v = numero(s.wacc_cop_nominal); if (a === null || b === null || v === null)
+    return <small>Rango no publicado</small>; const p = b > a ? Math.max(0, Math.min(100, (v - a) / (b - a) * 100)) : 50; return <div className="range" aria-label={`p25 ${fmt(s.wacc_rango[0])}, p75 ${fmt(s.wacc_rango[1])}`}><div><i style={{ left: `${p}%` }}/></div><small>{fmt(s.wacc_rango[0])}–{fmt(s.wacc_rango[1])}</small></div>; }

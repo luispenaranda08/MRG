@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "noEmit": false,
+    "incremental": false,
+    "plugins": []
+  },
+  "include": ["./**/*.ts", "../src/lib/finanzas/**/*.ts"]
+}

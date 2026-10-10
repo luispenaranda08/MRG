@@ -1,0 +1,31 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/build.mjs",
+    "start": "next start",
+    "lint": "eslint",
+    "test:dx": "node src/lib/dx/__tests__/regression.cjs",
+    "test:finanzas": "node src/lib/finanzas/__tests__/finanzas.cjs",
+    "test:calc": "node src/components/__tests__/calc.cjs",
+    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc",
+    "test:formatos": "node src/lib/dx/__tests__/formatos.cjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "typescript": "^5"
+  }
+}

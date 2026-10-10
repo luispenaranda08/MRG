@@ -18,3 +18,4 @@ ml/reports/*.log
 CODEX-*-ultimo-mensaje.txt
 web/out/
 web/build-output.txt
+qa/excel-check/

@@ -1,0 +1,65 @@
+{
+ "corte": "2026-10-10",
+ "indicadores": {
+  "trm": {
+   "v": 3238.88,
+   "fmt": "num",
+   "tono": "insumo",
+   "nota": "Pesos por dólar, tasa representativa del mercado.",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-08",
+   "codigo_tasa": null,
+   "nombre": "TRM"
+  },
+  "tasa_politica": {
+   "v": 0.1225,
+   "fmt": "pct",
+   "tono": "insumo",
+   "nota": "Tasa de intervención del Banco de la República.",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-08",
+   "codigo_tasa": "EA",
+   "nombre": "Tasa de política"
+  },
+  "ibr_overnight": {
+   "v": 0.11411,
+   "fmt": "pct",
+   "tono": "insumo",
+   "nota": "Nominal anual, base 360 días.",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-07",
+   "codigo_tasa": "NA",
+   "nombre": "IBR overnight"
+  },
+  "ibr_1m": {
+   "v": 0.11495,
+   "fmt": "pct",
+   "tono": "insumo",
+   "nota": "Nominal anual mes vencido (convención del IBR).",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-07",
+   "codigo_tasa": "NAMV",
+   "nombre": "IBR 1 mes"
+  },
+  "ibr_3m": {
+   "v": 0.11735,
+   "fmt": "pct",
+   "tono": "insumo",
+   "nota": "Nominal anual trimestre vencido (convención del IBR).",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-07",
+   "codigo_tasa": "NATV",
+   "nombre": "IBR 3 meses"
+  },
+  "ibr_6m": {
+   "v": 0.12033,
+   "fmt": "pct",
+   "tono": "insumo",
+   "nota": "Nominal anual semestre vencido (convención del IBR).",
+   "fuente": "Banco de la República · servicio SDMX",
+   "corte": "2026-10-07",
+   "codigo_tasa": "NASV",
+   "nombre": "IBR 6 meses"
+  }
+ }
+}

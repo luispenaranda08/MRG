@@ -1,0 +1,46 @@
+{
+ "version": "1.0-preliminar",
+ "estado": "Metodología en revisión",
+ "corte": "2026-10-10",
+ "generado": "2026-10-10T16:05:22",
+ "aviso": "Metodología en revisión: la versión 1.0 está en validación con expertos financieros. Cifras agregadas por sector, construidas con fuentes públicas verificables. No constituyen asesoría de inversión.",
+ "corte_anterior": null,
+ "fuentes": [
+  {
+   "id": "supersociedades",
+   "nombre": "Supersociedades · Estados financieros NIIF",
+   "url": "https://www.datos.gov.co/resource/pfdp-zks5",
+   "licencia": "Datos abiertos del Estado colombiano"
+  },
+  {
+   "id": "superfinanciera_f88",
+   "nombre": "Superfinanciera · Tasas de interés activas (formato 88)",
+   "url": "https://www.datos.gov.co/resource/w9zh-vetq",
+   "licencia": "Datos abiertos del Estado colombiano"
+  },
+  {
+   "id": "superfinanciera_f351",
+   "nombre": "Superfinanciera · Formato 351",
+   "url": "https://www.datos.gov.co/resource/ur2p-h4yf",
+   "licencia": "Datos abiertos del Estado colombiano"
+  },
+  {
+   "id": "banrep",
+   "nombre": "Banco de la República · servicio SDMX",
+   "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/",
+   "licencia": "Estadísticas públicas"
+  },
+  {
+   "id": "fred",
+   "nombre": "FRED · Federal Reserve Bank of St. Louis",
+   "url": "https://fred.stlouisfed.org/",
+   "licencia": "Datos públicos"
+  },
+  {
+   "id": "damodaran",
+   "nombre": "Damodaran Online",
+   "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html",
+   "licencia": "Uso libre; se cita la fuente"
+  }
+ ]
+}

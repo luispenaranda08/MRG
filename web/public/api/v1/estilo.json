@@ -1,0 +1,81 @@
+{
+ "version": 1,
+ "tonos": {
+  "clave": {
+   "texto": "#1F2124",
+   "fondo": "#F3E9CF",
+   "borde": "#C8A24A",
+   "negrita": true,
+   "uso": "Resultado principal (WACC, Ke, β apalancada)"
+  },
+  "insumo": {
+   "texto": "#1F2124",
+   "fondo": "#FBF3E2",
+   "borde": null,
+   "negrita": false,
+   "uso": "Supuesto o dato de entrada editable"
+  },
+  "sube": {
+   "texto": "#1F6B45",
+   "fondo": null,
+   "borde": null,
+   "negrita": false,
+   "uso": "Subida frente al corte anterior o a la referencia"
+  },
+  "baja": {
+   "texto": "#A3322A",
+   "fondo": null,
+   "borde": null,
+   "negrita": false,
+   "uso": "Bajada frente al corte anterior o a la referencia"
+  },
+  "neutro": {
+   "texto": "#1F2124",
+   "fondo": null,
+   "borde": null,
+   "negrita": false,
+   "uso": "Valor sin énfasis"
+  },
+  "subtotal": {
+   "texto": "#1F2124",
+   "fondo": "#ECECEC",
+   "borde": null,
+   "negrita": true,
+   "uso": "Subtotales y filas de resumen"
+  },
+  "encabezado": {
+   "texto": "#FFFFFF",
+   "fondo": "#1F2124",
+   "borde": null,
+   "negrita": true,
+   "uso": "Encabezados de tabla y de bloque"
+  },
+  "nota": {
+   "texto": "#6E7277",
+   "fondo": null,
+   "borde": null,
+   "negrita": false,
+   "uso": "Fuentes, fechas de corte y aclaraciones"
+  },
+  "alerta": {
+   "texto": "#7A5600",
+   "fondo": "#FBF3E2",
+   "borde": "#C8A24A",
+   "negrita": false,
+   "uso": "Cifra que requiere cautela"
+  }
+ },
+ "formatos": {
+  "pct": "0.00%",
+  "pp": "0.00\" pp\"",
+  "x": "0.00",
+  "num": "#,##0",
+  "bn": "#,##0.0\" bn\"",
+  "txt": "@"
+ },
+ "fuentes_tipograficas": {
+  "texto": "IBM Plex Sans",
+  "cifras": "IBM Plex Mono"
+ },
+ "convencion_origen": "Talleres de Gerencia Financiera (Maestría en Finanzas, Uninorte): subidas en verde, bajadas en rojo, insumos sobre fondo claro, encabezados oscuros con texto blanco, resultados resaltados."
+}

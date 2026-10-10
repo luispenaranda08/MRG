@@ -1,0 +1,68 @@
+{
+ "corte": "2026-10-10",
+ "parametros": {
+  "rf_usd": {
+   "v": 0.051,
+   "fmt": "pct",
+   "tono": "insumo",
+   "fuente": "FRED · DGS10 (Tesoro de EE. UU. a 10 años), promedio de 20 días hábiles",
+   "corte": "2026-10-07"
+  },
+  "erp_maduro": {
+   "v": 0.0423,
+   "fmt": "pct",
+   "tono": "insumo",
+   "fuente": "Damodaran · prima de riesgo de un mercado maduro",
+   "corte": "2026-01-05"
+  },
+  "spread_soberano": {
+   "v": 0.021,
+   "fmt": "pct",
+   "tono": "insumo",
+   "fuente": "Superfinanciera Formato 351 · bonos globales de Colombia en USD menos Tesoro, 10 años",
+   "corte": "2026-07-31"
+  },
+  "lambda": {
+   "v": 1.5234,
+   "fmt": "x",
+   "tono": "insumo",
+   "fuente": "Damodaran · volatilidad relativa acciones/bonos emergentes",
+   "corte": "2026-01-05"
+  },
+  "crp": {
+   "v": 0.032,
+   "fmt": "pct",
+   "tono": "clave",
+   "fuente": "Mirage · spread soberano de mercado × λ",
+   "corte": "2026-07-31"
+  },
+  "crp_damodaran": {
+   "v": 0.0285,
+   "fmt": "pct",
+   "tono": "nota",
+   "fuente": "Damodaran · prima país por calificación (referencia)",
+   "corte": "2026-01-05"
+  },
+  "inflacion_cop": {
+   "v": 0.0561,
+   "fmt": "pct",
+   "tono": "alerta",
+   "nota": "Inflación implícita de TES; incluye primas de liquidez e inflación. En validación frente a la encuesta de BanRep.",
+   "fuente": "Superfinanciera Formato 351 · TES pesos vs. UVR, 10 años",
+   "corte": "2026-07-31"
+  },
+  "inflacion_usd": {
+   "v": 0.0235,
+   "fmt": "pct",
+   "tono": "insumo",
+   "fuente": "FRED · T10YIE, promedio de 20 días hábiles",
+   "corte": "2026-10-07"
+  },
+  "tasa_impuesto": {
+   "v": 0.35,
+   "fmt": "pct",
+   "tono": "insumo",
+   "fuente": "Estatuto Tributario, art. 240 (tarifa general de renta)"
+  }
+ }
+}
