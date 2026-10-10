@@ -1,0 +1,9 @@
+format: jb-book
+root: intro
+chapters:
+  - file: notebooks/01_extraccion
+  - file: notebooks/02_eda
+  - file: notebooks/03_preprocesamiento
+  - file: notebooks/04_modelos_base
+  - file: notebooks/05_ajuste_fino
+  - file: notebooks/06_comparacion_estadistica

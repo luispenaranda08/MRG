@@ -15,3 +15,7 @@ CODEX-*
 CODEX-*
 logos/mirage/
 logos/concepts/
+# Motor y modelos de ML: no se publican
+ml/
+web/
+.github/

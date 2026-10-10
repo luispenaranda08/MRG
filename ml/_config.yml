@@ -1,0 +1,8 @@
+title: "Mirage · Modelos de machine learning para el costo de capital en Colombia"
+author: HyperTarget
+copyright: "2026"
+execute:
+  execute_notebooks: "off"
+repository:
+  url: https://github.com/luispenaranda08/MRG
+  path_to_book: ml

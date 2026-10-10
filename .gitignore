@@ -5,3 +5,16 @@ qa/browser-profile/
 .env*
 referencias/
 .env*
+# Datos del motor de ML (se regeneran con ml/mirage/ingest)
+ml/data/raw/
+ml/data/processed/*.parquet
+ml/data/processed/*.csv
+# Nunca publicar: datos internos (Yahoo) y salidas pesadas del ML
+ml/reports/INTERNO_*
+ml/data/processed/INTERNO_*
+ml/reports/predicciones/
+ml/reports/*.log
+# Salidas locales de Codex y del build
+CODEX-*-ultimo-mensaje.txt
+web/out/
+web/build-output.txt

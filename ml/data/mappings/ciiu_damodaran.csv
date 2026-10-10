@@ -1,0 +1,85 @@
+ciiu_division,descripcion,industria_damodaran,justificacion
+01,Agricultura y ganadería,Farming/Agriculture,Producción agropecuaria primaria
+02,Silvicultura,Paper/Forest Products,Insumo forestal de la cadena de papel y madera
+03,Pesca y acuicultura,Farming/Agriculture,Producción primaria de alimentos
+05,Extracción de carbón,Coal & Related Energy,Misma actividad
+06,Extracción de petróleo y gas,Oil/Gas (Production and Exploration),Exploración y producción
+07,Extracción de minerales metalíferos,Metals & Mining,Minería metálica (el oro se contrasta con Precious Metals)
+08,Otras minas y canteras,Metals & Mining,Minería no metálica y materiales de cantera
+09,Servicios de apoyo a la minería y petróleo,Oilfield Svcs/Equip.,Servicios a pozos y minas
+10,Elaboración de alimentos,Food Processing,Misma actividad
+11,Elaboración de bebidas,Beverage (Soft),Mayoría de empresas en bebidas no alcohólicas; contraste con Beverage (Alcoholic)
+12,Tabaco,Tobacco,Misma actividad
+13,Textiles,Apparel,Cadena textil-confección
+14,Confección de prendas,Apparel,Misma actividad
+15,Cuero y calzado,Shoe,Calzado y marroquinería
+16,Madera,Paper/Forest Products,Transformación de madera
+17,Papel y cartón,Paper/Forest Products,Misma actividad
+18,Impresión,Publishing & Newspapers,Artes gráficas e impresión
+19,Coquización y refinación de petróleo,Oil/Gas (Integrated),Refinación
+20,Sustancias químicas,Chemical (Diversified),Química básica y diversificada
+21,Productos farmacéuticos,Drugs (Pharmaceutical),Misma actividad
+22,Caucho y plástico,Packaging & Container,Mayoría plásticos de empaque; contraste con Rubber& Tires
+23,Minerales no metálicos (cemento y otros),Building Materials,Cemento concreto vidrio cerámica
+24,Metalurgia básica,Steel,Siderurgia y fundición
+25,Productos metálicos,Machinery,Metalmecánica
+26,Productos informáticos y electrónicos,Electronics (General),Misma actividad
+27,Aparatos eléctricos,Electrical Equipment,Misma actividad
+28,Maquinaria y equipo,Machinery,Misma actividad
+29,Vehículos automotores,Auto Parts,En Colombia predominan carrocerías y autopartes
+30,Otro equipo de transporte,Shipbuilding & Marine,Astilleros y otro material de transporte
+31,Muebles,Furn/Home Furnishings,Misma actividad
+32,Otras industrias manufactureras,Household Products,Manufacturas diversas de consumo
+33,Mantenimiento e instalación de maquinaria,Machinery,Servicios industriales ligados a maquinaria
+35,Energía eléctrica y gas,Utility (General),Generación transmisión distribución; contraste con Power
+36,Captación y suministro de agua,Utility (Water),Misma actividad
+37,Alcantarillado,Utility (Water),Servicio público de saneamiento
+38,Recolección y tratamiento de residuos,Environmental & Waste Services,Misma actividad
+39,Saneamiento ambiental,Environmental & Waste Services,Misma actividad
+41,Construcción de edificios,Homebuilding,Construcción de vivienda y edificaciones
+42,Obras de ingeniería civil,Engineering/Construction,Infraestructura
+43,Actividades especializadas de construcción,Engineering/Construction,Subcontratistas de construcción
+45,Comercio y reparación de vehículos,Retail (Automotive),Concesionarios y talleres
+46,Comercio al por mayor,Retail (Distributors),Distribución mayorista
+47,Comercio al por menor,Retail (General),Comercio minorista; Retail (Grocery and Food) para supermercados
+49,Transporte terrestre,Trucking,Mayoría transporte de carga por carretera
+50,Transporte acuático,Shipbuilding & Marine,Transporte marítimo y fluvial
+51,Transporte aéreo,Air Transport,Misma actividad
+52,Almacenamiento y actividades de apoyo al transporte,Transportation,Logística puertos terminales
+53,Correo y mensajería,Transportation,Mensajería y paquetería
+55,Alojamiento,Hotel/Gaming,Hotelería
+56,Restaurantes,Restaurant/Dining,Misma actividad
+58,Edición,Publishing & Newspapers,Misma actividad
+59,Cine y televisión,Entertainment,Producción audiovisual
+60,Radio y televisión,Broadcasting,Misma actividad
+61,Telecomunicaciones,Telecom. Services,Misma actividad
+62,Desarrollo de software y consultoría informática,Software (System & Application),Misma actividad
+63,Servicios de información,Information Services,Procesamiento de datos y portales
+64,Servicios financieros excepto seguros,Financial Svcs. (Non-bank & Insurance),Solo Ke; incluye holdings (contraste con Diversified)
+65,Seguros,Insurance (General),Solo Ke
+66,Actividades auxiliares financieras,Investments & Asset Management,Solo Ke
+68,Actividades inmobiliarias,Real Estate (Operations & Services),Arrendamiento y administración; Real Estate (Development) si desarrolla
+69,Actividades jurídicas y contables,Business & Consumer Services,Servicios profesionales
+70,Administración empresarial y consultoría,Business & Consumer Services,Incluye sociedades holding no financieras
+71,Arquitectura e ingeniería,Engineering/Construction,Servicios de ingeniería
+72,Investigación científica,Business & Consumer Services,Servicios profesionales especializados
+73,Publicidad y estudios de mercado,Advertising,Misma actividad
+74,Otras actividades profesionales,Business & Consumer Services,Servicios profesionales
+75,Actividades veterinarias,Healthcare Support Services,Servicios de salud animal
+77,Alquiler y arrendamiento,Business & Consumer Services,Alquiler de maquinaria y equipo
+78,Empleo,Business & Consumer Services,Servicios temporales de personal
+79,Agencias de viaje,Hotel/Gaming,Turismo
+80,Seguridad e investigación,Business & Consumer Services,Vigilancia privada
+81,Servicios a edificios y paisajismo,Business & Consumer Services,Aseo y mantenimiento
+82,Actividades administrativas de apoyo,Business & Consumer Services,Centros de llamadas y apoyo administrativo
+85,Educación,Education,Misma actividad
+86,Salud humana,Hospitals/Healthcare Facilities,IPS clínicas y hospitales
+87,Atención residencial de salud,Healthcare Support Services,Cuidado residencial
+88,Asistencia social,Healthcare Support Services,Servicios sociales
+90,Actividades creativas y artísticas,Entertainment,Misma familia
+91,Bibliotecas museos y otras culturales,Entertainment,Misma familia
+92,Juegos de azar,Hotel/Gaming,Misma actividad
+93,Deporte y recreación,Recreation,Misma actividad
+94,Asociaciones,Business & Consumer Services,Sin equivalente directo
+95,Reparación de computadores y enseres,Business & Consumer Services,Servicios de reparación
+96,Otras actividades de servicios personales,Business & Consumer Services,Servicios personales
