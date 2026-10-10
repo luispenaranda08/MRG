@@ -39,7 +39,7 @@ const F = [
     ["opx", "pyg", "Gastos operativos", "ln", /total (de )?otros gastos operativos|other operating expenses,? total|total gastos (operacionales|operativos)/],
     ["sga", "pyg", "Gastos de administración y ventas", "ln", /gastos de venta,? generales|selling,? general|^gastos de administracion|administracion y ventas/],
     ["ebit", "pyg", "Utilidad operativa (EBIT)", "sub", /^ebit$|^ebit \(|utilidad operativa|utilidad operacional|ganancia operacional|(ganancia|perdida).*actividades de operacion|operating income|resultado operativo/, /margen|margin|crecimiento/],
-    ["iexp", "pyg", "Gasto por intereses", "ln", /total de gastos de intereses|gastos? (por |de )?intereses|interest expense|^costos financieros|^gastos financieros/, /net|neto|ingreso/],
+    ["iexp", "pyg", "Gasto por intereses", "ln", /total de gastos de intereses|gastos? (por |de )?intereses|interest expense|^costos financieros|^gastos financieros|^gastos no operacionales \(financieros\)|^financieros$/, /net|neto|ingreso/],
     ["iinc", "pyg", "Ingresos financieros", "ln", /ingresos por intereses|ingresos financieros|interest (and investment )?income/],
     ["ebt", "pyg", "Utilidad antes de impuestos", "sub", /ebt incluyendo|ebt,? incl|antes de impuestos|income before (income )?tax|^ebt$/, /excepto|excl|crecimiento|margen|growth|margin/],
     ["tax", "pyg", "Impuesto de renta", "ln", /impuesto (sobre la |a la |de )?renta|income tax|impuestos? a las ganancias|gasto por impuesto|^(ingreso|gasto) \((gasto|ingreso)\) por impuestos?|^(gasto|ingreso) por impuestos?/, /diferido|antes|deferred|before/],
@@ -462,13 +462,29 @@ function pdModel(c, i) { const m = M(c, i), z = altz(c, i).z, lc = Math.log(Math
 const A = { M, altz, ratingModel, pdModel, dq };
 const RT = [[8.5, "AAA"], [6.5, "AA"], [5.5, "A+"], [4.25, "A"], [3, "A−"], [2.5, "BBB"], [2.25, "BB+"], [2, "BB"], [1.75, "B+"], [1.5, "B"], [1.25, "B−"], [0.8, "CCC"], [-1e9, "CC"]];
 const rating = icr => RT.find(t => icr >= t[0]);
+/** Advertencias para que el usuario no lea como válido un resultado que no aplica a su empresa. */
+function alertasModelo(c, s, m, x) {
+    const a = [], pct = v => (v * 100).toFixed(1).replace(".", ",") + " %";
+    if (!x.eqPos) a.push({ sev: "alta", msg: `Patrimonio ${m.eq < 0 ? "negativo" : "en cero"} en ${c.years[c.years.length - 1]}: el D/E contable no es interpretable. El WACC usa la estructura mediana del sector (D/E ${x.de.toFixed(2).replace(".", ",")}).` });
+    if (m.ebit <= 0) a.push({ sev: "alta", msg: "EBIT negativo: la valoración por flujo de caja descontado y el GAO no son representativos hasta que la operación sea rentable. Revise los supuestos de margen." });
+    if (m.debt > 0 && !m.intr) a.push({ sev: "media", msg: "Hay deuda financiera pero no se encontró el gasto por intereses: la cobertura y la calificación por cobertura no son confiables. Asigne la cuenta en «Revisar cuentas»." });
+    if (m.intr && m.debt <= 0) a.push({ sev: "media", msg: "Hay gasto financiero pero no deuda financiera: revise si la deuda está en otra cuenta (por ejemplo, otros pasivos financieros o arrendamientos)." });
+    if (x.eqPos && x.de > 3) a.push({ sev: "media", msg: `D/E de ${x.de.toFixed(2).replace(".", ",")}: con un apalancamiento tan alto la beta apalancada y el Ke se disparan; compare con la estructura del sector.` });
+    if (x.lev.gaf != null && x.lev.gaf > 10) a.push({ sev: "media", msg: "Los intereses consumen casi todo el EBIT (GAF muy alto): la empresa está cerca de no cubrir su deuda." });
+    if (x.w <= x.g) a.push({ sev: "alta", msg: `El crecimiento perpetuo (${pct(x.g)}) no es menor que el WACC (${pct(x.w)}): no hay valor terminal.` });
+    else if (x.Pj.every(p => p.fcl < 0)) a.push({ sev: "media", msg: "Todos los flujos de caja libres proyectados son negativos con estos supuestos: el valor resultante es negativo." });
+    if (s.recortes && s.recortes.length) a.push({ sev: "info", msg: s.recortes.join(" ") });
+    return a;
+}
 export function runModel(c, s, datos) {
     const SECT = () => datos.sectores.map(x => ({ n: x.nombre, bu: x.beta_desapalancada.v, de: x.de.v }));
     function model(c, s) {
         const k = LY(c), m = A.M(c, k), n = c.years.length, t = s.t / 100, fish = x => c.cur === "COP" ? ((1 + x / 100) * (1 + s.piCOP / 100) / (1 + s.piUSD / 100) - 1) * 100 : x;
-        const de = m.debt / m.eq, sect = SECT()[s.sector], bu = +s.bu, bl = bu * (1 + (1 - t) * de);
+        const sect = SECT()[s.sector], eqPos = m.eq > 0;
+        // Con patrimonio negativo o cero el D/E contable no tiene sentido: se usa la estructura mediana del sector
+        const de = eqPos ? m.debt / m.eq : sect.de, bu = +s.bu, bl = bu * (1 + (1 - t) * de);
         const keU = s.rf + bl * s.erp + s.lam * s.crp + s.size, cov = m.cov == null ? 99 : m.cov, rt = rating(cov);
-        const kdU = s.kdMode === "manual" ? +s.kd : s.kd, ke = fish(keU), kd = fish(kdU), wD = m.debt / (m.debt + m.eq), wE = 1 - wD;
+        const kdU = s.kdMode === "manual" ? +s.kd : s.kd, ke = fish(keU), kd = fish(kdU), wD = eqPos ? m.debt / (m.debt + m.eq) : de / (1 + de), wE = 1 - wD;
         const waccBU = wE * ke + wD * kd * (1 - t);
         const br = s.betaReg === "" || s.betaReg == null ? null : +s.betaReg, keReg = br != null ? fish(s.rf + br * s.erp + s.lam * s.crp) : null, waccReg = br != null ? wE * keReg + wD * kd * (1 - t) : null;
         const sDE = sect.de, sBL = sect.bu * (1 + (1 - t) * sDE), sKe = fish(s.rf + sBL * s.erp + s.lam * s.crp), sW = sKe / (1 + sDE) + sDE / (1 + sDE) * kd * (1 - t);
@@ -504,7 +520,8 @@ export function runModel(c, s, datos) {
         // EVA y riesgo
         const EV = c.years.map((y, i) => { const q = A.M(c, i); return { y, nopat: q.nopat, ic: q.ic, roic: q.roic, eva: q.nopat - w * q.ic }; });
         const az = A.altz(c, k), rm = A.ratingModel(c, k), pd = A.pdModel(c, k);
-        return { k, m, t, de, bu, bl, keU, ke, kdU, kd, rt, cov, wD, wE, waccBU, keReg, waccReg, sW, sDE, sBL, sKe, sect, wacc, w, curve, H, Pj, V, netDebt, eqv, ps, g, sens, SW, SG,
+        const alertas = alertasModelo(c, s, m, { eqPos, de, w, g, Pj, cov: m.cov, lev: { gaf } });
+        return { alertas, k, m, t, de, bu, bl, keU, ke, kdU, kd, rt, cov, wD, wE, waccBU, keReg, waccReg, sW, sDE, sBL, sKe, sect, wacc, w, curve, H, Pj, V, netDebt, eqv, ps, g, sens, SW, SG,
             lev: { cv, cf, mc, I, gao, gaf, gat: gao && gaf ? gao * gaf : null, pe, ms: (m.rev - pe) / m.rev }, upa: { Fin, kdNew, price, nA, nB, IB, ebitStar, A: upa(m.ebit, I, nA), B: upa(m.ebit, IB, nB), f: upa }, EV, az, rm, pd };
     }
     return model(c, s);
@@ -608,7 +625,8 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     const pw = (key, l, f, v, z, note) => { W.push([l, fv(f, v, z), note || ""]); WR[key] = "B" + W.length; };
     pw("D", "Deuda financiera", B("debt", L_), R.m.debt, NUM, "Balance");
     pw("E", "Patrimonio", B("eq", L_), R.m.eq, NUM, "Balance");
-    pw("de", "D/E (libros)", WR.D + "/" + WR.E, R.de, "0.000", "");
+    pw("des", "D/E mediano del sector", String(R.sDE), R.sDE, "0.000", "Mirage · " + (R.sect && R.sect.n || "sector") + "; se usa si el patrimonio no es positivo");
+    pw("de", "D/E para el WACC", "IF(" + WR.E + ">0," + WR.D + "/" + WR.E + "," + WR.des + ")", R.de, "0.000", "Libros; con patrimonio negativo o cero, el del sector");
     pw("bl", "Beta reapalancada (βL)", SU.bu + "*(1+(1-" + SU.t + ")*" + WR.de + ")", R.bl, "0.000", "Hamada");
     pw("keu", "Ke en USD", SU.rf + "+" + WR.bl + "*" + SU.erp + "+" + SU.lam + "*" + SU.crp + "+" + SU.size, R.keU / 100, PC2, "CAPM con prima país y tamaño");
     pw("kdu", "Kd en USD antes de impuestos", "IF(" + SU.kdman + ">0," + SU.kdman + "," + SU.rf + "+" + SU.lam + "*" + SU.crp + "+" + SU.spread + ")", R.kdU / 100, PC2, s.kdFuente || "Supuesto del usuario");
@@ -616,7 +634,7 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     pw("ke", "Ke en " + c.cur, "(1+" + WR.keu + ")*" + WR.fx + "-1", R.ke / 100, PC2, "");
     pw("kd", "Kd en " + c.cur, "(1+" + WR.kdu + ")*" + WR.fx + "-1", R.kd / 100, PC2, "");
     pw("kdt", "Kd después de impuestos", WR.kd + "*(1-" + SU.t + ")", R.kd / 100 * (1 - R.t), PC2, "");
-    pw("wd", "Peso de la deuda", WR.D + "/(" + WR.D + "+" + WR.E + ")", R.wD, PCT, "Valor en libros");
+    pw("wd", "Peso de la deuda", "IF(" + WR.E + ">0," + WR.D + "/(" + WR.D + "+" + WR.E + ")," + WR.de + "/(1+" + WR.de + "))", R.wD, PCT, "Valor en libros (o estructura del sector)");
     pw("we", "Peso del patrimonio", "1-" + WR.wd, R.wE, PCT, "");
     pw("wbu", "WACC con beta del sector", WR.we + "*" + WR.ke + "+" + WR.wd + "*" + WR.kdt, R.waccBU / 100, PC2, "");
     pw("ker", "Ke con beta de regresión", "IF(" + SU.beta + ">0,(1+" + SU.rf + "+" + SU.beta + "*" + SU.erp + "+" + SU.lam + "*" + SU.crp + ")*" + WR.fx + "-1,0)", R.keReg != null ? R.keReg / 100 : 0, PC2, "");
@@ -629,7 +647,7 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     const ph = (key, l, f, v, z) => { H.push([l].concat(yrs.map((y, i) => { const ff = f(i); return ff == null ? "" : fv(ff, v(i), z); }))); HR[key] = H.length; };
     const col = i => C_(1 + i);
     ph("ebit", "EBIT", i => Pq("ebit", i), i => R.H[i].ebit);
-    ph("t", "Tasa efectiva", i => "IFERROR(" + Pq("tax", i) + "/" + Pq("ebt", i) + ",0)", i => R.H[i].t, PCT);
+    ph("t", "Tasa efectiva", i => "IF(" + Pq("ebt", i) + ">0," + Pq("tax", i) + "/" + Pq("ebt", i) + ",0)", i => R.H[i].t, PCT);
     ph("uodi", "UODI = EBIT × (1 − t)", i => col(i) + HR.ebit + "*(1-" + col(i) + HR.t + ")", i => R.H[i].uodi);
     ph("da", "(+) Depreciación y amortización", i => Pq("da", i) || (Pq("ebitda", i) ? Pq("ebitda", i) + "-" + Pq("ebit", i) : "0"), i => R.H[i].da);
     ph("ar", "Cuentas por cobrar", i => G0(B("ar", i)), i => R.H[i].ar);
@@ -681,10 +699,10 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     pa("ebit", "EBIT", AR.mc + "-" + AR.cf, R.m.ebit);
     pa("pe", "Punto de equilibrio en ingresos", AR.cf + "/" + AR.pmc, R.lev.pe);
     pa("ms", "Margen de seguridad", "(" + AR.v + "-" + AR.pe + ")/" + AR.v, R.lev.ms, PCT);
-    pa("gao", "GAO = MC / EBIT", AR.mc + "/" + AR.ebit, R.lev.gao || 0, "0.000");
+    pa("gao", "GAO = MC / EBIT", "IF(" + AR.ebit + ">0," + AR.mc + "/" + AR.ebit + ",0)", R.lev.gao || 0, "0.000");
     pa("i", "Gasto por intereses", Pq("iexp", k) ? "ABS(" + Pq("iexp", k) + ")" : "0", R.lev.I);
     pa("uai", "UAI = EBIT − intereses", AR.ebit + "-" + AR.i, R.m.ebit - R.lev.I);
-    pa("gaf", "GAF = EBIT / UAI", AR.ebit + "/" + AR.uai, R.lev.gaf || 0, "0.000");
+    pa("gaf", "GAF = EBIT / UAI", "IF(" + AR.uai + ">0," + AR.ebit + "/" + AR.uai + ",0)", R.lev.gaf || 0, "0.000");
     pa("gat", "GAT = GAO × GAF", AR.gao + "*" + AR.gaf, R.lev.gat || 0, "0.000");
     AP.push([]);
     AP.push(["Comprobación: ventas × 2", "Base", "Ventas × 2"]);
@@ -693,7 +711,7 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     AP.push(["Costos variables", fv(AR.cv, R.lev.cv), fv(AR.cv + "*2", R.lev.cv * 2)]);
     AP.push(["Costos fijos", fv(AR.cf, R.lev.cf), fv(AR.cf, R.lev.cf)]);
     AP.push(["EBIT", fv("B" + b0 + "-B" + (b0 + 1) + "-B" + (b0 + 2), R.m.ebit), fv("C" + b0 + "-C" + (b0 + 1) + "-C" + (b0 + 2), R.m.rev * 2 - R.lev.cv * 2 - R.lev.cf)]);
-    AP.push(["GAO verificado = %ΔEBIT / %ΔVentas", fv("(C" + (b0 + 3) + "/B" + (b0 + 3) + "-1)/(C" + b0 + "/B" + b0 + "-1)", R.lev.gao || 0, "0.000")]);
+    AP.push(["GAO verificado = %ΔEBIT / %ΔVentas", fv("IF(B" + (b0 + 3) + ">0,(C" + (b0 + 3) + "/B" + (b0 + 3) + "-1)/(C" + b0 + "/B" + b0 + "-1),0)", R.lev.gao || 0, "0.000")]);
     add("Apalancamiento", AP, [40, 16, 16]);
     // UPA
     const u = R.upa, UP = [["UPA: deuda o emisión de acciones"], [c.name], [], ["Concepto", "Valor"]], UR = {};

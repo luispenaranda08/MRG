@@ -38,6 +38,13 @@ for (const f of fs.readdirSync(dir).filter(f => /\.(xlsx|csv)$/i.test(f)).sort()
             if (!ok) errores.push(`${k}: leído ${v} vs ${e}`);
         }
         if (!Number.isFinite(R.w)) errores.push("WACC no finito");
+        // Coherencia económica: WACC razonable y advertencias cuando el resultado no aplica
+        if (!(R.w > 0.03 && R.w < 0.4)) errores.push(`WACC fuera de rango: ${R.w}`);
+        if (!(R.wD >= 0 && R.wD <= 1)) errores.push(`peso de la deuda fuera de [0, 1]: ${R.wD}`);
+        if (m.eq <= 0 && !R.alertas.some(a => /Patrimonio/.test(a.msg))) errores.push("sin advertencia de patrimonio negativo");
+        if (m.ebit <= 0 && !R.alertas.some(a => /EBIT negativo/.test(a.msg))) errores.push("sin advertencia de EBIT negativo");
+        if (s.growth.some(g => g > 20 || g < -10)) errores.push("crecimiento proyectado sin acotar");
+        r.alertas = R.alertas.filter(a => a.sev !== "info").length;
         if (r.hojas !== 13) errores.push(`Excel con ${r.hojas} hojas`);
         r.resultado = errores.length ? "FALLA" : "OK"; r.detalle = errores.join("; ");
     } catch (e) {
@@ -46,6 +53,6 @@ for (const f of fs.readdirSync(dir).filter(f => /\.(xlsx|csv)$/i.test(f)).sort()
     if (r.resultado !== "OK") fallas++;
     filas.push(r);
 }
-for (const r of filas) console.log(`${r.resultado.padEnd(5)} ${r.archivo.padEnd(38)} ${String(r.anios ?? "").padEnd(10)} ${String(r.unidad ?? "").padEnd(9)} ${String(r.moneda ?? "").padEnd(4)} WACC ${r.wacc != null ? (r.wacc * 100).toFixed(2) + " %" : "—"}  ${r.nombre ? "«" + r.nombre + "»" : ""} ${r.detalle ?? ""}`);
+for (const r of filas) console.log(`${r.resultado.padEnd(5)} ${r.archivo.padEnd(38)} ${String(r.anios ?? "").padEnd(10)} ${String(r.unidad ?? "").padEnd(9)} ${String(r.moneda ?? "").padEnd(4)} WACC ${r.wacc != null ? (r.wacc * 100).toFixed(2) + " %" : "—"} alertas ${r.alertas ?? "—"}  ${r.nombre ? "«" + r.nombre + "»" : ""} ${r.detalle ?? ""}`);
 console.log(`\n${filas.length - fallas}/${filas.length} archivos leídos correctamente.`);
 process.exitCode = fallas ? 1 : 0;
