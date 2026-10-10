@@ -669,7 +669,9 @@ function suggest(text){
     if(!co)CO().forEach(k=>{if(norm(E[k].name).indexOf(nf_)>-1||k.indexOf(fn)===0)out.push({co:k,code:"FA",label:E[k].name+" · Análisis vertical y horizontal"});});
     const sq=norm(raw.replace(/^wacc\s*/i,""));if(sq.length>1)api.S.forEach((s,i)=>{if(norm(s.n+" "+s.c).indexOf(sq)>-1)out.push({sector:i,code:"WACC",label:"WACC · "+s.n+" · "+s.c});});
   }
-  return out.slice(0,9);
+  const on=v=>(api.views||[]).indexOf(v)>-1;
+  return out.filter(s=>{if(s.sector!=null)return on("wacc");const t=T(s.code);if(!t)return false;
+    if(t.code==="PRES")return on("fa");return t.kind==="vista"?on(t.go):on("ga");}).slice(0,9);
 }
 function drawList(){
   if(!sugg.length){list.hidden=true;q.setAttribute("aria-expanded","false");return;}

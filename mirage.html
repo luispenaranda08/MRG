@@ -227,14 +227,10 @@ td.rng svg{display:block}
     <button type="button" data-view="wacc" aria-current="page"><span class="fn">WACC</span>Costo de capital</button>
     <button type="button" data-view="calc"><span class="fn">CALC</span>Calculadora</button>
     <button type="button" data-view="dx"><span class="fn">DX</span>Tu empresa</button>
-    <button type="button" data-view="fa"><span class="fn">FA</span>Análisis V/H</button>
-    <button type="button" data-view="ga"><span class="fn">GA</span>Gerencia Analítica</button>
-    <button type="button" data-view="macro"><span class="fn">ECO</span>Macro</button>
-    <button type="button" data-view="method"><span class="fn">DOC</span>Método y fuentes</button>
   </nav>
   <div class="cmd" id="cmd">
     <span class="cmd-ctx num" id="cmd-ctx" title="Empresa activa">TGLS</span>
-    <input id="q" type="text" autocomplete="off" spellcheck="false" placeholder="Comando: TGLS FA · ALTZ · WACC energía" aria-label="Línea de comandos" role="combobox" aria-expanded="false" aria-controls="cmd-list" aria-autocomplete="list">
+    <input id="q" type="text" autocomplete="off" spellcheck="false" placeholder="Buscar sector: WACC energía" aria-label="Línea de comandos" role="combobox" aria-expanded="false" aria-controls="cmd-list" aria-autocomplete="list">
     <kbd>Ctrl K</kbd>
     <div class="cmd-list" id="cmd-list" role="listbox" hidden></div>
   </div>
@@ -302,7 +298,7 @@ td.rng svg{display:block}
         <h3>Cómo se calculó</h3>
         <div class="sub">Método de abajo hacia arriba</div>
         <div class="steps" id="d-steps"></div>
-        <div class="linkrow"><button type="button" class="btn ghost" data-go="calc">Calcular para una empresa →</button><button type="button" class="btn ghost" data-tool="BETA">Betas y pares</button></div>
+        <div class="linkrow"><button type="button" class="btn ghost" data-go="calc">Calcular para una empresa →</button></div>
       </div>
       <div class="memo">
         <svg width="30" height="30" fill="#FFFFFF" aria-hidden="true"><use href="#ft"/></svg>
@@ -493,7 +489,7 @@ CAGR      = (partida(2025) / partida(2021))^(1/4) − 1</div></section>
 </div>
 <div class="print-deck" id="print-deck" aria-hidden="true"></div>
 <div class="tip" id="tip" hidden></div>
-<nav class="mnav" aria-label="Secciones principales"><button type="button" data-view="wacc"><span>WACC</span>Capital</button><button type="button" data-view="dx"><span>DX</span>Tu empresa</button><button type="button" data-view="fa"><span>FA</span>Análisis</button><button type="button" data-view="ga"><span>GA</span>Herramientas</button><button type="button" data-view="calc"><span>CALC</span>Calculadora</button></nav>
+<nav class="mnav" aria-label="Secciones principales"><button type="button" data-view="wacc"><span>WACC</span>Capital</button><button type="button" data-view="dx"><span>DX</span>Tu empresa</button><button type="button" data-view="calc"><span>CALC</span>Calculadora</button></nav>
 
 <script>
 (function(){
@@ -673,7 +669,9 @@ function renderSources(){
 $("source-query").addEventListener("input",renderSources);
 
 /* ---------- Navegación ---------- */
-var VIEWS=["wacc","calc","dx","fa","ga","macro","method"],ALIAS={sector:"wacc",compare:"ga",issuers:"fa",data:"method"},hooks={};
+/* Vistas publicadas. FA, GA, ECO y DOC siguen en el código pero ocultas:
+   para volver a mostrarlas, agregarlas aquí y devolver sus botones a la barra. */
+var VIEWS=["wacc","calc","dx"],ALIAS={sector:"wacc",compare:"ga",issuers:"fa",data:"method"},hooks={};
 function show(v){
   v=ALIAS[v]||v;if(VIEWS.indexOf(v)<0)v="wacc";
   document.querySelectorAll(".view").forEach(function(s){s.hidden=s.id!=="v-"+v;});
@@ -687,7 +685,7 @@ document.querySelectorAll(".nav button,.mnav button").forEach(function(b){b.addE
 document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){if(b.dataset.go==="calc")sel.value=String(st.sel);show(b.dataset.go);});});
 function renderAll(){renderKPIs();renderTable();if(!$("v-macro").hidden)renderMacro();if(hooks.cur)hooks.cur();}
 renderAll();renderCalc();renderSources();
-window.FinTargetMockup={show:show,st:st,S:S,P:P,calc:calc,conv:conv,rowsData:rowsData,renderAll:renderAll,renderTable:renderTable,fx:fx,esc:esc,median:median,download:download,hooks:hooks,initial:(location.hash||"").slice(1)};
+window.FinTargetMockup={views:VIEWS,show:show,st:st,S:S,P:P,calc:calc,conv:conv,rowsData:rowsData,renderAll:renderAll,renderTable:renderTable,fx:fx,esc:esc,median:median,download:download,hooks:hooks,initial:(location.hash||"").slice(1)};
 })();
 </script>
 <script src="fuentes-validacion.js"></script>
