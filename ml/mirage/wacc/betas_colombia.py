@@ -10,9 +10,9 @@ Método por sector CIIU (división):
 1. Ancla: beta desapalancada corregida por caja de la industria emergente equivalente (βu ancla).
 2. Estructura de capital colombiana: D/E contable (deuda financiera / patrimonio) de las empresas del
    sector, en total y por tamaño (Ley 905 de 2004: activos en SMMLV).
-3. Riesgo operativo propio: βu de cada empresa = βu ancla × (σROA empresa / σROA sector)^w, con el σ de
-   cada empresa encogido hacia su sector y w estimado entre sectores (elasticidad del riesgo operativo
-   colombiano frente a la beta de mercado de la industria).
+3. (Desde v1.0.0 ya no se aplica.) Ajuste por riesgo operativo propio: βu ancla × (σROA empresa / σROA
+   sector)^w. La validación fuera de muestra mostró que no mejora a la beta de la industria y añade ruido;
+   queda disponible con ``ajuste_riesgo=True`` solo para investigación.
 4. Re-apalancamiento con Hamada y la tarifa marginal de renta (35 %).
 5. Beta total para dueños no diversificados: β apalancada / correlación media con el mercado
    (Damodaran, emergentes).
@@ -70,7 +70,7 @@ def anclas() -> pd.DataFrame:
                              "beta_u_ajustada_caja": "bu_ancla"})
 
 
-def firmas(anio: int | None = None) -> tuple[pd.DataFrame, dict]:
+def firmas(anio: int | None = None, ajuste_riesgo: bool = False) -> tuple[pd.DataFrame, dict]:
     """βu y βL por empresa (insumo interno; no se publica por empresa)."""
     panel = pd.read_parquet(PROCESSED / "supersociedades_panel_2016_2025.parquet")
     anio = anio or int(panel["anio"].max())
@@ -86,11 +86,11 @@ def firmas(anio: int | None = None) -> tuple[pd.DataFrame, dict]:
     ult = ult.join(a[["bu_ancla", "industria_damodaran", "correlacion"]], on="ciiu_division")
     ult = ult[ult["bu_ancla"].notna()]
     rel = (ult["sd_roa_enc"] / ult["sd_roa_sector"]).where(lambda s: s > 0, 1.0).fillna(1.0)
-    ult["bu_empresa"] = ult["bu_ancla"] * rel ** el["w"]
+    ult["bu_empresa"] = ult["bu_ancla"] * rel ** el["w"] if ajuste_riesgo else ult["bu_ancla"]
     ult["de"] = ult["d_e_contable"].clip(0, 10).fillna(0)
     ult["bl_ancla"] = relever(ult["bu_ancla"], ult["de"], TARIFA)
     ult["bl_empresa"] = relever(ult["bu_empresa"], ult["de"], TARIFA)
-    return ult, el | {"anio": anio}
+    return ult, el | {"anio": anio, "ajuste_riesgo": ajuste_riesgo}
 
 
 def tabla_sectorial(min_empresas: int = 30) -> tuple[pd.DataFrame, pd.DataFrame, dict]:

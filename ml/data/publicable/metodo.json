@@ -7,5 +7,6 @@
  "p_spearman": 0.0011513301722861293,
  "sectores": 64,
  "anio": 2025,
+ "ajuste_riesgo": 0,
  "corte_damodaran": "2026-01-05"
 }

@@ -35,10 +35,10 @@ from mirage.wacc import betas_colombia as BC
 from mirage.wacc.betas import relever
 
 API = Path(os.environ.get("MIRAGE_API_DIR", ROOT.parent / "web" / "public" / "api" / "v1"))
-VERSION = "1.0-preliminar"
-ESTADO = "Metodología en revisión"
-AVISO = ("Metodología en revisión: la versión 1.0 está en validación con expertos financieros. Cifras agregadas por sector, construidas con "
-         "fuentes públicas verificables. No constituyen asesoría de inversión.")
+VERSION = "1.0.0"
+ESTADO = None  # sin etiqueta de revisión desde la v1.0.0
+AVISO = ("Mirage v1.0.0. Cifras agregadas por sector y tamaño, construidas con fuentes públicas verificables y actualizadas "
+         "cada semana. No constituyen asesoría de inversión.")
 TARIFA = 0.35
 UMBRAL_VAR = {"pct": 0.0005, "x": 0.005, "pp": 0.0005}   # variaciones menores se consideran neutras
 
@@ -243,11 +243,9 @@ def sectores(v: dict, anterior: dict | None) -> dict:
                           "beta_apalancada": celda(r.bl_damodaran, "x", "nota"),
                           "diferencia_mirage_vs_damodaran": celda(dif_dam, "x", "sube" if dif_dam > 0.005 else "baja" if dif_dam < -0.005 else "neutro")},
         })
-    metodo = {"elasticidad_riesgo_operativo": round(info["w"], 4), "r2_elasticidad": round(info["r2"], 4),
-              "anio_estados_financieros": info["anio"], "corte_damodaran": info["corte_damodaran"], "ventana_kd": ventana,
-              "pasos": ["βu ancla: industria emergente equivalente (Damodaran, corregida por caja)",
-                        "Ajuste por riesgo operativo de cada empresa (σ del ROA, Supersociedades)",
-                        "Re-apalancamiento con el D/E contable de las empresas colombianas del sector",
+    metodo = {"version": VERSION, "anio_estados_financieros": info["anio"], "corte_damodaran": info["corte_damodaran"], "ventana_kd": ventana,
+              "pasos": ["βu: industria emergente equivalente de Damodaran, corregida por caja (mapeo CIIU Rev. 4 ↔ Damodaran)",
+                        "Re-apalancamiento con Hamada y el D/E contable de cada empresa colombiana del sector (Supersociedades); se publican medianas y cuartiles por sector y tamaño",
                         "Kd: tasa efectiva de los créditos comerciales nuevos del sector (Superfinanciera, formato 88)",
                         "Ke en USD = Rf + β × ERP + prima país; paso a COP por paridad de Fisher"]}
     return {"sectores": sorted(filas, key=lambda s: -s["empresas"]["v"]), "metodo": metodo}
@@ -269,7 +267,7 @@ def main() -> None:
             break
     p, v = parametros()
     s = sectores(v, anterior)
-    meta = {"version": VERSION, "estado": ESTADO, "corte": corte, "generado": dt.datetime.now().isoformat(timespec="seconds"), "aviso": AVISO,
+    meta = {"version": VERSION, **({"estado": ESTADO} if ESTADO else {}), "corte": corte, "generado": dt.datetime.now().isoformat(timespec="seconds"), "aviso": AVISO,
             "corte_anterior": anterior.get("corte") if anterior else None,
             "fuentes": [
                 {"id": "supersociedades", "nombre": "Supersociedades · Estados financieros NIIF", "url": "https://www.datos.gov.co/resource/pfdp-zks5", "licencia": "Datos abiertos del Estado colombiano"},

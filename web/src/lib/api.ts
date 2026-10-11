@@ -94,8 +94,8 @@ export interface Sector {
     };
 }
 export interface Metodo {
-    elasticidad_riesgo_operativo: number;
-    r2_elasticidad: number;
+    elasticidad_riesgo_operativo?: number;
+    r2_elasticidad?: number;
     anio_estados_financieros: number;
     corte_damodaran: string;
     ventana_kd: string[];

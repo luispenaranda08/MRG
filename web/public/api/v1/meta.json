@@ -1,9 +1,8 @@
 {
- "version": "1.0-preliminar",
- "estado": "Metodología en revisión",
+ "version": "1.0.0",
  "corte": "2026-10-10",
- "generado": "2026-10-10T16:05:22",
- "aviso": "Metodología en revisión: la versión 1.0 está en validación con expertos financieros. Cifras agregadas por sector, construidas con fuentes públicas verificables. No constituyen asesoría de inversión.",
+ "generado": "2026-10-10T20:17:36",
+ "aviso": "Mirage v1.0.0. Cifras agregadas por sector y tamaño, construidas con fuentes públicas verificables y actualizadas cada semana. No constituyen asesoría de inversión.",
  "corte_anterior": null,
  "fuentes": [
   {

@@ -21,12 +21,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4571,
+     "v": 0.5898,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7608,
+     "v": 0.5898,
      "fmt": "x",
      "tono": "nota"
     }
@@ -49,24 +49,24 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.5915,
+    "v": 0.5898,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.4737,
+     "v": 0.5898,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8201,
+     "v": 0.5979,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.1254,
+    "v": 4.1138,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
@@ -93,12 +93,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.1381,
+     "v": 0.1432,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1532,
+     "v": 0.1435,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -109,12 +109,12 @@
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0825,
+    "v": 0.0824,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0825,
+    "v": 0.0824,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -170,7 +170,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5925,
+      "v": 0.5898,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -192,7 +192,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6248,
+      "v": 0.5899,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -236,7 +236,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.2334,
+     "v": -0.2351,
      "fmt": "x",
      "tono": "baja"
     }
@@ -262,12 +262,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4651,
+     "v": 0.5327,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.5912,
+     "v": 0.5327,
      "fmt": "x",
      "tono": "nota"
     }
@@ -290,30 +290,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6007,
+    "v": 0.5684,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5319,
+     "v": 0.5327,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7582,
+     "v": 0.7128,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.6711,
+    "v": 4.42,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1436,
+    "v": 0.1422,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -328,34 +328,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.139,
+    "v": 0.1378,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1363,
+     "v": 0.1364,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1453,
+     "v": 0.1435,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1039,
+    "v": 0.1026,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0785,
+    "v": 0.0773,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0785,
+    "v": 0.0773,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -389,7 +389,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5878,
+      "v": 0.5505,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -411,7 +411,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5986,
+      "v": 0.5695,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -433,7 +433,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6276,
+      "v": 0.5948,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -477,7 +477,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.2364,
+     "v": -0.2687,
      "fmt": "x",
      "tono": "baja"
     }
@@ -503,12 +503,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.7734,
+     "v": 0.8902,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0003,
+     "v": 0.8902,
      "fmt": "x",
      "tono": "nota"
     }
@@ -531,30 +531,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.9901,
+    "v": 0.9254,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.8653,
+     "v": 0.8902,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2457,
+     "v": 1.1274,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.7139,
+    "v": 5.3407,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1606,
+    "v": 0.1578,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -569,34 +569,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1568,
+    "v": 0.1542,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1517,
+     "v": 0.1527,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1674,
+     "v": 0.1625,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1211,
+    "v": 0.1186,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0954,
+    "v": 0.0929,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0954,
+    "v": 0.0929,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -630,7 +630,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9786,
+      "v": 0.9072,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -652,7 +652,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.995,
+      "v": 0.9378,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -674,7 +674,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0615,
+      "v": 0.9954,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -718,7 +718,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1121,
+     "v": -0.1768,
      "fmt": "x",
      "tono": "baja"
     }
@@ -744,12 +744,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.3948,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.5979,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     }
@@ -772,30 +772,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.5486,
+    "v": 0.5082,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.4293,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7294,
+     "v": 0.5941,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 3.8876,
+    "v": 3.6011,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1414,
+    "v": 0.1396,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -810,34 +810,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.14,
+    "v": 0.1383,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.135,
+     "v": 0.1379,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1477,
+     "v": 0.1419,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1048,
+    "v": 0.1032,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0794,
+    "v": 0.0778,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0794,
+    "v": 0.0778,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -871,7 +871,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5409,
+      "v": 0.4985,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -893,7 +893,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5352,
+      "v": 0.5072,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -915,7 +915,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5877,
+      "v": 0.5296,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -959,7 +959,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1365,
+     "v": -0.1769,
      "fmt": "x",
      "tono": "baja"
     }
@@ -985,12 +985,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5223,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7109,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1013,30 +1013,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6576,
+    "v": 0.6221,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5748,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8367,
+     "v": 0.7161,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4312,
+    "v": 4.1919,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1461,
+    "v": 0.1446,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -1051,34 +1051,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1451,
+    "v": 0.1435,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1415,
+     "v": 0.1432,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1527,
+     "v": 0.1476,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1097,
+    "v": 0.1082,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0842,
+    "v": 0.0828,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0842,
+    "v": 0.0828,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -1112,7 +1112,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6555,
+      "v": 0.613,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1134,7 +1134,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6614,
+      "v": 0.6281,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1156,7 +1156,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6691,
+      "v": 0.6559,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1200,7 +1200,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.5311,
+     "v": -0.5666,
      "fmt": "x",
      "tono": "baja"
     }
@@ -1226,12 +1226,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4005,
+     "v": 0.5059,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.609,
+     "v": 0.5059,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1254,30 +1254,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6073,
+    "v": 0.5213,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.4803,
+     "v": 0.5059,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8527,
+     "v": 0.7274,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4446,
+    "v": 3.8156,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1439,
+    "v": 0.1402,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -1292,34 +1292,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1415,
+    "v": 0.1379,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1362,
+     "v": 0.1373,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1517,
+     "v": 0.1465,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1062,
+    "v": 0.1028,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0808,
+    "v": 0.0774,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0808,
+    "v": 0.0774,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -1353,7 +1353,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5334,
+      "v": 0.5059,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1375,7 +1375,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5709,
+      "v": 0.5085,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1397,7 +1397,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7031,
+      "v": 0.6748,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1441,7 +1441,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1301,
+     "v": -0.2161,
      "fmt": "x",
      "tono": "baja"
     }
@@ -1467,12 +1467,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9592,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2286,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1501,12 +1501,12 @@
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0101,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.378,
+     "v": 1.12,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1539,12 +1539,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.1615,
+     "v": 0.1659,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1776,
+     "v": 0.1663,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -1708,12 +1708,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5288,
+     "v": 0.6083,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6748,
+     "v": 0.6083,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1736,30 +1736,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.7683,
+    "v": 0.7131,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.6083,
+     "v": 0.612,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.97,
+     "v": 0.9485,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.334,
+    "v": 4.9504,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.151,
+    "v": 0.1485,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -1774,34 +1774,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1392,
+    "v": 0.1373,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1336,
+     "v": 0.1338,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1461,
+     "v": 0.1454,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.104,
+    "v": 0.1022,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0786,
+    "v": 0.0768,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0786,
+    "v": 0.0768,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -1835,7 +1835,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6984,
+      "v": 0.6324,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1857,7 +1857,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7644,
+      "v": 0.704,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1879,7 +1879,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8014,
+      "v": 0.752,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -1923,9 +1923,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0097,
+     "v": -0.0455,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -1949,12 +1949,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5113,
+     "v": 0.5828,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6511,
+     "v": 0.5828,
      "fmt": "x",
      "tono": "nota"
     }
@@ -1977,30 +1977,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6923,
+    "v": 0.6385,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5786,
+     "v": 0.5828,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8863,
+     "v": 0.8397,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.976,
+    "v": 4.5892,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1476,
+    "v": 0.1453,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2015,34 +2015,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.141,
+    "v": 0.139,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1367,
+     "v": 0.1369,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1484,
+     "v": 0.1466,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1058,
+    "v": 0.1038,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0804,
+    "v": 0.0785,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0804,
+    "v": 0.0785,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -2076,7 +2076,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6407,
+      "v": 0.6053,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2098,7 +2098,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6954,
+      "v": 0.6263,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2120,7 +2120,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7781,
+      "v": 0.7832,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2164,7 +2164,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1726,
+     "v": -0.2264,
      "fmt": "x",
      "tono": "baja"
     }
@@ -2190,12 +2190,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9202,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2414,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -2218,30 +2218,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.1242,
+    "v": 1.1108,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9806,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4376,
+     "v": 1.1932,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.1309,
+    "v": 7.046,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1665,
+    "v": 0.1659,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2256,34 +2256,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1665,
+    "v": 0.1659,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1602,
+     "v": 0.1659,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1802,
+     "v": 0.1695,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1305,
+    "v": 0.1299,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1045,
+    "v": 0.1039,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1045,
+    "v": 0.1039,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -2317,7 +2317,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1132,
+      "v": 1.1108,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2339,7 +2339,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1197,
+      "v": 1.1108,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2361,7 +2361,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1375,
+      "v": 1.1118,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2405,7 +2405,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.097,
+     "v": -0.1104,
      "fmt": "x",
      "tono": "baja"
     }
@@ -2431,12 +2431,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5227,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6858,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     }
@@ -2459,30 +2459,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6549,
+    "v": 0.6207,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5878,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7896,
+     "v": 0.7028,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4132,
+    "v": 4.1829,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.146,
+    "v": 0.1445,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2497,34 +2497,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1451,
+    "v": 0.1436,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1422,
+     "v": 0.1433,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1508,
+     "v": 0.1471,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1097,
+    "v": 0.1083,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0842,
+    "v": 0.0828,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0842,
+    "v": 0.0828,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -2558,7 +2558,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6508,
+      "v": 0.6136,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2580,7 +2580,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6519,
+      "v": 0.6224,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2602,7 +2602,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.72,
+      "v": 0.6775,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2646,7 +2646,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.5337,
+     "v": -0.5679,
      "fmt": "x",
      "tono": "baja"
     }
@@ -2672,12 +2672,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.4912,
+     "v": 1.6397,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.7507,
+     "v": 1.6397,
      "fmt": "x",
      "tono": "nota"
     }
@@ -2700,7 +2700,7 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.6851,
+    "v": 1.6573,
     "fmt": "x",
     "tono": "clave"
    },
@@ -2711,19 +2711,19 @@
      "tono": "nota"
     },
     {
-     "v": 2.0307,
+     "v": 1.8643,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 8.8348,
+    "v": 8.689,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.191,
+    "v": 0.1898,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2738,7 +2738,7 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1901,
+    "v": 0.1889,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2749,23 +2749,23 @@
      "tono": "nota"
     },
     {
-     "v": 0.2049,
+     "v": 0.1977,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1533,
+    "v": 0.1522,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1268,
+    "v": 0.1257,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1268,
+    "v": 0.1257,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -2799,7 +2799,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6958,
+      "v": 1.6485,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2821,7 +2821,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6688,
+      "v": 1.6573,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2843,7 +2843,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.7269,
+      "v": 1.7106,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -2887,7 +2887,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0107,
+     "v": -0.0385,
      "fmt": "x",
      "tono": "baja"
     }
@@ -2913,12 +2913,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5035,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6907,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     }
@@ -2941,30 +2941,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6633,
+    "v": 0.6322,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5757,
+     "v": 0.6129,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8111,
+     "v": 0.7331,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4699,
+    "v": 4.26,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1464,
+    "v": 0.145,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -2979,34 +2979,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1441,
+    "v": 0.1428,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1405,
+     "v": 0.142,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1503,
+     "v": 0.147,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1088,
+    "v": 0.1076,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0833,
+    "v": 0.0821,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0833,
+    "v": 0.0821,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -3040,7 +3040,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.681,
+      "v": 0.6172,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3062,7 +3062,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6573,
+      "v": 0.6388,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3084,7 +3084,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6384,
+      "v": 0.6516,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3128,7 +3128,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.5253,
+     "v": -0.5565,
      "fmt": "x",
      "tono": "baja"
     }
@@ -3154,12 +3154,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.503,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6509,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     }
@@ -3182,30 +3182,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6164,
+    "v": 0.5849,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5502,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8055,
+     "v": 0.6685,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4076,
+    "v": 4.1826,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1443,
+    "v": 0.1429,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -3220,34 +3220,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1437,
+    "v": 0.1423,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1408,
+     "v": 0.1421,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1518,
+     "v": 0.1459,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1083,
+    "v": 0.107,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0829,
+    "v": 0.0816,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0829,
+    "v": 0.0816,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -3281,7 +3281,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6303,
+      "v": 0.5827,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3303,7 +3303,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6004,
+      "v": 0.5839,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3325,7 +3325,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6206,
+      "v": 0.6291,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3369,7 +3369,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1344,
+     "v": -0.1659,
      "fmt": "x",
      "tono": "baja"
     }
@@ -3395,12 +3395,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.7427,
+     "v": 0.8594,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9816,
+     "v": 0.8594,
      "fmt": "x",
      "tono": "nota"
     }
@@ -3423,30 +3423,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.9676,
+    "v": 0.914,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.83,
+     "v": 0.8599,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1897,
+     "v": 1.0942,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.1753,
+    "v": 4.8884,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1596,
+    "v": 0.1573,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -3461,34 +3461,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1546,
+    "v": 0.1524,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1491,
+     "v": 0.1503,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1634,
+     "v": 0.1596,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1189,
+    "v": 0.1169,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0932,
+    "v": 0.0912,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0932,
+    "v": 0.0912,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -3522,7 +3522,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8943,
+      "v": 0.9072,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3544,7 +3544,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9493,
+      "v": 0.9073,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3566,7 +3566,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9932,
+      "v": 0.9191,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3610,7 +3610,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0702,
+     "v": -0.1238,
      "fmt": "x",
      "tono": "baja"
     }
@@ -3636,12 +3636,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5314,
+     "v": 0.6124,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6849,
+     "v": 0.6124,
      "fmt": "x",
      "tono": "nota"
     }
@@ -3664,30 +3664,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.7024,
+    "v": 0.6779,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.6124,
+     "v": 0.6153,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8759,
+     "v": 0.8538,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4912,
+    "v": 4.3346,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1481,
+    "v": 0.147,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -3702,34 +3702,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1409,
+    "v": 0.14,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1375,
+     "v": 0.1376,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1474,
+     "v": 0.1465,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1057,
+    "v": 0.1048,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0802,
+    "v": 0.0794,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0802,
+    "v": 0.0794,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -3763,7 +3763,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6838,
+      "v": 0.6546,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3785,7 +3785,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7031,
+      "v": 0.6727,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3807,7 +3807,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7009,
+      "v": 0.7097,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -3851,7 +3851,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0774,
+     "v": -0.1019,
      "fmt": "x",
      "tono": "baja"
     }
@@ -3877,12 +3877,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5661,
+     "v": 0.6662,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.762,
+     "v": 0.6662,
      "fmt": "x",
      "tono": "nota"
     }
@@ -3905,30 +3905,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.7763,
+    "v": 0.7538,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.6662,
+     "v": 0.6679,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0101,
+     "v": 0.9526,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.6485,
+    "v": 5.485,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1513,
+    "v": 0.1503,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -3943,34 +3943,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.143,
+    "v": 0.1422,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.139,
+     "v": 0.1391,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1515,
+     "v": 0.1494,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1077,
+    "v": 0.1069,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0823,
+    "v": 0.0815,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0823,
+    "v": 0.0815,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -4004,7 +4004,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7564,
+      "v": 0.7008,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4026,7 +4026,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7719,
+      "v": 0.7538,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4048,7 +4048,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8367,
+      "v": 0.9458,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4092,9 +4092,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0024,
+     "v": -0.0248,
      "fmt": "x",
-     "tono": "neutro"
+     "tono": "baja"
     }
    }
   },
@@ -4118,12 +4118,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9403,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2472,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -4152,12 +4152,12 @@
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0146,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.3808,
+     "v": 1.1147,
      "fmt": "x",
      "tono": "nota"
     }
@@ -4190,12 +4190,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.1617,
+     "v": 0.1659,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1777,
+     "v": 0.1661,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -4359,12 +4359,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.2797,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.7454,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     }
@@ -4387,30 +4387,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.7244,
+    "v": 1.5894,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.4253,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 2.0906,
+     "v": 1.9657,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.7354,
+    "v": 7.1301,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1927,
+    "v": 0.1868,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -4425,34 +4425,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.184,
+    "v": 0.1786,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1721,
+     "v": 0.1749,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1986,
+     "v": 0.1936,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1475,
+    "v": 0.1423,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1211,
+    "v": 0.116,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1211,
+    "v": 0.116,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -4486,7 +4486,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.732,
+      "v": 1.5515,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4508,7 +4508,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6797,
+      "v": 1.6088,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4530,7 +4530,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.7295,
+      "v": 1.7085,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4574,9 +4574,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.1102,
+     "v": -0.0247,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -4600,12 +4600,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9436,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2544,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -4628,30 +4628,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2668,
+    "v": 1.1491,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.092,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6544,
+     "v": 1.4521,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 8.0355,
+    "v": 7.2886,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1727,
+    "v": 0.1676,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -4666,34 +4666,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1687,
+    "v": 0.1638,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1615,
+     "v": 0.1623,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1848,
+     "v": 0.1764,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1327,
+    "v": 0.1279,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1066,
+    "v": 0.102,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1066,
+    "v": 0.102,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -4727,7 +4727,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2222,
+      "v": 1.1108,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4749,7 +4749,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2053,
+      "v": 1.1639,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4771,7 +4771,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6332,
+      "v": 1.4889,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4815,9 +4815,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0456,
+     "v": -0.0722,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -4841,12 +4841,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6601,
+     "v": 0.7938,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8877,
+     "v": 0.7938,
      "fmt": "x",
      "tono": "nota"
     }
@@ -4869,30 +4869,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.8366,
+    "v": 0.7984,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.7154,
+     "v": 0.7938,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0325,
+     "v": 0.9194,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.4539,
+    "v": 5.2046,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1539,
+    "v": 0.1523,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -4907,34 +4907,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1533,
+    "v": 0.1517,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1481,
+     "v": 0.1515,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1618,
+     "v": 0.1569,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1177,
+    "v": 0.1161,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0921,
+    "v": 0.0905,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0921,
+    "v": 0.0905,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -4968,7 +4968,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8245,
+      "v": 0.797,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -4990,7 +4990,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7994,
+      "v": 0.7938,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5012,7 +5012,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9941,
+      "v": 0.874,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5056,7 +5056,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.2606,
+     "v": -0.2989,
      "fmt": "x",
      "tono": "baja"
     }
@@ -5082,12 +5082,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9895,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2749,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -5110,30 +5110,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.1949,
+    "v": 1.1171,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0559,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4482,
+     "v": 1.2856,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.5793,
+    "v": 7.0861,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1696,
+    "v": 0.1662,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -5148,34 +5148,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1691,
+    "v": 0.1657,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1631,
+     "v": 0.1654,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.18,
+     "v": 0.173,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.133,
+    "v": 0.1297,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.107,
+    "v": 0.1038,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.107,
+    "v": 0.1038,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -5209,7 +5209,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2085,
+      "v": 1.1151,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5231,7 +5231,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1344,
+      "v": 1.1155,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5253,7 +5253,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2905,
+      "v": 1.2767,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5297,7 +5297,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0263,
+     "v": -0.1041,
      "fmt": "x",
      "tono": "baja"
     }
@@ -5323,12 +5323,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.7348,
+     "v": 0.818,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8817,
+     "v": 0.818,
      "fmt": "x",
      "tono": "nota"
     }
@@ -5351,30 +5351,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.9265,
+    "v": 0.8775,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.818,
+     "v": 0.8181,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1565,
+     "v": 1.099,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.1185,
+    "v": 5.7945,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1579,
+    "v": 0.1557,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -5389,7 +5389,7 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1524,
+    "v": 0.1505,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -5400,23 +5400,23 @@
      "tono": "nota"
     },
     {
-     "v": 0.1615,
+     "v": 0.1592,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1169,
+    "v": 0.115,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0912,
+    "v": 0.0894,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0912,
+    "v": 0.0894,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -5450,7 +5450,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9359,
+      "v": 0.8611,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5472,7 +5472,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9374,
+      "v": 0.8723,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5494,7 +5494,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9175,
+      "v": 0.9638,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5538,9 +5538,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0372,
+     "v": -0.0119,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -5564,12 +5564,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.71,
+     "v": 0.8907,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0405,
+     "v": 0.8907,
      "fmt": "x",
      "tono": "nota"
     }
@@ -5592,30 +5592,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0183,
+    "v": 0.9533,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.8326,
+     "v": 0.8921,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2344,
+     "v": 1.1128,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.8578,
+    "v": 5.4837,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1619,
+    "v": 0.159,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -5630,34 +5630,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1545,
+    "v": 0.1519,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1472,
+     "v": 0.1495,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.163,
+     "v": 0.1582,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1188,
+    "v": 0.1164,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0931,
+    "v": 0.0907,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0931,
+    "v": 0.0907,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -5691,7 +5691,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9034,
+      "v": 0.9229,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5713,7 +5713,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0223,
+      "v": 0.96,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5735,7 +5735,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1166,
+      "v": 1.0143,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5779,7 +5779,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0392,
+     "v": -0.1043,
      "fmt": "x",
      "tono": "baja"
     }
@@ -5805,12 +5805,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.1149,
+     "v": 1.281,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.3704,
+     "v": 1.281,
      "fmt": "x",
      "tono": "nota"
     }
@@ -5833,30 +5833,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.3723,
+    "v": 1.3235,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.2362,
+     "v": 1.281,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.7433,
+     "v": 1.657,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 9.0544,
+    "v": 8.7329,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1773,
+    "v": 0.1752,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -5871,34 +5871,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1735,
+    "v": 0.1715,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1679,
+     "v": 0.1697,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1889,
+     "v": 0.1853,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1373,
+    "v": 0.1353,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1112,
+    "v": 0.1092,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1112,
+    "v": 0.1092,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -5932,7 +5932,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.3859,
+      "v": 1.2993,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5954,7 +5954,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.3724,
+      "v": 1.3643,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -5976,7 +5976,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.281,
+      "v": 1.3163,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6020,7 +6020,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1717,
+     "v": -0.2205,
      "fmt": "x",
      "tono": "baja"
     }
@@ -6046,12 +6046,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.3291,
+     "v": 0.3674,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.392,
+     "v": 0.3674,
      "fmt": "x",
      "tono": "nota"
     }
@@ -6074,7 +6074,7 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.3886,
+    "v": 0.3684,
     "fmt": "x",
     "tono": "clave"
    },
@@ -6085,19 +6085,19 @@
      "tono": "nota"
     },
     {
-     "v": 0.5058,
+     "v": 0.458,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 3.1452,
+    "v": 2.9817,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1344,
+    "v": 0.1335,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -6112,7 +6112,7 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1342,
+    "v": 0.1334,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -6123,23 +6123,23 @@
      "tono": "nota"
     },
     {
-     "v": 0.1393,
+     "v": 0.1373,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.0992,
+    "v": 0.0984,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.074,
+    "v": 0.0731,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.074,
+    "v": 0.0731,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -6173,7 +6173,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.3781,
+      "v": 0.3674,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6195,7 +6195,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.4052,
+      "v": 0.3759,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6217,7 +6217,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.4095,
+      "v": 0.3675,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6261,7 +6261,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.3971,
+     "v": -0.4173,
      "fmt": "x",
      "tono": "baja"
     }
@@ -6287,12 +6287,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9163,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1997,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -6315,30 +6315,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.217,
+    "v": 1.1816,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.1068,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.604,
+     "v": 1.5691,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.7199,
+    "v": 7.4949,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1705,
+    "v": 0.169,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -6353,34 +6353,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1655,
+    "v": 0.1641,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1611,
+     "v": 0.1612,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1808,
+     "v": 0.1795,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1295,
+    "v": 0.1281,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1035,
+    "v": 0.1022,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1035,
+    "v": 0.1022,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -6414,7 +6414,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1376,
+      "v": 1.1437,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6436,7 +6436,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2895,
+      "v": 1.3104,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6458,7 +6458,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.288,
+      "v": 1.1835,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6502,9 +6502,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0042,
+     "v": -0.0396,
      "fmt": "x",
-     "tono": "neutro"
+     "tono": "baja"
     }
    }
   },
@@ -6528,12 +6528,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.8996,
+     "v": 1.0503,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2313,
+     "v": 1.0503,
      "fmt": "x",
      "tono": "nota"
     }
@@ -6556,30 +6556,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2116,
+    "v": 1.1038,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0297,
+     "v": 1.0503,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4703,
+     "v": 1.3432,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.0207,
+    "v": 6.396,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1703,
+    "v": 0.1656,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -6594,34 +6594,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.164,
+    "v": 0.1596,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1566,
+     "v": 0.1574,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1744,
+     "v": 0.1693,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.128,
+    "v": 0.1238,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1021,
+    "v": 0.098,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1021,
+    "v": 0.098,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -6655,7 +6655,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0821,
+      "v": 1.0627,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6677,7 +6677,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2215,
+      "v": 1.09,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6699,7 +6699,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2924,
+      "v": 1.1786,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6743,9 +6743,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.089,
+     "v": -0.0188,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -6769,12 +6769,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5317,
+     "v": 0.6141,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6629,
+     "v": 0.6141,
      "fmt": "x",
      "tono": "nota"
     }
@@ -6797,30 +6797,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6687,
+    "v": 0.6375,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5908,
+     "v": 0.6141,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8312,
+     "v": 0.8143,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.6819,
+    "v": 4.4634,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1466,
+    "v": 0.1452,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -6835,34 +6835,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1447,
+    "v": 0.1434,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1415,
+     "v": 0.1424,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1514,
+     "v": 0.1507,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1094,
+    "v": 0.1081,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0839,
+    "v": 0.0826,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0839,
+    "v": 0.0826,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -6896,7 +6896,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6868,
+      "v": 0.6398,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6918,7 +6918,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6482,
+      "v": 0.6279,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6940,7 +6940,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6876,
+      "v": 0.6603,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -6984,7 +6984,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0757,
+     "v": -0.1069,
      "fmt": "x",
      "tono": "baja"
     }
@@ -7010,12 +7010,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6566,
+     "v": 0.7702,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9279,
+     "v": 0.7702,
      "fmt": "x",
      "tono": "nota"
     }
@@ -7038,30 +7038,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.8346,
+    "v": 0.7914,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.7077,
+     "v": 0.7702,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0822,
+     "v": 0.9508,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.8928,
+    "v": 5.5877,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1538,
+    "v": 0.152,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -7076,34 +7076,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1516,
+    "v": 0.1498,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1463,
+     "v": 0.1489,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.162,
+     "v": 0.1565,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1161,
+    "v": 0.1143,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0904,
+    "v": 0.0887,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0904,
+    "v": 0.0887,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -7137,7 +7137,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9261,
+      "v": 0.789,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7159,7 +7159,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7702,
+      "v": 0.7951,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7181,7 +7181,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8867,
+      "v": 0.799,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7225,7 +7225,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1056,
+     "v": -0.1488,
      "fmt": "x",
      "tono": "baja"
     }
@@ -7251,12 +7251,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.5899,
+     "v": 0.6662,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7499,
+     "v": 0.6662,
      "fmt": "x",
      "tono": "nota"
     }
@@ -7279,30 +7279,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.7623,
+    "v": 0.7138,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.6627,
+     "v": 0.6672,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9169,
+     "v": 0.9097,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.5463,
+    "v": 5.1938,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1507,
+    "v": 0.1486,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -7317,34 +7317,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1446,
+    "v": 0.1427,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1407,
+     "v": 0.1408,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1507,
+     "v": 0.1504,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1093,
+    "v": 0.1074,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0838,
+    "v": 0.082,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0838,
+    "v": 0.082,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -7378,7 +7378,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.877,
+      "v": 0.7731,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7400,7 +7400,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.738,
+      "v": 0.6979,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7422,7 +7422,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7445,
+      "v": 0.7082,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7466,7 +7466,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0164,
+     "v": -0.0649,
      "fmt": "x",
      "tono": "baja"
     }
@@ -7492,12 +7492,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6714,
+     "v": 0.7884,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8936,
+     "v": 0.7884,
      "fmt": "x",
      "tono": "nota"
     }
@@ -7520,30 +7520,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.8725,
+    "v": 0.7978,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.744,
+     "v": 0.7884,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0218,
+     "v": 0.9331,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.3335,
+    "v": 5.7911,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1555,
+    "v": 0.1522,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -7558,34 +7558,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1545,
+    "v": 0.1512,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1489,
+     "v": 0.1508,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1609,
+     "v": 0.1571,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1188,
+    "v": 0.1157,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0931,
+    "v": 0.0901,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0931,
+    "v": 0.0901,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -7619,7 +7619,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8274,
+      "v": 0.7884,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7641,7 +7641,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9048,
+      "v": 0.8061,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7663,7 +7663,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.855,
+      "v": 0.7993,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7707,7 +7707,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1091,
+     "v": -0.1838,
      "fmt": "x",
      "tono": "baja"
     }
@@ -7733,12 +7733,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.2245,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.715,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     }
@@ -7761,30 +7761,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.5902,
+    "v": 1.5149,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.3636,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 2.0771,
+     "v": 1.713,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.1335,
+    "v": 6.7956,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1868,
+    "v": 0.1835,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -7799,34 +7799,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.185,
+    "v": 0.1818,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1754,
+     "v": 0.181,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.2059,
+     "v": 0.1903,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1485,
+    "v": 0.1453,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1221,
+    "v": 0.119,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1221,
+    "v": 0.119,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -7860,7 +7860,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.59,
+      "v": 1.508,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7882,7 +7882,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.54,
+      "v": 1.5084,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7904,7 +7904,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.9427,
+      "v": 1.6331,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -7948,7 +7948,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0239,
+     "v": -0.0993,
      "fmt": "x",
      "tono": "baja"
     }
@@ -7974,12 +7974,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.7349,
+     "v": 0.821,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9121,
+     "v": 0.821,
      "fmt": "x",
      "tono": "nota"
     }
@@ -8002,30 +8002,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.9331,
+    "v": 0.8396,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.8122,
+     "v": 0.821,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0673,
+     "v": 1.0262,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.3426,
+    "v": 5.7068,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1581,
+    "v": 0.1541,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -8040,34 +8040,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1564,
+    "v": 0.1524,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1513,
+     "v": 0.1516,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.162,
+     "v": 0.1603,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1207,
+    "v": 0.1168,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0949,
+    "v": 0.0912,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0949,
+    "v": 0.0912,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -8101,7 +8101,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9189,
+      "v": 0.8267,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8123,7 +8123,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9364,
+      "v": 0.8538,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8145,7 +8145,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9672,
+      "v": 0.9145,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8189,9 +8189,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0405,
+     "v": -0.053,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -8215,12 +8215,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.8672,
+     "v": 1.0076,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1257,
+     "v": 1.0076,
      "fmt": "x",
      "tono": "nota"
     }
@@ -8243,30 +8243,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2004,
+    "v": 1.0981,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9765,
+     "v": 1.0097,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4187,
+     "v": 1.3751,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.8491,
+    "v": 7.1801,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1698,
+    "v": 0.1653,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -8281,34 +8281,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1615,
+    "v": 0.1576,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1529,
+     "v": 0.1542,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1699,
+     "v": 0.1682,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1257,
+    "v": 0.1219,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0998,
+    "v": 0.0961,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0998,
+    "v": 0.0961,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -8342,7 +8342,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.3671,
+      "v": 1.1354,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8364,7 +8364,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1305,
+      "v": 1.0968,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8386,7 +8386,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2363,
+      "v": 1.08,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8430,7 +8430,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.1228,
+     "v": 0.0205,
      "fmt": "x",
      "tono": "sube"
     }
@@ -8456,12 +8456,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.2473,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6997,
+     "v": 1.4956,
      "fmt": "x",
      "tono": "nota"
     }
@@ -8484,30 +8484,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.7286,
+    "v": 1.5833,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.3479,
+     "v": 1.4958,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 2.1155,
+     "v": 1.9116,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.7544,
+    "v": 7.1026,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1929,
+    "v": 0.1865,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -8522,34 +8522,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1854,
+    "v": 0.1796,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1701,
+     "v": 0.1761,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.2009,
+     "v": 0.1927,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1488,
+    "v": 0.1432,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1224,
+    "v": 0.1169,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1224,
+    "v": 0.1169,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -8583,7 +8583,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.8399,
+      "v": 1.5113,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8605,7 +8605,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6062,
+      "v": 1.5989,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8627,7 +8627,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.7645,
+      "v": 1.6128,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8671,9 +8671,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.1145,
+     "v": -0.0308,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -8697,12 +8697,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4958,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6098,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     }
@@ -8725,30 +8725,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6706,
+    "v": 0.6595,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5626,
+     "v": 0.565,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8636,
+     "v": 0.8194,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 3.6877,
+    "v": 3.6264,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1467,
+    "v": 0.1462,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -8763,34 +8763,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1331,
+    "v": 0.1327,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1294,
+     "v": 0.1295,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1398,
+     "v": 0.1383,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.0982,
+    "v": 0.0978,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0729,
+    "v": 0.0726,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0729,
+    "v": 0.0726,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -8824,7 +8824,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6031,
+      "v": 0.5755,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8846,7 +8846,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6786,
+      "v": 0.6819,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8868,7 +8868,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6529,
+      "v": 0.625,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -8912,7 +8912,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.2619,
+     "v": -0.2731,
      "fmt": "x",
      "tono": "baja"
     }
@@ -8938,12 +8938,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9214,
+     "v": 1.1059,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2453,
+     "v": 1.1059,
      "fmt": "x",
      "tono": "nota"
     }
@@ -8966,30 +8966,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2277,
+    "v": 1.2125,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9936,
+     "v": 1.1073,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.5344,
+     "v": 1.4575,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.0469,
+    "v": 6.9598,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.171,
+    "v": 0.1703,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -9004,34 +9004,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.163,
+    "v": 0.1624,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1541,
+     "v": 0.1584,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1747,
+     "v": 0.1717,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1271,
+    "v": 0.1265,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1012,
+    "v": 0.1007,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1012,
+    "v": 0.1007,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -9065,7 +9065,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1866,
+      "v": 1.136,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9087,7 +9087,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2441,
+      "v": 1.2182,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9109,7 +9109,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.3001,
+      "v": 1.326,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9153,9 +9153,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0021,
+     "v": -0.0172,
      "fmt": "x",
-     "tono": "neutro"
+     "tono": "baja"
     }
    }
   },
@@ -9179,12 +9179,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.245,
+     "v": 1.4669,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6815,
+     "v": 1.4669,
      "fmt": "x",
      "tono": "nota"
     }
@@ -9207,30 +9207,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.7756,
+    "v": 1.6427,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.4721,
+     "v": 1.4887,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 2.3024,
+     "v": 2.1128,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.782,
+    "v": 7.1997,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1949,
+    "v": 0.1891,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -9245,34 +9245,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1762,
+    "v": 0.1713,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.165,
+     "v": 0.1656,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1956,
+     "v": 0.1886,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1399,
+    "v": 0.1351,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1137,
+    "v": 0.109,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1137,
+    "v": 0.109,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -9306,7 +9306,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.7501,
+      "v": 1.6261,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9328,7 +9328,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.704,
+      "v": 1.587,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9350,7 +9350,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 2.2209,
+      "v": 1.9459,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9394,9 +9394,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.1328,
+     "v": -0.0001,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "neutro"
     }
    }
   },
@@ -9420,12 +9420,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.8714,
+     "v": 1.0291,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1467,
+     "v": 1.0291,
      "fmt": "x",
      "tono": "nota"
     }
@@ -9448,24 +9448,24 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0295,
+    "v": 1.03,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9086,
+     "v": 1.0291,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.26,
+     "v": 1.0765,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.5322,
+    "v": 6.5355,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
@@ -9492,12 +9492,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.157,
+     "v": 0.1623,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1723,
+     "v": 0.1643,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -9547,7 +9547,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0291,
+      "v": 1.0371,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9569,7 +9569,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0301,
+      "v": 1.0291,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9591,7 +9591,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0291,
+      "v": 1.0309,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9635,7 +9635,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0941,
+     "v": -0.0936,
      "fmt": "x",
      "tono": "baja"
     }
@@ -9661,12 +9661,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.1565,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6996,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     }
@@ -9689,30 +9689,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.5166,
+    "v": 1.4353,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.2806,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.9641,
+     "v": 1.6846,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.8686,
+    "v": 6.5004,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1836,
+    "v": 0.1801,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -9727,34 +9727,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1808,
+    "v": 0.1774,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1709,
+     "v": 0.176,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1997,
+     "v": 0.1879,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1444,
+    "v": 0.141,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1181,
+    "v": 0.1148,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1181,
+    "v": 0.1148,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -9788,7 +9788,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.8291,
+      "v": 1.4018,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9810,7 +9810,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.5588,
+      "v": 1.4827,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9832,7 +9832,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.3287,
+      "v": 1.4053,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -9876,7 +9876,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1135,
+     "v": -0.1948,
      "fmt": "x",
      "tono": "baja"
     }
@@ -9902,12 +9902,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.581,
+     "v": 0.6461,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7244,
+     "v": 0.6461,
      "fmt": "x",
      "tono": "nota"
     }
@@ -9930,30 +9930,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6662,
+    "v": 0.6472,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.615,
+     "v": 0.6461,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8186,
+     "v": 0.6954,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.424,
+    "v": 4.2977,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1465,
+    "v": 0.1457,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -9968,34 +9968,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1464,
+    "v": 0.1456,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1442,
+     "v": 0.1455,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1531,
+     "v": 0.1477,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.111,
+    "v": 0.1102,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0855,
+    "v": 0.0847,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0855,
+    "v": 0.0847,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -10029,7 +10029,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6631,
+      "v": 0.6461,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10051,7 +10051,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6669,
+      "v": 0.6537,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10073,7 +10073,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7654,
+      "v": 0.6898,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10117,7 +10117,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0672,
+     "v": -0.0862,
      "fmt": "x",
      "tono": "baja"
     }
@@ -10143,12 +10143,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.2389,
+     "v": 1.4504,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6343,
+     "v": 1.4504,
      "fmt": "x",
      "tono": "nota"
     }
@@ -10171,30 +10171,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.6366,
+    "v": 1.5126,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.4073,
+     "v": 1.4514,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.9333,
+     "v": 1.9207,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.89,
+    "v": 7.2922,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1888,
+    "v": 0.1834,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -10209,34 +10209,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.182,
+    "v": 0.1769,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1726,
+     "v": 0.1744,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1941,
+     "v": 0.1936,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1455,
+    "v": 0.1406,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1192,
+    "v": 0.1144,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1192,
+    "v": 0.1144,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -10270,7 +10270,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.5551,
+      "v": 1.4573,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10292,7 +10292,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6517,
+      "v": 1.6204,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10314,7 +10314,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.6606,
+      "v": 1.6089,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10358,9 +10358,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0348,
+     "v": -0.0892,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -10384,12 +10384,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4919,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6251,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     }
@@ -10412,30 +10412,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6276,
+    "v": 0.5897,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5602,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7685,
+     "v": 0.7165,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.4879,
+    "v": 4.2166,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1448,
+    "v": 0.1432,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -10450,34 +10450,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.144,
+    "v": 0.1424,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1411,
+     "v": 0.142,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.15,
+     "v": 0.1478,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1087,
+    "v": 0.1071,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0832,
+    "v": 0.0817,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0832,
+    "v": 0.0817,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -10511,7 +10511,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6897,
+      "v": 0.5807,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10533,7 +10533,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.604,
+      "v": 0.6001,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10599,7 +10599,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1232,
+     "v": -0.1611,
      "fmt": "x",
      "tono": "baja"
     }
@@ -10625,12 +10625,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.0357,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2442,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -10653,30 +10653,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.1847,
+    "v": 1.132,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0984,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.421,
+     "v": 1.3508,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.515,
+    "v": 7.1806,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1691,
+    "v": 0.1668,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -10691,34 +10691,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1676,
+    "v": 0.1653,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1639,
+     "v": 0.1644,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1776,
+     "v": 0.1746,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1315,
+    "v": 0.1294,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1055,
+    "v": 0.1034,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1055,
+    "v": 0.1034,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -10752,7 +10752,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2217,
+      "v": 1.1251,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10774,7 +10774,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1975,
+      "v": 1.1302,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10796,7 +10796,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1634,
+      "v": 1.2893,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -10840,7 +10840,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0365,
+     "v": -0.0892,
      "fmt": "x",
      "tono": "baja"
     }
@@ -10866,12 +10866,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9037,
+     "v": 0.9674,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1336,
+     "v": 0.9674,
      "fmt": "x",
      "tono": "nota"
     }
@@ -10894,30 +10894,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0135,
+    "v": 0.9703,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9518,
+     "v": 0.9674,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2336,
+     "v": 1.021,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.9482,
+    "v": 5.6942,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1617,
+    "v": 0.1598,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -10932,34 +10932,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1615,
+    "v": 0.1596,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1588,
+     "v": 0.1595,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.171,
+     "v": 0.1618,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1256,
+    "v": 0.1238,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0998,
+    "v": 0.098,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0998,
+    "v": 0.098,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -10993,7 +10993,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0094,
+      "v": 0.9711,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11015,7 +11015,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0514,
+      "v": 0.9691,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11037,7 +11037,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0555,
+      "v": 0.99,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11081,7 +11081,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0987,
+     "v": -0.142,
      "fmt": "x",
      "tono": "baja"
     }
@@ -11107,12 +11107,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.9546,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2942,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     }
@@ -11135,30 +11135,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.1763,
+    "v": 1.1129,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9699,
+     "v": 1.1108,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4647,
+     "v": 1.2011,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.4614,
+    "v": 7.059,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1688,
+    "v": 0.166,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -11173,34 +11173,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1686,
+    "v": 0.1658,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1596,
+     "v": 0.1657,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1811,
+     "v": 0.1697,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1325,
+    "v": 0.1298,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1065,
+    "v": 0.1039,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1065,
+    "v": 0.1039,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -11234,7 +11234,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2569,
+      "v": 1.1108,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11256,7 +11256,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1256,
+      "v": 1.1291,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11278,7 +11278,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1217,
+      "v": 1.1118,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11322,7 +11322,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0449,
+     "v": -0.1084,
      "fmt": "x",
      "tono": "baja"
     }
@@ -11348,12 +11348,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.8341,
+     "v": 0.9949,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1888,
+     "v": 0.9949,
      "fmt": "x",
      "tono": "nota"
     }
@@ -11376,30 +11376,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0997,
+    "v": 1.0357,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.8601,
+     "v": 0.9949,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.3722,
+     "v": 1.1597,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.4416,
+    "v": 6.0666,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1654,
+    "v": 0.1626,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -11414,34 +11414,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1608,
+    "v": 0.1581,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1509,
+     "v": 0.1565,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.172,
+     "v": 0.1632,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1249,
+    "v": 0.1224,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0991,
+    "v": 0.0966,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0991,
+    "v": 0.0966,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -11475,7 +11475,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0081,
+      "v": 1.042,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11497,7 +11497,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0997,
+      "v": 1.0271,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11519,7 +11519,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2608,
+      "v": 1.0852,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11563,7 +11563,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0475,
+     "v": -0.1115,
      "fmt": "x",
      "tono": "baja"
     }
@@ -11589,12 +11589,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.851,
+     "v": 0.9301,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0241,
+     "v": 0.9301,
      "fmt": "x",
      "tono": "nota"
     }
@@ -11617,30 +11617,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0792,
+    "v": 1.0608,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.9305,
+     "v": 0.96,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.3353,
+     "v": 1.1969,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.5609,
+    "v": 5.4662,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1645,
+    "v": 0.1637,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -11655,34 +11655,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1533,
+    "v": 0.1526,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1479,
+     "v": 0.149,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1625,
+     "v": 0.1575,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1177,
+    "v": 0.117,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.092,
+    "v": 0.0914,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.092,
+    "v": 0.0914,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -11716,7 +11716,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0452,
+      "v": 1.0652,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11738,7 +11738,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1007,
+      "v": 1.0608,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11760,7 +11760,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1697,
+      "v": 1.067,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11804,7 +11804,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1587,
+     "v": -0.1771,
      "fmt": "x",
      "tono": "baja"
     }
@@ -11830,12 +11830,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4733,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6619,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     }
@@ -11858,30 +11858,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6217,
+    "v": 0.5984,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5098,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8736,
+     "v": 0.6869,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 3.4187,
+    "v": 3.2907,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1446,
+    "v": 0.1435,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -11896,34 +11896,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1419,
+    "v": 0.141,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1375,
+     "v": 0.1396,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1519,
+     "v": 0.1445,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1067,
+    "v": 0.1058,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0812,
+    "v": 0.0804,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0812,
+    "v": 0.0804,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -11957,7 +11957,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7033,
+      "v": 0.5931,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -11979,7 +11979,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5654,
+      "v": 0.6215,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12045,7 +12045,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.3108,
+     "v": -0.3341,
      "fmt": "x",
      "tono": "baja"
     }
@@ -12071,12 +12071,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6491,
+     "v": 0.8134,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9846,
+     "v": 0.8134,
      "fmt": "x",
      "tono": "nota"
     }
@@ -12099,30 +12099,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.8363,
+    "v": 0.8134,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.6603,
+     "v": 0.8134,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0308,
+     "v": 0.823,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 6.2685,
+    "v": 6.0974,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1539,
+    "v": 0.1529,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -12137,34 +12137,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1539,
+    "v": 0.1529,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1462,
+     "v": 0.1529,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1624,
+     "v": 0.1533,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1183,
+    "v": 0.1173,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0926,
+    "v": 0.0917,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0926,
+    "v": 0.0917,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -12220,7 +12220,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8363,
+      "v": 0.8134,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12242,7 +12242,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8538,
+      "v": 0.8153,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12286,7 +12286,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.1439,
+     "v": -0.1668,
      "fmt": "x",
      "tono": "baja"
     }
@@ -12306,18 +12306,18 @@
     "tono": "neutro"
    },
    "beta_desapalancada": {
-    "v": 0.7879,
+    "v": 0.7888,
     "fmt": "x",
     "tono": "neutro"
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6406,
+     "v": 0.7888,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8769,
+     "v": 0.7888,
      "fmt": "x",
      "tono": "nota"
     }
@@ -12340,30 +12340,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.9039,
+    "v": 0.8537,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.7559,
+     "v": 0.7888,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.1056,
+     "v": 1.0542,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.8433,
+    "v": 5.5189,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1569,
+    "v": 0.1547,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -12378,34 +12378,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1508,
+    "v": 0.1488,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.145,
+     "v": 0.1463,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1586,
+     "v": 0.1566,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1152,
+    "v": 0.1134,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0896,
+    "v": 0.0878,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0896,
+    "v": 0.0878,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -12439,7 +12439,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9253,
+      "v": 0.7933,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12461,7 +12461,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8567,
+      "v": 0.8603,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12483,7 +12483,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.0666,
+      "v": 0.9866,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12527,9 +12527,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0095,
+     "v": -0.0407,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -12553,12 +12553,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.497,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6553,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     }
@@ -12581,30 +12581,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.5818,
+    "v": 0.5628,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5378,
+     "v": 0.5626,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.7062,
+     "v": 0.6024,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 3.1995,
+    "v": 3.0947,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1428,
+    "v": 0.142,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -12619,34 +12619,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1428,
+    "v": 0.142,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1409,
+     "v": 0.142,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1482,
+     "v": 0.1437,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1075,
+    "v": 0.1067,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0821,
+    "v": 0.0813,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0821,
+    "v": 0.0813,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -12680,7 +12680,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.599,
+      "v": 0.5626,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12702,7 +12702,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6184,
+      "v": 0.563,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12724,7 +12724,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5723,
+      "v": 0.5742,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -12768,7 +12768,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.3507,
+     "v": -0.3697,
      "fmt": "x",
      "tono": "baja"
     }
@@ -12794,12 +12794,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.7387,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.453,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     }
@@ -12828,12 +12828,12 @@
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.7387,
+     "v": 1.4018,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6544,
+     "v": 1.4059,
      "fmt": "x",
      "tono": "nota"
     }
@@ -12866,12 +12866,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.1497,
+     "v": 0.1786,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1896,
+     "v": 0.1788,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -13035,12 +13035,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4772,
+     "v": 0.5795,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6051,
+     "v": 0.5795,
      "fmt": "x",
      "tono": "nota"
     }
@@ -13063,30 +13063,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.6809,
+    "v": 0.6708,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5669,
+     "v": 0.5798,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.858,
+     "v": 0.803,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.7496,
+    "v": 4.6791,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1471,
+    "v": 0.1467,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -13101,34 +13101,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1351,
+    "v": 0.1348,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1311,
+     "v": 0.1316,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1413,
+     "v": 0.1394,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1001,
+    "v": 0.0997,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0748,
+    "v": 0.0745,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0748,
+    "v": 0.0745,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -13162,7 +13162,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5903,
+      "v": 0.593,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13184,7 +13184,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6534,
+      "v": 0.6907,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13206,7 +13206,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8255,
+      "v": 0.7272,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13250,7 +13250,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0825,
+     "v": 0.0724,
      "fmt": "x",
      "tono": "sube"
     }
@@ -13276,12 +13276,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.8587,
+     "v": 1.0076,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.214,
+     "v": 1.0076,
      "fmt": "x",
      "tono": "nota"
     }
@@ -13304,30 +13304,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.0708,
+    "v": 1.0105,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.963,
+     "v": 1.0076,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4403,
+     "v": 1.1191,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.0015,
+    "v": 6.6075,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1642,
+    "v": 0.1615,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -13342,34 +13342,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1639,
+    "v": 0.1613,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1592,
+     "v": 0.1611,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.18,
+     "v": 0.166,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.128,
+    "v": 0.1254,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.102,
+    "v": 0.0996,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.102,
+    "v": 0.0996,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -13425,7 +13425,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.1635,
+      "v": 1.0106,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13447,7 +13447,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.025,
+      "v": 1.0471,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13491,7 +13491,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0069,
+     "v": -0.0671,
      "fmt": "x",
      "tono": "baja"
     }
@@ -13517,12 +13517,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6581,
+     "v": 0.7426,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.8861,
+     "v": 0.7426,
      "fmt": "x",
      "tono": "nota"
     }
@@ -13545,30 +13545,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.85,
+    "v": 0.792,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.7386,
+     "v": 0.7427,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.9826,
+     "v": 0.9409,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 5.4171,
+    "v": 5.0474,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1545,
+    "v": 0.152,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -13583,34 +13583,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.15,
+    "v": 0.1477,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1456,
+     "v": 0.1457,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1552,
+     "v": 0.1536,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1145,
+    "v": 0.1123,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.0889,
+    "v": 0.0867,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.0889,
+    "v": 0.0867,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -13666,7 +13666,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.8419,
+      "v": 0.8691,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13688,7 +13688,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.962,
+      "v": 0.7882,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13732,9 +13732,9 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": 0.0307,
+     "v": -0.0273,
      "fmt": "x",
-     "tono": "sube"
+     "tono": "baja"
     }
    }
   },
@@ -13758,12 +13758,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.0464,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4315,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     }
@@ -13786,30 +13786,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2176,
+    "v": 1.2158,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.0464,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.6219,
+     "v": 1.2212,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.8168,
+    "v": 7.8051,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1706,
+    "v": 0.1705,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -13824,34 +13824,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1706,
+    "v": 0.1705,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1631,
+     "v": 0.1705,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1882,
+     "v": 0.1707,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1344,
+    "v": 0.1343,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1084,
+    "v": 0.1083,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1084,
+    "v": 0.1083,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -13885,7 +13885,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2456,
+      "v": 1.2158,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13907,7 +13907,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2168,
+      "v": 1.2158,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -13973,7 +13973,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0626,
+     "v": -0.0645,
      "fmt": "x",
      "tono": "baja"
     }
@@ -13999,12 +13999,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.6965,
+     "v": 0.8562,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0442,
+     "v": 0.8562,
      "fmt": "x",
      "tono": "nota"
     }
@@ -14033,12 +14033,12 @@
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.72,
+     "v": 0.8562,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.0816,
+     "v": 0.9237,
      "fmt": "x",
      "tono": "nota"
     }
@@ -14071,12 +14071,12 @@
    },
    "wacc_rango": [
     {
-     "v": 0.1488,
+     "v": 0.1548,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1646,
+     "v": 0.1577,
      "fmt": "pct",
      "tono": "nota"
     }
@@ -14126,7 +14126,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.7498,
+      "v": 0.8562,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14148,7 +14148,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9529,
+      "v": 0.8625,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14170,7 +14170,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.9631,
+      "v": 0.9356,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14240,12 +14240,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 1.1328,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.2905,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     }
@@ -14268,30 +14268,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 1.2158,
+    "v": 1.2176,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 1.2022,
+     "v": 1.2158,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 1.4233,
+     "v": 1.2582,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 7.8051,
+    "v": 7.8166,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1705,
+    "v": 0.1706,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -14306,34 +14306,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1703,
+    "v": 0.1704,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.1697,
+     "v": 0.1703,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1794,
+     "v": 0.1722,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1342,
+    "v": 0.1343,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.1081,
+    "v": 0.1082,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.1081,
+    "v": 0.1082,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -14367,7 +14367,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2158,
+      "v": 1.2578,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14389,7 +14389,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 1.2158,
+      "v": 1.2181,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14455,7 +14455,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0645,
+     "v": -0.0627,
      "fmt": "x",
      "tono": "baja"
     }
@@ -14481,12 +14481,12 @@
    },
    "beta_desapalancada_rango": [
     {
-     "v": 0.4437,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.5559,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     }
@@ -14509,30 +14509,30 @@
     }
    ],
    "beta_apalancada": {
-    "v": 0.5945,
+    "v": 0.5819,
     "fmt": "x",
     "tono": "clave"
    },
    "beta_apalancada_rango": [
     {
-     "v": 0.5281,
+     "v": 0.498,
      "fmt": "x",
      "tono": "nota"
     },
     {
-     "v": 0.6615,
+     "v": 0.6937,
      "fmt": "x",
      "tono": "nota"
     }
    ],
    "beta_total": {
-    "v": 4.2129,
+    "v": 4.123,
     "fmt": "x",
     "tono": "alerta",
     "nota": "Para dueños no diversificados (β / correlación con el mercado). La correlación de Damodaran para emergentes es baja y la eleva mucho."
    },
    "ke": {
-    "v": 0.1434,
+    "v": 0.1428,
     "fmt": "pct",
     "tono": "clave"
    },
@@ -14547,34 +14547,34 @@
     "tono": "nota"
    },
    "wacc_cop_nominal": {
-    "v": 0.1354,
+    "v": 0.1349,
     "fmt": "pct",
     "tono": "clave"
    },
    "wacc_rango": [
     {
-     "v": 0.133,
+     "v": 0.132,
      "fmt": "pct",
      "tono": "nota"
     },
     {
-     "v": 0.1377,
+     "v": 0.1388,
      "fmt": "pct",
      "tono": "nota"
     }
    ],
    "wacc_usd_nominal": {
-    "v": 0.1003,
+    "v": 0.0999,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_cop_real": {
-    "v": 0.075,
+    "v": 0.0746,
     "fmt": "pct",
     "tono": "neutro"
    },
    "wacc_usd_real": {
-    "v": 0.075,
+    "v": 0.0746,
     "fmt": "pct",
     "tono": "neutro"
    },
@@ -14608,7 +14608,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.5676,
+      "v": 0.498,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14630,7 +14630,7 @@
       "tono": "neutro"
      },
      "beta_apalancada": {
-      "v": 0.6109,
+      "v": 0.6245,
       "fmt": "x",
       "tono": "neutro"
      },
@@ -14696,7 +14696,7 @@
      "tono": "nota"
     },
     "diferencia_mirage_vs_damodaran": {
-     "v": -0.0906,
+     "v": -0.1033,
      "fmt": "x",
      "tono": "baja"
     }
@@ -14704,8 +14704,7 @@
   }
  ],
  "metodo": {
-  "elasticidad_riesgo_operativo": 0.458,
-  "r2_elasticidad": 0.1294,
+  "version": "1.0.0",
   "anio_estados_financieros": 2025,
   "corte_damodaran": "2026-01-05",
   "ventana_kd": [
@@ -14713,9 +14712,8 @@
    "2026-07-01"
   ],
   "pasos": [
-   "βu ancla: industria emergente equivalente (Damodaran, corregida por caja)",
-   "Ajuste por riesgo operativo de cada empresa (σ del ROA, Supersociedades)",
-   "Re-apalancamiento con el D/E contable de las empresas colombianas del sector",
+   "βu: industria emergente equivalente de Damodaran, corregida por caja (mapeo CIIU Rev. 4 ↔ Damodaran)",
+   "Re-apalancamiento con Hamada y el D/E contable de cada empresa colombiana del sector (Supersociedades); se publican medianas y cuartiles por sector y tamaño",
    "Kd: tasa efectiva de los créditos comerciales nuevos del sector (Superfinanciera, formato 88)",
    "Ke en USD = Rf + β × ERP + prima país; paso a COP por paridad de Fisher"
   ]
