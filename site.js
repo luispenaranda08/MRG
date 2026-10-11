@@ -127,3 +127,23 @@
   motion.addEventListener('change', sync);
   sync();
 })();
+
+/* Indicadores en vivo desde la API pública de Mirage; si no carga, quedan las cifras escritas en la página. */
+(() => {
+  const spans = document.querySelectorAll('.ticker [data-k]');
+  if (!spans.length || !window.fetch) return;
+  const API = 'https://mirage.hypertarget.tech/api/v1/';
+  const pct = v => (v * 100).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+  const mes = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+  Promise.all(['meta', 'parametros', 'sectores'].map(n => fetch(API + n + '.json').then(r => { if (!r.ok) throw new Error(n); return r.json(); })))
+    .then(([meta, par, sec]) => {
+      const w = sec.sectores.map(s => s.wacc_cop_nominal && s.wacc_cop_nominal.v).filter(v => typeof v === 'number').sort((a, b) => a - b);
+      const val = { wacc: w.length ? (w.length % 2 ? w[(w.length - 1) / 2] : (w[w.length / 2 - 1] + w[w.length / 2]) / 2) : null };
+      Object.keys(par.parametros).forEach(k => { val[k] = par.parametros[k].v; });
+      spans.forEach(s => { const v = val[s.dataset.k]; if (typeof v === 'number') s.textContent = pct(v); });
+      const [y, m, d] = String(meta.corte).split('-');
+      const nota = document.querySelector('.ticker [data-nota]');
+      if (nota && y) nota.textContent = `[ MIRAGE V${String(meta.version).toUpperCase()} · CORTE ${Number(d)} ${mes[Number(m) - 1]} ${y} ]`;
+    })
+    .catch(() => {});
+})();
