@@ -10,11 +10,14 @@
     "test:dx": "node src/lib/dx/__tests__/regression.cjs",
     "test:finanzas": "node src/lib/finanzas/__tests__/finanzas.cjs",
     "test:calc": "node src/components/__tests__/calc.cjs",
-    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc",
-    "test:formatos": "node src/lib/dx/__tests__/formatos.cjs"
+    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc && npm run test:documento",
+    "test:formatos": "node src/lib/dx/__tests__/formatos.cjs",
+    "test:documento": "node src/lib/__tests__/documento.cjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
     "next": "16.4.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",

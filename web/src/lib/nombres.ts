@@ -1,5 +1,7 @@
 /** Identidad de los documentos; nunca altera los cálculos ni sus referencias. */
-export function nombreArchivo(tipo: string, empresa = "", fecha = new Date().toISOString().slice(0, 10), extension = "xlsx") {
+/** Fecha local AAAA-MM-DD (en Colombia, de noche toISOString ya marca el día siguiente en UTC). */
+export function hoyLocal(f = new Date()) { return `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, "0")}-${String(f.getDate()).padStart(2, "0")}`; }
+export function nombreArchivo(tipo: string, empresa = "", fecha = hoyLocal(), extension = "xlsx") {
     const limpio = empresa.trim().normalize("NFKC").replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-").replace(/\s+/g, "-").replace(/[. -]+$/g, "").slice(0, 100);
     return `Mirage-${tipo}${limpio ? `-${limpio}` : ""}-${fecha}.${extension}`;
 }

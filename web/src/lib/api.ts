@@ -111,7 +111,7 @@ export interface Datos {
 }
 export const API_BASE = (process.env.NEXT_PUBLIC_MIRAGE_API || "/api/v1").replace(/\/$/, "");
 async function json<T>(archivo: string): Promise<T> { const r = await fetch(`${API_BASE}/${archivo}`); if (!r.ok)
-    throw new Error(`No se pudo cargar ${archivo} (${r.status}).`); return r.json(); }
+    throw new Error("No se pudieron cargar los datos de mercado. Inténtelo de nuevo."); return r.json(); }
 export async function cargarDatos(): Promise<Datos> {
     const [meta, estilo, p, s, indicadores] = await Promise.all([json<Meta>("meta.json"), json<Estilo>("estilo.json"), json<{
             parametros: Parametros;
@@ -120,7 +120,7 @@ export async function cargarDatos(): Promise<Datos> {
             metodo: Metodo;
         }>("sectores.json"), json<{ indicadores: NonNullable<Datos['indicadores']> }>("indicadores.json")]);
     if (!s.sectores.length || !estilo.tonos || !p.parametros)
-        throw new Error("Contrato de API incompleto.");
+        throw new Error("Los datos de mercado están incompletos.");
     return { meta, estilo, parametros: p.parametros, sectores: s.sectores, metodo: s.metodo, indicadores: indicadores.indicadores };
 }
 export function fmt(c: Celda): string { if (c.v === null || (typeof c.v === "number" && !Number.isFinite(c.v)))
@@ -135,4 +135,4 @@ export function variables(estilo: Estilo): Record<string, string> { const r: Rec
     r[`--${k}-peso`] = t.negrita ? "700" : "400";
 } return r; }
 export function waccSector(s: Sector, moneda: string, modo: string): Celda { if (moneda === "COP")
-    return modo === "real" ? s.wacc_cop_real : s.wacc_cop_nominal; return modo === "real" ? s.wacc_usd_real || celda(null, "pct", "nota", "La API no publica WACC USD real en este corte.") : s.wacc_usd_nominal; }
+    return modo === "real" ? s.wacc_cop_real : s.wacc_cop_nominal; return modo === "real" ? s.wacc_usd_real || celda(null, "pct", "nota", "No se publica WACC USD real en este corte.") : s.wacc_usd_nominal; }

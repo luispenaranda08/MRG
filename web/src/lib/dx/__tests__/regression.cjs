@@ -54,8 +54,8 @@ function evaluate(w,sheet,address,visiting=new Set()) {
  try{
   const {Wacc}=require('../../../components/Wacc.tsx'),{Calculadora}=require('../../../components/Calculadora.tsx'),{Diagnostico}=require('../../../components/Diagnostico.tsx');
   const html=renderToStaticMarkup(React.createElement(Wacc));assert.equal((html.match(/class="sector-link"/g)||[]).length,61);assert.ok(html.includes('role="tooltip"'));assert.ok(html.includes('βu'));
-  assert.ok(renderToStaticMarkup(React.createElement(Calculadora)).includes('Memo TXT'));
-  const dx=renderToStaticMarkup(React.createElement(Diagnostico));assert.ok(dx.includes('type="file"'));assert.ok(dx.includes('nunca se envían a un servidor'));
+  const calc=renderToStaticMarkup(React.createElement(Calculadora));assert.ok(calc.includes('↓ PDF'));assert.ok(calc.includes('↓ Excel'));assert.ok(calc.includes('Memo de costo de capital'));assert.ok(!calc.includes('Memo TXT'));
+  const dx=renderToStaticMarkup(React.createElement(Diagnostico));assert.ok(dx.includes('type="file"'));assert.ok(dx.includes('Elegir archivo'));assert.ok(dx.includes('class="sr-only" type="file"'));assert.ok(dx.includes('dx-nombre-archivo'));assert.ok(dx.includes('nunca se envían a un servidor'));
  }finally{Module._load=originalLoad;}
  console.log(JSON.stringify(summary,null,2));console.log('OK: regresión Visa, dos empresas, ExcelJS 13 hojas, fórmulas, fallback Kd, null y formato.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

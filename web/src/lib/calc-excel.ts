@@ -1,7 +1,7 @@
 import ExcelJS from "exceljs";
 import { amortizar, indicadores, modeloProyecto, type EntradaCredito, type EntradaProyecto, type ResultadoCredito } from "@/lib/finanzas";
 import type { Estilo } from "./api";
-import { applyTone } from "./excel";
+import { applyTone, pieCalculadora } from "./excel";
 
 function libro(titulo: string, empresa: string) {
     const w = new ExcelJS.Workbook();
@@ -89,7 +89,7 @@ export function creditoWorkbook(e: EntradaCredito, estilo: Estilo, empresa = "")
     dato(c, "ΣAbonos = Principal", "", estilo);
     formula(c, "B2", "ABS(SUM(Credito[Abono a capital])-Principal)<MAX(1,Principal)*0.000001", Math.abs(r.filas.reduce((s, f) => s + f.abonoCapital, 0) - e.principal) < Math.max(1, e.principal) * 1e-6, estilo);
     dato(c, "Saldo final = 0", "", estilo); formula(c, "B3", `ABS('Amortización'!J${last})<MAX(1,Principal)*0.000001`, r.controles.saldoFinalCero, estilo);
-    return w;
+    return pieCalculadora(w, estilo);
 }
 
 export interface FlujosProyecto { modo: "flujos"; a: number[]; b?: number[]; k: number; reinversion?: number }
@@ -122,7 +122,7 @@ export function proyectoWorkbook(e: ExportProyecto, estilo: Estilo, empresa = ""
         modeloExcel(e.entrada, estilo, w, s, f, deuda, ev, c);
     }
     w.eachSheet(ws => { ws.columns.forEach((col, i) => { col.width = i ? 22 : 34; }); });
-    return w;
+    return pieCalculadora(w, estilo);
 }
 
 function modeloExcel(e: EntradaProyecto, estilo: Estilo, w: ExcelJS.Workbook, s: ExcelJS.Worksheet, f: ExcelJS.Worksheet, deuda: ExcelJS.Worksheet, ev: ExcelJS.Worksheet, c: ExcelJS.Worksheet) {
