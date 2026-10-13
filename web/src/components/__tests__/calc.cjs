@@ -15,6 +15,7 @@ Module._load = function(request, parent, main) {
 };
 const F = require("../../lib/finanzas/index.ts"), { creditoWorkbook, proyectoWorkbook } = require("../../lib/calc-excel.ts"), { nombreArchivo, proponerEmpresa } = require("../../lib/nombres.ts");
 const { Calculadora, SECCIONES, leerSeccion } = require("../CalcSecciones.tsx"), { Tasas, ValorDinero } = require("../CalcTasas.tsx"), { Creditos } = require("../CalcCreditos.tsx"), { ProyectosFlujos, ProyectoModelo, BRIGHAM } = require("../CalcProyectos.tsx");
+const { Wacc } = require("../Wacc.tsx");
 const approx = (a, b, tolerance = 1e-7) => assert.ok(Number.isFinite(a) && Math.abs(a - b) < tolerance, `${a} != ${b}`);
 const roundtrip = async w => { const re = new ExcelJS.Workbook(); await re.xlsx.load(await w.xlsx.writeBuffer()); return re; };
 function render(C, props = {}, fixture = x => x) {
@@ -68,20 +69,63 @@ function evaluar(w, sheet, address, stack = new Set(), cache = new Map()) {
         assert.ok(html.includes('role="tablist"')); assert.equal((html.match(/role="tab"/g) || []).length, 5);
         assert.ok(html.includes(`id="tab-${key}" role="tab" aria-selected="true"`), label);
         assert.ok(html.includes(`id="panel-${key}" aria-labelledby="tab-${key}" tabindex="0"`), label);
-        assert.ok(html.includes("Empresa o proyecto"));
+        assert.equal((html.match(/Empresa o proyecto \(opcional\)/g) || []).length, 1);
+        assert.ok(html.indexOf("</h1>") < html.indexOf('class="company-field"'));
+        assert.ok(html.indexOf('class="company-field"') < html.indexOf('class="calc-tabs"'));
+        let companySeeded = false;
+        const named = render(Calculadora, { inicial: key }, x => { if (x === "" && !companySeeded) { companySeeded = true; return "Empresa manual"; } return x; });
+        assert.equal((named.match(/Empresa o proyecto: Empresa manual/g) || []).length, 5);
+        assert.equal((html.match(/↓ PDF/g) || []).length, 5); assert.equal((html.match(/↓ Excel/g) || []).length, 5);
     }
+    // Ejecuta los callbacks reales de Excel sin escribir archivos ni abrir el navegador.
+    const { CostoCapital } = require("../Calculadora.tsx"), { DocumentoMirage } = require("../DocumentoMirage.tsx");
+    const excel = require("../../lib/excel.ts"), save = excel.saveWorkbook, originalHooks = { useState: hooks.useState, useRef: hooks.useRef, useMemo: hooks.useMemo, useEffect: hooks.useEffect };
+    const company = "Empresa / Bogotá: SAS", decision = { veredicto: "informativo", decision: "Revisar supuestos", recomendaciones: ["Comparar escenarios"], alertas: [] };
+    const find = tree => {
+        if (!tree || typeof tree !== "object") return undefined;
+        if (tree.type === DocumentoMirage) return tree;
+        for (const child of React.Children.toArray(tree.props?.children)) { const found = find(child); if (found) return found; }
+    };
+    try {
+        hooks.useState = x => [typeof x === "function" ? x() : x, () => {}];
+        for (const [component, props] of [[CostoCapital, { sector: datos.sectores[0].ciiu_division, tamano: "Mediana", setSector() {}, setTamano() {} }], [Tasas, {}], [ValorDinero, {}], [Creditos, {}], [ProyectosFlujos, {}], [ProyectoModelo, { sector: datos.sectores[0] }]]) {
+            const preview = find(component({ ...props, empresa: company }));
+            assert.ok(preview, component.name); assert.equal(preview.props.documento.empresa, company);
+            let exported;
+            excel.saveWorkbook = async (book, filename) => { exported = { book: await roundtrip(book), filename }; };
+            await preview.props.excel({ ...preview.props.documento, jev: decision });
+            assert.ok(exported.book.title.includes(company), component.name);
+            assert.ok(exported.filename.includes("Empresa---Bogotá--SAS"), exported.filename);
+            assert.ok(!/[<>:"/\\|?*]/.test(exported.filename));
+            assert.equal(exported.book.getWorksheet("Recomendación").getCell("B3").value, decision.decision);
+            const sheet = exported.book.worksheets[0];
+            assert.ok(JSON.stringify(sheet.getSheetValues()).includes(company));
+        }
+        hooks.useRef = x => ({ current: x }); hooks.useMemo = fn => fn(); hooks.useEffect = () => {};
+        let exportedWacc;
+        excel.saveWorkbook = async (book, filename) => { exportedWacc = { book, filename }; };
+        const wacc = find(Wacc()); assert.equal(wacc.props.documento.empresa, "");
+        await wacc.props.excel(wacc.props.documento);
+        assert.match(exportedWacc.filename, /^Mirage-WACC-\d{4}-\d{2}-\d{2}\.xlsx$/);
+        assert.ok(!JSON.stringify(exportedWacc.book.getWorksheet("WACC").getSheetValues()).includes("Empresa o proyecto"));
+    } finally { Object.assign(hooks, originalHooks); excel.saveWorkbook = save; }
     assert.equal(leerSeccion("?seccion=creditos"), "creditos"); assert.equal(leerSeccion("?seccion=inexistente"), "capital");
+    for (const [component, props, cifra] of [[Tasas, {}, "1,17"], [ValorDinero, {}, "315,47"], [Creditos, {}, "1.243.520,81"], [ProyectosFlujos, {}, "814,33"], [ProyectoModelo, { sector: datos.sectores[0] }, "Inversión inicial"], [Wacc, {}, "Costo de capital por sector"]]) {
+        const preview = render(component, props);
+        assert.ok(preview.includes("↓ PDF")); assert.ok(preview.includes("↓ Excel")); assert.ok(preview.includes(cifra), cifra);
+        assert.ok(!preview.includes("Empresa o proyecto"));
+    }
     assert.ok(render(Tasas, {}, x => x === "" ? "12" : x).includes("Equivalencias"));
     assert.ok(render(ValorDinero, {}, x => x && typeof x === "object" && "P" in x ? { P: "1000", F: "0", A: "", n: "4", i: "10" } : x).includes("315,47"));
     const badTVM = render(ValorDinero, {}, x => x && typeof x === "object" && "P" in x ? { P: "1000", F: "0", A: "", n: "0", i: "10" } : x);
     assert.ok(badTVM.includes('role="alert"')); assert.ok(badTVM.includes("no puede ser cero"));
-    const creditHtml = render(Creditos, { empresa: "Empresa manual" }, x => x && typeof x === "object" && "activo" in x ? { ...x, activo: "1000", anios: "4", tasa: "10" } : x === 12 ? 1 : x === false ? true : x);
+    const creditHtml = render(Creditos, {}, x => x && typeof x === "object" && "activo" in x ? { ...x, activo: "1000", anios: "4", tasa: "10" } : x === 12 ? 1 : x === "NAMV" ? "EA" : x === false ? true : x);
     assert.ok(creditHtml.includes("315,47")); assert.ok(creditHtml.includes("<svg")); assert.ok(creditHtml.includes("Comparación de sistemas"));
-    const projectHtml = render(ProyectosFlujos, { empresa: "Empresa manual", ejemplo: true });
+    const projectHtml = render(ProyectosFlujos, { ejemplo: true });
     assert.ok(projectHtml.includes("814,33")); assert.ok(projectHtml.includes("Perfil del VPN")); assert.ok(projectHtml.includes("Cruce"));
     const sector = datos.sectores[0];
-    assert.ok(render(ProyectoModelo, { empresa: "Empresa manual", sector }).includes("Tramos de deuda"));
-    const modelHtml = render(ProyectoModelo, { empresa: "Empresa manual", sector }, x => x && typeof x === "object" && "vidaDiferidos" in x ? { ...x, ventas: "1000000" } : x);
+    assert.ok(render(ProyectoModelo, { sector }).includes("Tramos de deuda"));
+    const modelHtml = render(ProyectoModelo, { sector }, x => x && typeof x === "object" && "vidaDiferidos" in x ? { ...x, ventas: "1000000" } : x);
     for (const text of ["Estructura de capital", "FCL del proyecto descontado al costo de capital", "FCL del proyecto descontado a la TMRR", "FCL del inversionista", "EVA"]) assert.ok(modelHtml.includes(text), text);
     const credit = { principal: 1000, cuotas: 4, tasaPeriodica: 0.1, sistema: "cuota_fija", periodosPorAnio: 1, desembolso: "2026-10-10" };
     const cw = await roundtrip(creditoWorkbook(credit, datos.estilo, "Empresa manual"));
@@ -129,7 +173,7 @@ function evaluar(w, sheet, address, stack = new Set(), cache = new Map()) {
     const si = datos.sectores.findIndex(s => s.ciiu_division === "63");
     for (const empresa of ["Visa Inc.", "Empresa manual / Bogotá: SAS"]) {
         const company = buildCompany(p, { name: empresa, cur: "USD", unit: "millones", country: "Estados Unidos", sectorName: datos.sectores[si].nombre, bu: datos.sectores[si].beta_desapalancada.v }), sup = defaultsFor(company, datos, si, "Grande"), dx = await roundtrip(buildWorkbook(company, sup, runModel(company, sup, datos), p, datos));
-        assert.equal(dx.worksheets.length, 13); assert.ok(dx.title.includes(empresa)); assert.equal(dx.creator, "Mirage · HyperTarget");
+        assert.equal(dx.worksheets.length, 14); assert.ok(dx.title.includes(empresa)); assert.equal(dx.creator, "Mirage · HyperTarget");
         dx.eachSheet(ws => { assert.ok(String(ws.getCell("A1").value).includes(empresa), ws.name); assert.ok(ws.headerFooter.oddHeader.includes(empresa)); });
         const file = nombreArchivo("DX", empresa, "2026-10-10"); assert.ok(file.startsWith("Mirage-DX-")); assert.ok(file.endsWith("-2026-10-10.xlsx")); assert.ok(!/[<>:"/\\|?*]/.test(file));
     }
@@ -141,5 +185,5 @@ function evaluar(w, sheet, address, stack = new Set(), cache = new Map()) {
         assert.ok(w.title.includes("Empresa manual"));
         w.eachSheet(ws => { assert.ok(ws.headerFooter.oddHeader.includes("Empresa manual")); assert.equal(ws.getRow(ws.rowCount).getCell(2).value, "Empresa manual"); });
     }
-    console.log("OK: 5 subsecciones React SSR; tasas, TVM y errores; comparación y SVG; créditos (4 sistemas, gracia, tasas variables, UVR); proyectos Flujos y Modelo; fórmulas recalculadas y cachés; cuota 315,4708; VPN S 814,33; DX Visa y nombre manual en 13 hojas; 9 ejemplos API idénticos al GET.");
+    console.log("OK: 5 subsecciones React SSR; tasas, TVM y errores; comparación y SVG; créditos (4 sistemas, gracia, tasas variables, UVR); proyectos Flujos y Modelo; fórmulas recalculadas y cachés; cuota 315,4708; VPN S 814,33; DX Visa y nombre manual en 14 hojas; 9 ejemplos API idénticos al GET.");
 })().catch(e => { console.error(e); process.exitCode = 1; }).finally(() => { Module._load = originalLoad; });

@@ -111,30 +111,30 @@ Búsqueda equivalente a grep con `rg -n '[0-9]+([.,][0-9]+)?\s*%' src/components
 ## Salida del build final
 
 ```text
-> web@0.1.0 build
-> node scripts/build.mjs
-
-▲ Next.js 16.4.0 (Turbopack)
-✓ Running next.config.ts took 89ms
-
-  Creating an optimized production build ...
-✓ Compiled successfully in 5.0s
-  Running TypeScript ...
-  Finished TypeScript in 7.5s ...
-  Collecting page data using 7 workers ...
-  Generating static pages using 7 workers (0/6) ...
-  Generating static pages using 7 workers (1/6) 
-  Generating static pages using 7 workers (2/6) 
-  Generating static pages using 7 workers (4/6) 
-✓ Generating static pages using 7 workers (6/6) in 2.9s
-  Finalizing page optimization ...
-
-Route (app)
-┌ ○ /
-├ ○ /_not-found
-├ ○ /calculadora
-└ ○ /tu-empresa
-
-
+> web@0.1.0 build
+> node scripts/build.mjs
+
+▲ Next.js 16.4.0 (Turbopack)
+✓ Running next.config.ts took 89ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.0s
+  Running TypeScript ...
+  Finished TypeScript in 7.5s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/6) ...
+  Generating static pages using 7 workers (1/6) 
+  Generating static pages using 7 workers (2/6) 
+  Generating static pages using 7 workers (4/6) 
+✓ Generating static pages using 7 workers (6/6) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /calculadora
+└ ○ /tu-empresa
+
+
 ○  (Static)  prerendered as static content
 ```

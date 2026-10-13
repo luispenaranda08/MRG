@@ -6,6 +6,7 @@ import type { Insumos } from "./calculadora";
 import type { EntradaCredito, ResultadoCredito, EntradaTVM, Indicadores, ResultadoProyecto, resolver, equivalencias } from "./finanzas";
 import type { ExportProyecto } from "./calc-excel";
 import { nombreArchivo } from "./nombres";
+import { VEREDICTO, type DecisionJev } from "./jev";
 
 export type SeccionDocumento = "capital" | "tasas" | "tvm" | "creditos" | "proyectos";
 export type FilaDocumento = { concepto: string; cifra: Celda };
@@ -14,7 +15,7 @@ export interface Documento {
     numero: string; fecha: string; conclusion: string; supuestos: FilaDocumento[];
     resultados: FilaDocumento[]; metodo: string; fuentes: Fuente[]; estilo: Estilo;
     tablas: { titulo: string; columnas: string[]; filas: string[][]; nota?: string }[];
-    notas: string[]; aviso: string;
+    notas: string[]; aviso: string; jev?: DecisionJev;
 }
 interface Entradas {
     capital: { mercado: Datos; entrada: Insumos; sector: string; tamano: string };
@@ -188,6 +189,11 @@ export function pdfDocumento(original: Documento, logos: LogosDocumento = {}, op
     y += 15; pdf.setDrawColor(tonos.neutro.texto); pdf.setLineWidth(0.53); pdf.line(margin, y, width - margin, y); y += 7;
     texto(doc.titulo, 18, true); if (doc.empresa) texto(`Empresa o proyecto: ${doc.empresa}`);
     seccion("Conclusión"); texto(doc.conclusion, 11, true); doc.notas.forEach(n => texto(n, 9));
+    if (doc.jev) {
+        seccion("Recomendación"); texto(VEREDICTO[doc.jev.veredicto], 11, true); texto(doc.jev.decision);
+        if (doc.jev.recomendaciones.length) { texto("Recomendaciones", 10, true); doc.jev.recomendaciones.forEach(r => texto(`• ${r}`)); }
+        if (doc.jev.alertas.length) { texto("Alertas", 10, true); doc.jev.alertas.forEach(a => texto(`• ${a}`)); }
+    }
     seccion("Supuestos"); tabla(["Concepto", "Valor"], doc.supuestos.map(f => [f.concepto, fmt(f.cifra)]), "insumo");
     seccion("Resultados"); tabla(["Concepto", "Valor"], doc.resultados.map(f => [f.concepto, fmt(f.cifra)]), "clave", doc.resultados.map(f => f.cifra.tono));
     for (const t of doc.tablas) { seccion(t.titulo); tabla(t.columnas, t.filas); if (t.nota) texto(t.nota, 9); }

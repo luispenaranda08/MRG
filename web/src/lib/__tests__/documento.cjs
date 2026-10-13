@@ -41,13 +41,21 @@ for (const [neutral, cifra] of docs) {
     assert.ok(output.startsWith("%PDF-"));
     assert.ok(output.includes("Mirage by HyperTarget")); assert.ok(output.includes(doc.titulo)); assert.ok(output.includes("Página 1 de"));
     assert.ok(texto.includes(doc.conclusion), doc.seccion + ": conclusión completa en PDF");
-    assert.ok(texto.includes(cifra));
+    assert.ok(texto.includes(cifra)); assert.ok(texto.includes(`Empresa o proyecto: ${doc.empresa}`));
     assert.equal((output.match(/Mirage by HyperTarget\) Tj/g) || []).length, pdf.getNumberOfPages());
     for (let page = 1; page <= pdf.getNumberOfPages(); page++) assert.ok(output.includes(`Página ${page} de ${pdf.getNumberOfPages()}`));
     const html = renderToStaticMarkup(React.createElement(DocumentoMirage, { documento: doc, excel: async () => {} }));
-    assert.ok(html.includes(doc.titulo)); assert.ok(html.includes(doc.conclusion)); assert.ok(html.includes("↓ PDF")); assert.ok(html.includes("↓ Excel")); assert.ok(html.includes("/hypertarget-symbol-black.svg"));
+    assert.ok(html.includes(`Empresa o proyecto: ${doc.empresa}`)); assert.ok(html.includes(doc.titulo)); assert.ok(html.includes(doc.conclusion)); assert.ok(html.includes("↓ PDF")); assert.ok(html.includes("↓ Excel")); assert.ok(html.includes("/hypertarget-symbol-black.svg"));
     assert.ok(!/\bAPI\b|\bmotor\b|\.json/.test(html));
     assert.match(archivoDocumento(doc), /^Mirage-.*-2026-10-10\.pdf$/); assert.ok(!/[<>:"/\\|?*]/.test(archivoDocumento(doc)));
+    assert.ok(archivoDocumento(doc).includes(doc.empresa === "Empresa" ? "-Empresa-" : "-Empresa---Bogotá--SAS-"));
+    const book = documentoWorkbook(doc); assert.ok(book.title.includes(doc.empresa));
+    assert.equal(book.getWorksheet("Documento").getCell("A2").value, `Empresa o proyecto: ${doc.empresa}`);
+    const empty = { ...doc, empresa: "" };
+    assert.ok(!textoPDF(pdfDocumento(empty, {}, { comprimir: false }).output()).includes("Empresa o proyecto:"));
+    assert.ok(!renderToStaticMarkup(React.createElement(DocumentoMirage, { documento: empty })).includes("Empresa o proyecto:"));
+    assert.equal(documentoWorkbook(empty).getWorksheet("Documento").getCell("A2").value, `Datos de mercado al ${doc.corte}`);
+    assert.ok(!archivoDocumento(empty).includes("-Empresa-"));
     assert.equal(pdf.internal.pageSize.getWidth().toFixed(1), "215.9"); assert.equal(pdf.internal.pageSize.getHeight().toFixed(1), "279.4");
     console.log(`OK PDF ${doc.titulo}: ${pdf.getNumberOfPages()} páginas; cifra ${cifra}; conclusión completa y pie en todas las páginas.`);
 }
@@ -69,3 +77,4 @@ const largo = { ...docs[0][0], supuestos: Array.from({ length: 180 }, (_, j) => 
 const pl = pdfDocumento(largo, {}, {comprimir: false}), out = pl.output(); assert.ok(pl.getNumberOfPages() > 4);
 for (let n = 1; n <= pl.getNumberOfPages(); n++) assert.ok(out.includes(`Página ${n} de ${pl.getNumberOfPages()}`));
 console.log("OK: 5 documentos, cifras exactas del cálculo, vista previa compartida, pies Excel, variantes y PDF multipágina sin canvas ni red.");
+require("./jev.cjs")({ docs, mercado, credito, proyecto, entradaModelo }).catch(e => { console.error(e); process.exitCode = 1; });

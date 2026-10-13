@@ -6,6 +6,9 @@ export interface MappedRow {
     conf: number;
     v: (number | null)[];
     sheet: string;
+    /** Veredicto de presentación (JEV): la fila no se muestra en los estados del informe. */
+    oculta?: boolean;
+    motivo?: string;
 }
 export interface Parsed {
     years: number[];
@@ -18,4 +21,7 @@ export interface Parsed {
     sheets: string[];
     bs: string;
     ps: string;
+    revision?: Revision;
+    textos?: string[];
 }
+export interface Revision { formato: string; veredicto: string; alertas: string[]; cambios: number }

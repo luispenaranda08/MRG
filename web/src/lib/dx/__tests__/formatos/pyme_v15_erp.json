@@ -1,0 +1,346 @@
+{
+ "empresa": "Confecciones Andinas S.A.S.",
+ "unidad": "miles de pesos",
+ "datos": [
+  {
+   "cuenta": "Efectivo y equivalentes al efectivo",
+   "anio": 2024,
+   "valor": 7706
+  },
+  {
+   "cuenta": "Efectivo y equivalentes al efectivo",
+   "anio": 2025,
+   "valor": 33039
+  },
+  {
+   "cuenta": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+   "anio": 2024,
+   "valor": 757417
+  },
+  {
+   "cuenta": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+   "anio": 2025,
+   "valor": 679102
+  },
+  {
+   "cuenta": "Inventarios corrientes",
+   "anio": 2024,
+   "valor": 267689
+  },
+  {
+   "cuenta": "Inventarios corrientes",
+   "anio": 2025,
+   "valor": 222360
+  },
+  {
+   "cuenta": "Activos corrientes totales",
+   "anio": 2024,
+   "valor": 1032812
+  },
+  {
+   "cuenta": "Activos corrientes totales",
+   "anio": 2025,
+   "valor": 934501
+  },
+  {
+   "cuenta": "Propiedades, planta y equipo",
+   "anio": 2024,
+   "valor": 360567
+  },
+  {
+   "cuenta": "Propiedades, planta y equipo",
+   "anio": 2025,
+   "valor": 325567
+  },
+  {
+   "cuenta": "Activos intangibles distintos de la plusvalía",
+   "anio": 2024,
+   "valor": 609909
+  },
+  {
+   "cuenta": "Activos intangibles distintos de la plusvalía",
+   "anio": 2025,
+   "valor": 590207
+  },
+  {
+   "cuenta": "Total de activos no corrientes",
+   "anio": 2024,
+   "valor": 1344164
+  },
+  {
+   "cuenta": "Total de activos no corrientes",
+   "anio": 2025,
+   "valor": 1253225
+  },
+  {
+   "cuenta": "Total de activos",
+   "anio": 2024,
+   "valor": 2376976
+  },
+  {
+   "cuenta": "Total de activos",
+   "anio": 2025,
+   "valor": 2187726
+  },
+  {
+   "cuenta": "Cuentas por pagar comerciales y otras cuentas por pagar corrientes",
+   "anio": 2024,
+   "valor": 512258
+  },
+  {
+   "cuenta": "Cuentas por pagar comerciales y otras cuentas por pagar corrientes",
+   "anio": 2025,
+   "valor": 932804
+  },
+  {
+   "cuenta": "Pasivos corrientes totales",
+   "anio": 2024,
+   "valor": 512258
+  },
+  {
+   "cuenta": "Pasivos corrientes totales",
+   "anio": 2025,
+   "valor": 932804
+  },
+  {
+   "cuenta": "Cuentas comerciales por pagar y otras cuentas por pagar no corrientes",
+   "anio": 2024,
+   "valor": 361108
+  },
+  {
+   "cuenta": "Cuentas comerciales por pagar y otras cuentas por pagar no corrientes",
+   "anio": 2025,
+   "valor": 247992
+  },
+  {
+   "cuenta": "Total de pasivos no corrientes",
+   "anio": 2024,
+   "valor": 361108
+  },
+  {
+   "cuenta": "Total de pasivos no corrientes",
+   "anio": 2025,
+   "valor": 247992
+  },
+  {
+   "cuenta": "Total pasivos",
+   "anio": 2024,
+   "valor": 873366
+  },
+  {
+   "cuenta": "Total pasivos",
+   "anio": 2025,
+   "valor": 1180796
+  },
+  {
+   "cuenta": "Capital emitido",
+   "anio": 2024,
+   "valor": 420000
+  },
+  {
+   "cuenta": "Capital emitido",
+   "anio": 2025,
+   "valor": 420000
+  },
+  {
+   "cuenta": "Otras reservas",
+   "anio": 2024,
+   "valor": 152739
+  },
+  {
+   "cuenta": "Otras reservas",
+   "anio": 2025,
+   "valor": 152739
+  },
+  {
+   "cuenta": "Ganancias acumuladas",
+   "anio": 2024,
+   "valor": 930871
+  },
+  {
+   "cuenta": "Ganancias acumuladas",
+   "anio": 2025,
+   "valor": 434191
+  },
+  {
+   "cuenta": "Patrimonio total",
+   "anio": 2024,
+   "valor": 1503610
+  },
+  {
+   "cuenta": "Patrimonio total",
+   "anio": 2025,
+   "valor": 1006930
+  },
+  {
+   "cuenta": "Total de patrimonio y pasivos",
+   "anio": 2024,
+   "valor": 2376976
+  },
+  {
+   "cuenta": "Total de patrimonio y pasivos",
+   "anio": 2025,
+   "valor": 2187726
+  },
+  {
+   "cuenta": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposición clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+   "anio": 2024,
+   "valor": 1032812
+  },
+  {
+   "cuenta": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposición clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+   "anio": 2025,
+   "valor": 934501
+  },
+  {
+   "cuenta": "Propiedades de inversión a valor razonable con cambios en resultados",
+   "anio": 2024,
+   "valor": 210770
+  },
+  {
+   "cuenta": "Propiedades de inversión a valor razonable con cambios en resultados",
+   "anio": 2025,
+   "valor": 211437
+  },
+  {
+   "cuenta": "Activos por impuestos corrientes, no corriente",
+   "anio": 2024,
+   "valor": 162918
+  },
+  {
+   "cuenta": "Activos por impuestos corrientes, no corriente",
+   "anio": 2025,
+   "valor": 126014
+  },
+  {
+   "cuenta": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposición clasificados como mantenidos para la venta",
+   "anio": 2024,
+   "valor": 512258
+  },
+  {
+   "cuenta": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposición clasificados como mantenidos para la venta",
+   "anio": 2025,
+   "valor": 932804
+  },
+  {
+   "cuenta": "Ingresos de actividades ordinarias",
+   "anio": 2024,
+   "valor": 3422338
+  },
+  {
+   "cuenta": "Ingresos de actividades ordinarias",
+   "anio": 2025,
+   "valor": 3535517
+  },
+  {
+   "cuenta": "Costo de ventas",
+   "anio": 2024,
+   "valor": 2555167
+  },
+  {
+   "cuenta": "Costo de ventas",
+   "anio": 2025,
+   "valor": 2825410
+  },
+  {
+   "cuenta": "Ganancia bruta",
+   "anio": 2024,
+   "valor": 867171
+  },
+  {
+   "cuenta": "Ganancia bruta",
+   "anio": 2025,
+   "valor": 710107
+  },
+  {
+   "cuenta": "Otros ingresos",
+   "anio": 2024,
+   "valor": 17483
+  },
+  {
+   "cuenta": "Otros ingresos",
+   "anio": 2025,
+   "valor": 13221
+  },
+  {
+   "cuenta": "Gastos de ventas",
+   "anio": 2024,
+   "valor": 238964
+  },
+  {
+   "cuenta": "Gastos de ventas",
+   "anio": 2025,
+   "valor": 260733
+  },
+  {
+   "cuenta": "Gastos de administración",
+   "anio": 2024,
+   "valor": 374759
+  },
+  {
+   "cuenta": "Gastos de administración",
+   "anio": 2025,
+   "valor": 252713
+  },
+  {
+   "cuenta": "Otros gastos",
+   "anio": 2024,
+   "valor": 190496
+  },
+  {
+   "cuenta": "Otros gastos",
+   "anio": 2025,
+   "valor": 127229
+  },
+  {
+   "cuenta": "Ganancia (pérdida) por actividades de operación",
+   "anio": 2024,
+   "valor": 80435
+  },
+  {
+   "cuenta": "Ganancia (pérdida) por actividades de operación",
+   "anio": 2025,
+   "valor": 82653
+  },
+  {
+   "cuenta": "Ganancia (pérdida), antes de impuestos",
+   "anio": 2024,
+   "valor": 80435
+  },
+  {
+   "cuenta": "Ganancia (pérdida), antes de impuestos",
+   "anio": 2025,
+   "valor": 82653
+  },
+  {
+   "cuenta": "Ingreso (gasto) por impuestos",
+   "anio": 2024,
+   "valor": 28152
+  },
+  {
+   "cuenta": "Ingreso (gasto) por impuestos",
+   "anio": 2025,
+   "valor": 76028
+  },
+  {
+   "cuenta": "Ganancia (pérdida) procedente de operaciones continuadas",
+   "anio": 2024,
+   "valor": 52283
+  },
+  {
+   "cuenta": "Ganancia (pérdida) procedente de operaciones continuadas",
+   "anio": 2025,
+   "valor": 6625
+  },
+  {
+   "cuenta": "Ganancia (pérdida)",
+   "anio": 2024,
+   "valor": 52283
+  },
+  {
+   "cuenta": "Ganancia (pérdida)",
+   "anio": 2025,
+   "valor": 6625
+  }
+ ]
+}

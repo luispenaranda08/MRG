@@ -1,5 +1,6 @@
 import { nombreArchivo } from "./nombres";
 import ExcelJS from "exceljs";
+import { insertarGraficas, type GraficaXlsx } from "./dx/graficas";
 import { fmt, type Celda, type Datos, type Estilo, type Tono } from "./api";
 export function applyTone(c: ExcelJS.Cell, estilo: Estilo, tono: Tono) { const t = estilo.tonos[tono]; c.font = { name: estilo.fuentes_tipograficas.cifras, color: { argb: t.texto.replace("#", "FF") }, bold: t.negrita }; if (t.fondo)
     c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: t.fondo.replace("#", "FF") } }; if (t.borde)
@@ -7,7 +8,9 @@ export function applyTone(c: ExcelJS.Cell, estilo: Estilo, tono: Tono) { const t
 export function putCell(c: ExcelJS.Cell, v: Celda, e: Estilo) { c.value = v.v; c.numFmt = e.formatos[v.fmt]; applyTone(c, e, v.tono); if (v.nota || v.fuente)
     c.note = [v.nota, v.fuente, v.corte].filter(Boolean).join(" · "); }
 export function download(content: BlobPart, filename: string, mime: string) { const url = URL.createObjectURL(new Blob([content], { type: mime })); const a = document.createElement("a"); a.href = url; a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
-export async function saveWorkbook(w: ExcelJS.Workbook, name: string) { const buf = await w.xlsx.writeBuffer(); download(new Uint8Array(buf).buffer, name, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); }
+/** Bytes del libro; si trae gráficas del dashboard (ExcelJS no las escribe) se agregan al .xlsx. */
+export async function workbookBytes(w: ExcelJS.Workbook): Promise<Uint8Array> { const buf = new Uint8Array(await w.xlsx.writeBuffer()), graficas = (w as { graficasMirage?: GraficaXlsx[] }).graficasMirage; return graficas?.length ? insertarGraficas(buf, graficas) : buf; }
+export async function saveWorkbook(w: ExcelJS.Workbook, name: string) { const buf = await workbookBytes(w); download(buf.slice().buffer, name, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"); }
 export function sources(w: ExcelJS.Workbook, d: Datos) { const f = w.addWorksheet("Fuentes"); f.addRow(["Fuente", "URL", "Licencia"]); f.addRow([d.meta.aviso, d.meta.corte, d.meta.version]); d.meta.fuentes.forEach(x => f.addRow([x.nombre, x.url, x.licencia])); const m = w.addWorksheet("Método"); m.addRow(["Pasos del método"]); d.metodo.pasos.forEach(p => m.addRow([p])); for (const s of [f, m]) {
     s.columns.forEach(c => c.width = 55);
     s.getRow(1).eachCell(c => applyTone(c, d.estilo, "encabezado"));

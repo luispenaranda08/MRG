@@ -5,6 +5,7 @@ import * as XLSX from "xlsx";
 import { proponerEmpresa } from "../nombres";
 import ExcelJS from "exceljs";
 import { applyTone } from "../excel";
+import { hojaDashboard, validarPlan, type Catalogo, type PlanDashboard } from "./dashboard";
 const LY = c => c.years.length - 1;
 const norm = s => String(s == null ? "" : s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 /* ======================= Diccionario de cuentas ======================= */
@@ -241,7 +242,7 @@ function parseWorkbook(wb, fname) {
         unit = mr > 1e10 ? "unidades" : mr > 1e7 ? "miles" : "millones";
     const cur = /us\$|usd|dolares|u\.s\./.test(all) ? "USD" : /pesos|cop|niif|supersociedades|ingresos de actividades ordinarias/.test(all) ? "COP" : "USD";
     const name = proponerEmpresa(text, fname);
-    return { years, rows, aux, unit, cur, name, sheets: sheets.map(s => s.name), bs: bs.name, ps: ps.name, fname };
+    return { years, rows, aux, unit, cur, name, sheets: sheets.map(s => s.name), bs: bs.name, ps: ps.name, fname, textos: [...new Set(text.map(t => t.trim()).filter(t => t && !/^[\d.,()\s-]+$/.test(t)))].slice(0, 30) };
 }
 /* ======================= Empresa a partir del mapeo ======================= */
 const UM = { unidades: 1, miles: 1e3, millones: 1e6 };
@@ -249,6 +250,9 @@ function buildCompany(p, meta) {
     const years = p.years, n = years.length, bal = [], pyg = [], flags = [], has = {};
     let k = 0;
     p.rows.forEach(r => {
+        // Filas que el veredicto de JEV deja fuera: no se presentan, salvo que alimenten un campo del modelo
+        if (r.oculta && !r.field)
+            return;
         if (r.hdr) {
             (r.st === "pyg" ? pyg : bal).push({ id: "h" + (k++), l: r.label, t: "hdr" });
             return;
@@ -527,7 +531,94 @@ export function runModel(c, s, datos) {
     return model(c, s);
 }
 export { parseWorkbook, buildCompany, FI, M, dq };
-export function buildWorkbook(c, s, R, parsed, datos) {
+/**
+ * Catálogo del dashboard: series por año, composiciones del último año y KPI. Con `refs` (dentro de buildWorkbook)
+ * cada elemento lleva su fórmula a las demás hojas; sin `refs` sirve para describirle la empresa a JEV.
+ */
+export function catalogoDashboard(c, R, refs = null): Catalogo {
+    const yrs = c.years, k = R.k, Mi = i => M(c, i), F = fn => refs ? fn : () => null;
+    const B = refs?.B, Pq = refs?.Pq, col = refs?.col, H = refs?.HR, E = refs?.ER, P = refs?.PR, pc = refs?.pc;
+    const div = (a, b) => `IFERROR(${a}/${b},0)`, hay = id => !refs || !!B(id, 0);
+    const serie = (id, nombre, fmt, f, v, grupo = "hist") => ({ id, nombre, fmt, grupo, f: F(f), v });
+    const S = [
+        serie("rev", "Ingresos", "num", i => Pq("rev", i), i => Mi(i).rev),
+        serie("gp", "Utilidad bruta", "num", i => Pq("gp", i), i => Mi(i).gp),
+        serie("ebit", "EBIT", "num", i => Pq("ebit", i), i => Mi(i).ebit),
+        serie("ebitda", "EBITDA", "num", i => Pq("ebit", i) + "+'FCL Histórico'!" + col(i) + H.da, i => Mi(i).ebit + (R.H[i].da || 0)),
+        serie("ni", "Utilidad neta", "num", i => Pq("ni", i), i => Mi(i).ni),
+        serie("gm", "Margen bruto", "pct", i => div(Pq("gp", i), Pq("rev", i)), i => Mi(i).gm),
+        serie("em", "Margen EBIT", "pct", i => div(Pq("ebit", i), Pq("rev", i)), i => Mi(i).em),
+        serie("nm", "Margen neto", "pct", i => div(Pq("ni", i), Pq("rev", i)), i => Mi(i).nm),
+        serie("roa", "ROA", "pct", i => div(Pq("ni", i), B("ta", i)), i => Mi(i).roa),
+        serie("roe", "ROE", "pct", i => div(Pq("ni", i), "(" + B("eq", i) + (B("mi", i) ? "-" + B("mi", i) : "") + ")"), i => Mi(i).roe),
+        serie("roic", "ROIC", "pct", i => "EVA!" + col(i) + E.roic, i => R.EV[i].roic),
+        serie("wacc", "WACC", "pct", () => refs.WACC, () => R.w),
+        serie("eva", "EVA", "num", i => "EVA!" + col(i) + E.eva, i => R.EV[i].eva),
+        serie("cr", "Razón corriente", "x", i => div(B("tca", i), B("tcl", i)), i => Mi(i).cr),
+        serie("quick", "Prueba ácida", "x", i => div("(" + B("tca", i) + (B("inv", i) ? "-" + B("inv", i) : "") + ")", B("tcl", i)), i => Mi(i).quick),
+        serie("la", "Pasivo / activo", "pct", i => div(B("tl", i), B("ta", i)), i => Mi(i).la),
+        serie("de", "Deuda / patrimonio", "x", i => div(B("debt", i), B("eq", i)), i => Mi(i).de),
+        serie("dso", "Días de cartera", "dias", i => hay("ar") ? div(B("ar", i), Pq("rev", i)) + "*365" : null, i => Mi(i).ar ? Mi(i).dso : null),
+        serie("dio", "Días de inventario", "dias", i => hay("inv") ? div(B("inv", i), "(" + Pq("rev", i) + "-" + Pq("gp", i) + ")") + "*365" : null, i => Mi(i).dio),
+        serie("dpo", "Días de proveedores", "dias", i => hay("ap") ? div(B("ap", i), "(" + Pq("rev", i) + "-" + Pq("gp", i) + ")") + "*365" : null, i => Mi(i).dpo),
+        serie("ta", "Activo total", "num", i => B("ta", i), i => Mi(i).ta),
+        serie("tl", "Pasivo total", "num", i => B("tl", i), i => Mi(i).tl),
+        serie("eq", "Patrimonio", "num", i => B("eq", i), i => Mi(i).eq),
+        serie("debt", "Deuda financiera", "num", i => B("debt", i), i => Mi(i).debt),
+        serie("cash", "Efectivo", "num", i => B("cash", i), i => Mi(i).cash),
+        serie("ktno", "Capital de trabajo neto operativo", "num", i => "'FCL Histórico'!" + col(i) + H.kt, i => Mi(i).ktno),
+        serie("fcl", "Flujo de caja libre", "num", i => i ? "'FCL Histórico'!" + col(i) + H.fcl : null, i => R.H[i].fcl),
+        serie("z", "Z'' de Altman", "z", i => "Riesgo!" + col(i) + "9", i => altz(c, i).z),
+        serie("proy_rev", "Ingresos proyectados", "num", j => "'FCL Proyectado'!" + pc(j) + P.rev, j => R.Pj[j].rev, "proy"),
+        serie("proy_ebit", "EBIT proyectado", "num", j => "'FCL Proyectado'!" + pc(j) + P.ebit, j => R.Pj[j].ebit, "proy"),
+        serie("proy_fcl", "Flujo de caja libre proyectado", "num", j => "'FCL Proyectado'!" + pc(j) + P.fcl, j => R.Pj[j].fcl, "proy"),
+        serie("proy_vp", "Valor presente del FCL", "num", j => "'FCL Proyectado'!" + pc(j) + P.vp, j => R.Pj[j].fcl / Math.pow(1 + R.w, j + 1), "proy"),
+    ];
+    if (Mi(k).intr)
+        S.push(serie("cov", "Cobertura de intereses", "x", i => Pq("iexp", i) ? div(Pq("ebit", i), "ABS(" + Pq("iexp", i) + ")") : null, i => Mi(i).cov));
+    const m = Mi(k), fk = (st, id) => refs ? (st === "bal" ? B(id, k) : Pq(id, k)) || "0" : "";
+    const parte = (nombre, f, v) => ({ nombre, f: refs ? f : "", v });
+    const comp = [
+        { id: "estructura_activo", nombre: "Estructura del activo", partes: [parte("Activo corriente", fk("bal", "tca"), m.tca), parte("Activo no corriente", fk("bal", "ta") + "-" + fk("bal", "tca"), m.ta - m.tca)] },
+        { id: "estructura_financiacion", nombre: "Estructura de financiación", partes: [parte("Pasivo corriente", fk("bal", "tcl"), m.tcl), parte("Pasivo no corriente", fk("bal", "tl") + "-" + fk("bal", "tcl"), m.tl - m.tcl), parte("Patrimonio", fk("bal", "eq"), m.eq)] },
+        { id: "destino_ingresos", nombre: "En qué se van los ingresos", partes: [parte("Costo de ventas", fk("pyg", "rev") + "-" + fk("pyg", "gp"), m.cogs), parte("Gastos operativos", fk("pyg", "gp") + "-" + fk("pyg", "ebit"), m.opex), parte("Resultado no operativo", fk("pyg", "ebit") + "-" + fk("pyg", "ebt"), -m.nonop), parte("Impuestos", fk("pyg", "tax"), m.tax), parte("Utilidad neta", fk("pyg", "ni"), m.ni)] },
+        { id: "capital_trabajo", nombre: "Capital de trabajo", partes: [parte("Cuentas por cobrar", fk("bal", "ar"), m.ar), parte("Inventarios", fk("bal", "inv"), m.inv), parte("Proveedores", fk("bal", "ap"), m.ap)] },
+    ];
+    const y = yrs[k], ya = yrs[k - 1], ser = id => S.find(s => s.id === id);
+    const cambio = (id, pp) => {
+        if (!k)
+            return { texto: "Año " + y };
+        const s = ser(id), a = s.v(k - 1), b = s.v(k);
+        if (pp)
+            return { f: refs ? "((" + s.f(k) + ")-(" + s.f(k - 1) + "))*100" : undefined, v: (b - a) * 100, z: `"vs ${ya}: "+0.0" pp";"vs ${ya}: "-0.0" pp"` };
+        return { f: refs ? "IFERROR((" + s.f(k) + ")/(" + s.f(k - 1) + ")-1,0)" : undefined, v: a ? b / a - 1 : 0, z: `"vs ${ya}: "+0.0%;"vs ${ya}: "-0.0%` };
+    };
+    const kpi = (id, nombre, fmt, f, v, nota) => ({ id, nombre, fmt, f: refs ? f : null, v, nota });
+    const az = altz(c, k);
+    const K = [
+        kpi("rev", "Ingresos " + y, "num", refs && Pq("rev", k), m.rev, cambio("rev")),
+        kpi("ebitda", "EBITDA " + y, "num", refs && ser("ebitda").f(k), ser("ebitda").v(k), cambio("ebitda")),
+        kpi("ni", "Utilidad neta " + y, "num", refs && Pq("ni", k), m.ni, cambio("ni")),
+        kpi("em", "Margen EBIT", "pct", refs && ser("em").f(k), m.em, cambio("em", true)),
+        kpi("nm", "Margen neto", "pct", refs && ser("nm").f(k), m.nm, cambio("nm", true)),
+        kpi("roe", "ROE", "pct", refs && ser("roe").f(k), m.roe, cambio("roe", true)),
+        kpi("roic", "ROIC", "pct", refs && ser("roic").f(k), R.EV[k].roic, { texto: R.EV[k].roic > R.w ? "Por encima del WACC" : "Por debajo del WACC" }),
+        kpi("wacc", "WACC", "pct", refs && refs.WACC, R.w, { texto: "Costo de capital en " + c.cur }),
+        kpi("eva", "EVA " + y, "num", refs && ser("eva").f(k), R.EV[k].eva, { texto: R.EV[k].eva >= 0 ? "Crea valor" : "Destruye valor" }),
+        kpi("ev", "Valor de la empresa", "num", refs && "'FCL Proyectado'!" + refs.rEV, R.V ? R.V.ev : null, { texto: "Flujo de caja descontado" }),
+        kpi("ps", "Valor por acción", "num", refs && "'FCL Proyectado'!" + refs.rPS, R.ps, { texto: "Con las acciones de Supuestos" }),
+        kpi("cr", "Razón corriente", "x", refs && ser("cr").f(k), m.cr, { texto: "Año " + y }),
+        kpi("de", "Deuda / patrimonio", "x", refs && ser("de").f(k), m.de, { texto: "Año " + y }),
+        kpi("la", "Pasivo / activo", "pct", refs && ser("la").f(k), m.la, { texto: "Año " + y }),
+        kpi("z", "Z'' de Altman", "z", refs && ser("z").f(k), az.z, { texto: "Equivale a " + az.r }),
+        kpi("rating", "Rating estimado", "texto", null, R.rm.r, { texto: "Por cobertura: " + R.rt[1] }),
+        kpi("pd", "Prob. de incumplimiento", "pct", null, R.pd.pd, { texto: "A un año" }),
+        kpi("gao", "Apalancamiento operativo", "x", refs && "Apalancamiento!" + refs.AR.gao, R.lev.gao, { texto: "GAO" }),
+    ];
+    return { anios: yrs.map(String), proyectados: R.Pj.map(p => p.y + "e"), series: S, composiciones: comp, kpis: K };
+}
+
+export function buildWorkbook(c, s, R, parsed, datos, plan: Partial<PlanDashboard> | null = null) {
     const st = { company: c, sup: s, R, parsed, fname: parsed.fname };
     const SECT = () => datos.sectores.map(x => ({ n: x.nombre }));
     const yrs = c.years, n = yrs.length, k = R.k, wb = new ExcelJS.Workbook(), C_ = i => XLSX.utils.encode_col(i);
@@ -755,14 +846,25 @@ export function buildWorkbook(c, s, R, parsed, datos) {
     add("Riesgo", RK, [48].concat(yrs.map(() => 12)));
     // Calidad y mapeo
     const QM = [["Calidad de datos y mapeo de cuentas"], [st.fname], [], ["Cuenta en el archivo", "Estado", "Campo Mirage", "Confianza"]];
-    st.parsed.rows.filter(r => !r.hdr).forEach(r => QM.push([r.label, r.st === "bal" ? "Balance" : "Resultados", r.field ? FI[r.field].l : "(sin asignar)", r.field ? { v: r.conf, z: "0%" } : ""]));
+    QM[3].push("Presentación");
+    st.parsed.rows.filter(r => !r.hdr).forEach(r => QM.push([r.label, r.st === "bal" ? "Balance" : "Resultados", r.field ? FI[r.field].l : "(sin asignar)", r.field ? { v: r.conf, z: "0%" } : "", (r.oculta ? "No se presenta" : "Se presenta") + (r.motivo ? ": " + r.motivo : "")]));
     QM.push([]);
+    if (st.parsed.revision)
+        QM.push([], ["Revisión del archivo", st.parsed.revision.formato || ""], [st.parsed.revision.veredicto || ""], ...(st.parsed.revision.alertas || []).map(a => ["Alerta", a]));
     QM.push(["Control", "Resultado"]);
     A.dq(c).list.forEach(d => QM.push([d.title, d.msg]));
     QM.push([], ["Fuentes API", datos.meta.corte, datos.meta.version]);
     datos.meta.fuentes.forEach(f => QM.push([f.nombre, f.url, f.licencia]));
     datos.metodo.pasos.forEach(p => QM.push(["Método", p]));
-    add("Calidad y mapeo", QM, [52, 14, 36, 12]);
+    add("Calidad y mapeo", QM, [52, 14, 36, 12, 60]);
+    // Dashboard: segunda hoja del libro, con el plan de JEV validado contra el catálogo
+    const abs = r => r.replace(/^([A-Z]+)(\d+)$/, "$$$1$$$2");
+    const catalogo = catalogoDashboard(c, R, { B, Pq, col, HR, ER, PR, pc, WACC, rEV: abs(rEV), rPS: abs(rPS), AR });
+    const planFinal = validarPlan(plan, catalogo, c.name);
+    wb.graficasMirage = hojaDashboard(wb, catalogo, planFinal, c.name, (cell, t) => applyTone(cell, datos.estilo, t));
+    wb.planMirage = planFinal;
+    wb.getWorksheet("Dashboard").orderNo = wb.getWorksheet("Portada").orderNo + 0.5;
+    wb.views = [{ x: 0, y: 0, width: 20000, height: 12000, firstSheet: 0, activeTab: 1, visibility: "visible" }];
     wb.title = `Mirage DX · ${c.name}`;
     wb.creator = "Mirage · HyperTarget";
     wb.calcProperties.fullCalcOnLoad = true;

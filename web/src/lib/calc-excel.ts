@@ -2,6 +2,8 @@ import ExcelJS from "exceljs";
 import { amortizar, indicadores, modeloProyecto, type EntradaCredito, type EntradaProyecto, type ResultadoCredito } from "@/lib/finanzas";
 import type { Estilo } from "./api";
 import { applyTone, pieCalculadora } from "./excel";
+import { agregarDecision } from "./documento-excel";
+import type { DecisionJev } from "./jev";
 
 function libro(titulo: string, empresa: string) {
     const w = new ExcelJS.Workbook();
@@ -61,7 +63,7 @@ function tablaCredito(s: ExcelJS.Worksheet, e: EntradaCredito, r: ResultadoCredi
     s.columns.forEach((c, i) => { c.width = i === 1 ? 16 : 20; });
 }
 
-export function creditoWorkbook(e: EntradaCredito, estilo: Estilo, empresa = "") {
+export function creditoWorkbook(e: EntradaCredito, estilo: Estilo, empresa = "", jev?: DecisionJev) {
     const r = amortizar(e), w = libro("Créditos", empresa), d = hoja(w, "Datos", estilo, empresa);
     d.addRow(["Insumo", "Valor"]);
     dato(d, "Principal", e.principal, estilo, w, "Principal"); // B3
@@ -89,12 +91,13 @@ export function creditoWorkbook(e: EntradaCredito, estilo: Estilo, empresa = "")
     dato(c, "ΣAbonos = Principal", "", estilo);
     formula(c, "B2", "ABS(SUM(Credito[Abono a capital])-Principal)<MAX(1,Principal)*0.000001", Math.abs(r.filas.reduce((s, f) => s + f.abonoCapital, 0) - e.principal) < Math.max(1, e.principal) * 1e-6, estilo);
     dato(c, "Saldo final = 0", "", estilo); formula(c, "B3", `ABS('Amortización'!J${last})<MAX(1,Principal)*0.000001`, r.controles.saldoFinalCero, estilo);
+    agregarDecision(w, estilo, jev);
     return pieCalculadora(w, estilo);
 }
 
 export interface FlujosProyecto { modo: "flujos"; a: number[]; b?: number[]; k: number; reinversion?: number }
 export type ExportProyecto = FlujosProyecto | { modo: "modelo"; entrada: EntradaProyecto };
-export function proyectoWorkbook(e: ExportProyecto, estilo: Estilo, empresa = "") {
+export function proyectoWorkbook(e: ExportProyecto, estilo: Estilo, empresa = "", jev?: DecisionJev) {
     const w = libro("Proyectos", empresa), s = hoja(w, "Supuestos", estilo, empresa), f = hoja(w, "FCL", estilo, empresa), deuda = hoja(w, "Deuda", estilo, empresa), ev = hoja(w, "Evaluación", estilo, empresa), c = hoja(w, "Controles", estilo, empresa);
     if (e.modo === "flujos") {
         dato(s, "k", e.k, estilo, w, "KProyecto"); dato(s, "Reinversión", e.reinversion ?? e.k, estilo, w, "Reinversion");
@@ -122,6 +125,7 @@ export function proyectoWorkbook(e: ExportProyecto, estilo: Estilo, empresa = ""
         modeloExcel(e.entrada, estilo, w, s, f, deuda, ev, c);
     }
     w.eachSheet(ws => { ws.columns.forEach((col, i) => { col.width = i ? 22 : 34; }); });
+    agregarDecision(w, estilo, jev);
     return pieCalculadora(w, estilo);
 }
 

@@ -29,20 +29,20 @@ function evaluate(w,sheet,address,visiting=new Set()) {
  const old={...base,bu:0.74,rf:4.72,erp:4.33,crp:0,lam:0,size:0,kdMode:'manual',kd:5,betaReg:0.7649,waccMode:'reg',growth:[11,10.5,9.5,9,8.5],g:3,price:223.647,finNeed:5000,finRate:5,issuePrice:223.647,fixed:100};
  const legacy=runModel(c,old,datos),wb=buildWorkbook(c,old,legacy,p,datos);
  approx(legacy.lev.gao,1.459,0.0005,'GAO');approx(legacy.upa.ebitStar,22823.5,0.001,'EBIT indiferencia');approx(legacy.EV.at(-1).eva,19206,1,'EVA 2025');
- assert.equal(wb.worksheets.length,13);assert.ok(find(wb,'Apalancamiento','GAO = MC / EBIT').formula);approx(find(wb,'UPA','EBIT de indiferencia').result,22823.5,0.001,'UPA Excel');
+ assert.equal(wb.worksheets.length,14);assert.ok(find(wb,'Apalancamiento','GAO = MC / EBIT').formula);approx(find(wb,'UPA','EBIT de indiferencia').result,22823.5,0.001,'UPA Excel');
  const evaRow=wb.getWorksheet('EVA').getRow(10);assert.equal(evaRow.getCell(1).value,'EVA');approx(evaRow.getCell(6).result,19206,1,'EVA Excel');
  approx(evaluate(wb,'Apalancamiento',find(wb,'Apalancamiento','GAO = MC / EBIT').address),legacy.lev.gao,1e-9,'GAO fórmula viva');
  approx(evaluate(wb,'UPA',find(wb,'UPA','EBIT de indiferencia').address),legacy.upa.ebitStar,1e-6,'UPA fórmula viva');
  approx(evaluate(wb,'EVA','F10'),legacy.EV.at(-1).eva,1e-6,'EVA fórmula viva');
  let formulaCount=0;wb.eachSheet(s=>s.eachRow(r=>r.eachCell(c=>{if(c.formula){formulaCount++;assert.ok(!c.formula.includes('undefined'));}})));assert.ok(formulaCount>300);
- const fresh=runModel(c,base,datos),freshBook=buildWorkbook(c,base,fresh,p,datos);approx(evaluate(freshBook,'EVA','F10'),fresh.EV.at(-1).eva,1e-6,'EVA API fórmula viva');const bytes=await freshBook.xlsx.writeBuffer(),roundtrip=new ExcelJS.Workbook();await roundtrip.xlsx.load(bytes);assert.equal(roundtrip.worksheets.length,13);assert.ok(find(roundtrip,'WACC','WACC usado para valorar').formula);
+ const fresh=runModel(c,base,datos),freshBook=buildWorkbook(c,base,fresh,p,datos);approx(evaluate(freshBook,'EVA','F10'),fresh.EV.at(-1).eva,1e-6,'EVA API fórmula viva');const bytes=await freshBook.xlsx.writeBuffer(),roundtrip=new ExcelJS.Workbook();await roundtrip.xlsx.load(bytes);assert.equal(roundtrip.worksheets.length,14);assert.ok(find(roundtrip,'WACC','WACC usado para valorar').formula);
  const inputs={deuda:100,patrimonio:200,ebit:40,gastos:8,tarifa:datos.parametros.tasa_impuesto.v,total:false,primaTamano:false},sc=datos.sectores[si],calc=calcular(datos.parametros,sc,'Grande',inputs);assert.ok(Number.isFinite(calc['WACC COP'].v));
  const noKd={...sc,por_tamano:{...sc.por_tamano,Grande:{...sc.por_tamano.Grande,kd:celda(null)}}};assert.equal(calcular(datos.parametros,noKd,'Grande',inputs)['Kd observado COP'].v,sc.kd.v);
  assert.equal(calcular(datos.parametros,sc,'Grande',{...inputs,primaTamano:true})['WACC COP'].v,null);assert.equal(waccSector(sc,'USD','real').v,sc.wacc_usd_real.v);
  // WeakMap evita compartir cuentas entre cargas sucesivas (ambas tk=MI).
  const pyme=parseWorkbook(XLSX.read(fs.readFileSync('public/ejemplos/PYME-Confecciones-del-Caribe.xlsx'),{type:'buffer'}),'PYME-Confecciones-del-Caribe.xlsx');
  const cs=buildCompany(pyme,{name:pyme.name,cur:'COP',unit:'miles',country:'Colombia',sectorName:sc.nombre,bu:sc.beta_desapalancada.v});assert.notEqual(M(c,0).rev,M(cs,0).rev);
- const sm=defaultsFor(cs,datos,si,'Pequeña'),rm=runModel(cs,sm,datos);assert.ok(Number.isFinite(rm.w));assert.equal(buildWorkbook(cs,sm,rm,pyme,datos).worksheets.length,13);
+ const sm=defaultsFor(cs,datos,si,'Pequeña'),rm=runModel(cs,sm,datos);assert.ok(Number.isFinite(rm.w));assert.equal(buildWorkbook(cs,sm,rm,pyme,datos).worksheets.length,14);
  const summary={legacy:{gao:legacy.lev.gao,ebitStar:legacy.upa.ebitStar,eva2025:legacy.EV.at(-1).eva,wacc:legacy.w},api:{sector:sc.nombre,gao:fresh.lev.gao,ebitStar:fresh.upa.ebitStar,eva2025:fresh.EV.at(-1).eva,wacc:fresh.w,kdUSD:base.kd},deltaEVA:fresh.EV.at(-1).eva-legacy.EV.at(-1).eva,sheets:roundtrip.worksheets.map(s=>s.name),formulaCount};
  // Renderizado de las vistas con datos API, sin abrir navegador.
  const Module=require('node:module'),originalLoad=Module._load,React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
@@ -55,7 +55,7 @@ function evaluate(w,sheet,address,visiting=new Set()) {
   const {Wacc}=require('../../../components/Wacc.tsx'),{Calculadora}=require('../../../components/Calculadora.tsx'),{Diagnostico}=require('../../../components/Diagnostico.tsx');
   const html=renderToStaticMarkup(React.createElement(Wacc));assert.equal((html.match(/class="sector-link"/g)||[]).length,61);assert.ok(html.includes('role="tooltip"'));assert.ok(html.includes('βu'));
   const calc=renderToStaticMarkup(React.createElement(Calculadora));assert.ok(calc.includes('↓ PDF'));assert.ok(calc.includes('↓ Excel'));assert.ok(calc.includes('Memo de costo de capital'));assert.ok(!calc.includes('Memo TXT'));
-  const dx=renderToStaticMarkup(React.createElement(Diagnostico));assert.ok(dx.includes('type="file"'));assert.ok(dx.includes('Elegir archivo'));assert.ok(dx.includes('class="sr-only" type="file"'));assert.ok(dx.includes('dx-nombre-archivo'));assert.ok(dx.includes('nunca se envían a un servidor'));
+  const dx=renderToStaticMarkup(React.createElement(Diagnostico));assert.ok(dx.includes('type="file"'));assert.ok(dx.includes('Elegir archivo'));assert.ok(dx.includes('class="sr-only" type="file"'));assert.ok(dx.includes('dx-nombre-archivo'));assert.ok(dx.includes('formatos: Excel'));assert.ok(!dx.includes('nunca se envían'));assert.ok(!/JEV/.test(dx));
  }finally{Module._load=originalLoad;}
- console.log(JSON.stringify(summary,null,2));console.log('OK: regresión Visa, dos empresas, ExcelJS 13 hojas, fórmulas, fallback Kd, null y formato.');
+ console.log(JSON.stringify(summary,null,2));console.log('OK: regresión Visa, dos empresas, ExcelJS 14 hojas con dashboard, fórmulas, fallback Kd, null y formato.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

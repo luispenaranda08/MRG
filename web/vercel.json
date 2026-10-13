@@ -16,5 +16,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/analisis/[op].ts": {
+      "maxDuration": 120
+    }
+  }
 }

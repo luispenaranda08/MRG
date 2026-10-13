@@ -1,0 +1,51 @@
+DISTRIBUIDORA DEL NORTE S.A.S.
+Cifras en miles de pesos colombianos
+
+ESTADO DE SITUACIÓN FINANCIERA
+
+Concepto                                                              31/12/2025      31/12/2024
+Efectivo y equivalentes al efectivo                           7        1.446.031         371.514
+Cuentas comerciales por cobrar y otras cuentas por cobrar                408.705       2.060.116
+Inventarios corrientes                                        7          150.419         589.038
+Activos por impuestos corrientes, corriente                              444.260         448.936
+Activos corrientes totales                                             2.449.415       3.469.604
+Propiedades, planta y equipo                                              23.236           1.000
+Activos por impuestos diferidos                                           36.094          25.260
+Otros activos no financieros no corrientes                                 2.478          37.025
+Total de activos no corrientes                                            61.808          63.285
+Total de activos                                                       2.511.223       3.532.889
+Otros pasivos financieros corrientes                                     698.922       1.428.489
+Cuentas por pagar comerciales y otras cuentas por pagar co               228.851         151.652
+Pasivos por impuestos corrientes, corriente                              833.168         735.349
+Provisiones corrientes por beneficios a los empleados                    207.249         302.887
+Otras provisiones corrientes                                             288.528          67.255
+Pasivos corrientes totales                                             2.256.718       2.685.632
+Otros pasivos financieros no corrientes                                1.608.311       1.615.368
+Total de pasivos no corrientes                                         1.608.311       1.615.368
+Total pasivos                                                          3.865.029       4.301.000
+Capital emitido                                                          247.670         247.670
+Prima de emisión                                                           8.990           8.990
+Ganancias acumuladas                                                 (1.696.788)     (1.111.093)
+Patrimonio total                                                     (1.353.806)       (768.111)
+Total de patrimonio y pasivos                                          2.511.223       3.532.889
+Total de pasivos corrientes distintos de los pasivos inclu             2.256.718       2.685.632
+Total activos corrientes distintos de los activos no corri             2.449.415       3.469.604
+Total provisiones corrientes                                             495.777         370.142
+Otras participaciones en el patrimonio                                    86.322          86.322
+
+ESTADO DE RESULTADOS
+
+Concepto                                                              31/12/2025      31/12/2024
+Ingresos de actividades ordinarias                                     4.480.942       4.896.024
+Costo de ventas                                                        4.042.458       3.844.861
+Ganancia bruta                                                           438.484       1.051.163
+Costos de distribución                                                    91.404          83.593
+Gastos de administración                                                 569.162         464.092
+Otros gastos                                                             188.684         765.847
+Ganancia (pérdida) por actividades de operación                        (410.766)       (262.369)
+Ingresos financieros                                                      48.463          36.545
+Costos financieros                                                       125.584         444.716
+Ganancia (pérdida), antes de impuestos                                 (487.887)       (670.540)
+Ingreso (gasto) por impuestos                                             97.808         120.762
+Ganancia (pérdida) procedente de operaciones continuadas               (585.695)       (791.302)
+Ganancia (pérdida)                                                     (585.695)       (791.302)
