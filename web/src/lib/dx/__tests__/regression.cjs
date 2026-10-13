@@ -36,9 +36,9 @@ function evaluate(w,sheet,address,visiting=new Set()) {
  approx(evaluate(wb,'EVA','F10'),legacy.EV.at(-1).eva,1e-6,'EVA fórmula viva');
  let formulaCount=0;wb.eachSheet(s=>s.eachRow(r=>r.eachCell(c=>{if(c.formula){formulaCount++;assert.ok(!c.formula.includes('undefined'));}})));assert.ok(formulaCount>300);
  const fresh=runModel(c,base,datos),freshBook=buildWorkbook(c,base,fresh,p,datos);approx(evaluate(freshBook,'EVA','F10'),fresh.EV.at(-1).eva,1e-6,'EVA API fórmula viva');const bytes=await freshBook.xlsx.writeBuffer(),roundtrip=new ExcelJS.Workbook();await roundtrip.xlsx.load(bytes);assert.equal(roundtrip.worksheets.length,14);assert.ok(find(roundtrip,'WACC','WACC usado para valorar').formula);
- const inputs={deuda:100,patrimonio:200,ebit:40,gastos:8,tarifa:datos.parametros.tasa_impuesto.v,total:false,primaTamano:false},sc=datos.sectores[si],calc=calcular(datos.parametros,sc,'Grande',inputs);assert.ok(Number.isFinite(calc['WACC COP'].v));
+ const inputs={deuda:100,patrimonio:200,ebit:40,gastos:8,tarifa:datos.parametros.tasa_impuesto.v,total:false},sc=datos.sectores[si],calc=calcular(datos.parametros,sc,'Grande',inputs);assert.ok(Number.isFinite(calc['WACC COP'].v));
  const noKd={...sc,por_tamano:{...sc.por_tamano,Grande:{...sc.por_tamano.Grande,kd:celda(null)}}};assert.equal(calcular(datos.parametros,noKd,'Grande',inputs)['Kd observado COP'].v,sc.kd.v);
- assert.equal(calcular(datos.parametros,sc,'Grande',{...inputs,primaTamano:true})['WACC COP'].v,null);assert.equal(waccSector(sc,'USD','real').v,sc.wacc_usd_real.v);
+ assert.equal(calcular(datos.parametros,sc,'Grande',inputs)['WACC COP'].v,calc['WACC COP'].v);assert.equal(waccSector(sc,'USD','real').v,sc.wacc_usd_real.v);
  // WeakMap evita compartir cuentas entre cargas sucesivas (ambas tk=MI).
  const pyme=parseWorkbook(XLSX.read(fs.readFileSync('public/ejemplos/PYME-Confecciones-del-Caribe.xlsx'),{type:'buffer'}),'PYME-Confecciones-del-Caribe.xlsx');
  const cs=buildCompany(pyme,{name:pyme.name,cur:'COP',unit:'miles',country:'Colombia',sectorName:sc.nombre,bu:sc.beta_desapalancada.v});assert.notEqual(M(c,0).rev,M(cs,0).rev);

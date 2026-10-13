@@ -88,6 +88,11 @@ function evaluar(w, sheet, address, stack = new Set(), cache = new Map()) {
     };
     try {
         hooks.useState = x => [typeof x === "function" ? x() : x, () => {}];
+        const capitalHtml = render(CostoCapital, { sector: datos.sectores[0].ciiu_division, tamano: "Mediana", setSector() {}, setTamano() {} });
+        assert.match(capitalHtml, /<details class="beta-total"><summary>Opción para dueños no diversificados<\/summary>/);
+        assert.ok(capitalHtml.includes("La beta total supone que el dueño tiene todo su patrimonio en esta empresa."));
+        assert.ok(!capitalHtml.includes("Incluir prima por tamaño"));
+        assert.ok(!capitalHtml.includes("Prima por tamaño"));
         for (const [component, props] of [[CostoCapital, { sector: datos.sectores[0].ciiu_division, tamano: "Mediana", setSector() {}, setTamano() {} }], [Tasas, {}], [ValorDinero, {}], [Creditos, {}], [ProyectosFlujos, {}], [ProyectoModelo, { sector: datos.sectores[0] }]]) {
             const preview = find(component({ ...props, empresa: company }));
             assert.ok(preview, component.name); assert.equal(preview.props.documento.empresa, company);

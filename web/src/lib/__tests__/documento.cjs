@@ -11,7 +11,7 @@ const { armarDocumento, pdfDocumento, identificarDocumento, archivoDocumento } =
 const { documentoWorkbook } = require("../documento-excel.ts"), { creditoWorkbook, proyectoWorkbook } = require("../calc-excel.ts"), { tableWorkbook, pieCalculadora } = require("../excel.ts");
 const React = require("react"), { renderToStaticMarkup } = require("react-dom/server"), { DocumentoMirage } = require("../../components/DocumentoMirage.tsx");
 const sector = mercado.sectores.find(s => s.ciiu_division === "47"), tamano = "Mediana";
-const capital = { deuda: numero(sector.por_tamano[tamano].de) ?? numero(sector.de), patrimonio: 1, ebit: 20, gastos: 2, tarifa: numero(mercado.parametros.tasa_impuesto), total: false, primaTamano: false };
+const capital = { deuda: numero(sector.por_tamano[tamano].de) ?? numero(sector.de), patrimonio: 1, ebit: 20, gastos: 2, tarifa: numero(mercado.parametros.tasa_impuesto), total: false };
 const rc = calcular(mercado.parametros, sector, tamano, capital);
 const tasa = 0.14, desde = "NAMV", hacia = "EM", rt = { conversion: F.convertir(tasa, desde, hacia), equivalencias: F.equivalencias(tasa, desde) };
 const entradaTVM = { P: -1000, F: 0, A: null, n: 4, i: 0.1 }, rv = F.resolver(entradaTVM);
@@ -59,6 +59,16 @@ for (const [neutral, cifra] of docs) {
     assert.equal(pdf.internal.pageSize.getWidth().toFixed(1), "215.9"); assert.equal(pdf.internal.pageSize.getHeight().toFixed(1), "279.4");
     console.log(`OK PDF ${doc.titulo}: ${pdf.getNumberOfPages()} páginas; cifra ${cifra}; conclusión completa y pie en todas las páginas.`);
 }
+assert.ok(!docs[0][0].supuestos.some(f => f.concepto === "Beta total" || f.concepto === "Prima por tamaño"));
+const totalCapital = { ...capital, total: true };
+const totalDoc = armarDocumento("capital", { mercado, entrada: totalCapital, sector: `${sector.ciiu_division} · ${sector.nombre}`, tamano }, calcular(mercado.parametros, sector, tamano, totalCapital));
+const betaAlerta = totalDoc.supuestos.find(f => f.concepto === "Beta total");
+assert.equal(betaAlerta.cifra.v, "Sí"); assert.equal(betaAlerta.cifra.tono, "alerta");
+assert.ok(!totalDoc.supuestos.some(f => f.concepto === "Prima por tamaño"));
+assert.ok(textoPDF(pdfDocumento(totalDoc, {}, { comprimir: false }).output()).includes("Beta total"));
+const totalBook = documentoWorkbook(totalDoc); let betaRow;
+totalBook.getWorksheet("Documento").eachRow(row => { if (row.getCell(1).value === "Beta total") betaRow = row; });
+assert.ok(betaRow); assert.equal(betaRow.getCell(1).fill.fgColor.argb, mercado.estilo.tonos.alerta.fondo.replace("#", "FF"));
 assert.equal(docs[3][0].tablas[0].filas.length, 8);
 assert.ok(docs[3][0].tablas[0].nota.includes("241 filas completas"));
 assert.equal(docs[3][0].tablas[0].filas.at(-1)[0], "240");

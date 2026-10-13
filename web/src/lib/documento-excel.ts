@@ -23,7 +23,7 @@ export function documentoWorkbook(doc: Documento) {
     for (const texto of [doc.titulo, ...(doc.empresa ? [`Empresa o proyecto: ${doc.empresa}`] : []), `Datos de mercado al ${doc.corte}`, doc.conclusion]) s.addRow([texto]);
     for (const [titulo, filas] of [["Supuestos", doc.supuestos], ["Resultados", doc.resultados]] as const) {
         s.addRow([titulo, "Valor"]).eachCell(c => applyTone(c, doc.estilo, "encabezado"));
-        filas.forEach(f => { const r = s.addRow([f.concepto]); putCell(r.getCell(2), f.cifra, doc.estilo); });
+        filas.forEach(f => { const r = s.addRow([f.concepto]); putCell(r.getCell(2), f.cifra, doc.estilo); if (f.cifra.tono === "alerta") { applyTone(r.getCell(1), doc.estilo, "alerta"); applyTone(r.getCell(2), doc.estilo, "alerta"); } });
     }
     doc.tablas.forEach(t => { s.addRow([t.titulo]); s.addRow(t.columnas).eachCell(c => applyTone(c, doc.estilo, "encabezado")); t.filas.forEach(f => s.addRow(f)); if (t.nota) s.addRow([t.nota]); });
     s.addRow(["Método", doc.metodo]); doc.notas.forEach(n => s.addRow([n])); doc.fuentes.forEach(f => s.addRow([f.nombre, f.url])); s.addRow([doc.aviso]);

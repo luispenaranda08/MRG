@@ -52,7 +52,7 @@ export function armarDocumento<S extends SeccionDocumento>(seccion: S, datos: En
         const { entrada: e, sector, tamano } = datos as Entradas["capital"], r = resultado as Resultados["capital"];
         supuesto("Sector", sector, "txt"); supuesto("Tamaño", tamano, "txt");
         supuesto("Deuda financiera (COP)", e.deuda); supuesto("Patrimonio (COP)", e.patrimonio); supuesto("EBIT (COP)", e.ebit); supuesto("Gastos financieros (COP)", e.gastos); supuesto("Tarifa de renta", e.tarifa, "pct");
-        supuesto("Beta total", e.total ? "Sí" : "No", "txt"); supuesto("Prima por tamaño", e.primaTamano ? "Sin dato publicado" : "No aplicada", "txt");
+        if (e.total) doc.supuestos.push({ concepto: "Beta total", cifra: celda("Sí", "txt", "alerta", "Esta beta eleva mucho el Ke; no es la tasa que se usa para valorar ante terceros.") });
         const nombres: Record<string, string> = { rf_usd: "Tasa libre de riesgo USD", erp_maduro: "Prima de mercado", crp: "Prima país", inflacion_cop: "Inflación COP", inflacion_usd: "Inflación USD" };
         for (const [k, l] of Object.entries(nombres)) doc.supuestos.push({ concepto: l, cifra: { ...mercado.parametros[k as keyof Datos["parametros"]], tono: "insumo" } });
         const sc = mercado.sectores.find(s => sector.startsWith(s.ciiu_division));
@@ -194,7 +194,7 @@ export function pdfDocumento(original: Documento, logos: LogosDocumento = {}, op
         if (doc.jev.recomendaciones.length) { texto("Recomendaciones", 10, true); doc.jev.recomendaciones.forEach(r => texto(`• ${r}`)); }
         if (doc.jev.alertas.length) { texto("Alertas", 10, true); doc.jev.alertas.forEach(a => texto(`• ${a}`)); }
     }
-    seccion("Supuestos"); tabla(["Concepto", "Valor"], doc.supuestos.map(f => [f.concepto, fmt(f.cifra)]), "insumo");
+    seccion("Supuestos"); tabla(["Concepto", "Valor"], doc.supuestos.map(f => [f.concepto, fmt(f.cifra)]), "insumo", doc.supuestos.map(f => f.cifra.tono));
     seccion("Resultados"); tabla(["Concepto", "Valor"], doc.resultados.map(f => [f.concepto, fmt(f.cifra)]), "clave", doc.resultados.map(f => f.cifra.tono));
     for (const t of doc.tablas) { seccion(t.titulo); tabla(t.columnas, t.filas); if (t.nota) texto(t.nota, 9); }
     seccion("Método"); texto(doc.metodo);
