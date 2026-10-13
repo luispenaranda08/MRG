@@ -200,8 +200,11 @@ def sectores(v: dict, anterior: dict | None) -> dict:
         kd = _f(kd_tot.get(d)) if d in kd_tot.index else None
         kd_uso = kd if kd is not None else v["rf_usd"] + v["spread_soberano"] + 0.03
         ke, w_cop, w_usd, w_real = wacc(r.bl_mediana, r.de_mediana, kd_uso)
-        _, w_lo, _, _ = wacc(r.bl_p25, r.de_mediana, kd_uso)
-        _, w_hi, _, _ = wacc(r.bl_p75, r.de_mediana, kd_uso)
+        # βu es la misma en todo el sector, así que βL p25/p75 son exactamente las de D/E p25/p75:
+        # cada extremo del rango se calcula con su propio par (βL, D/E), no con la mediana de D/E.
+        _, w_a, _, _ = wacc(r.bl_p25, r.de_p25, kd_uso)
+        _, w_b, _, _ = wacc(r.bl_p75, r.de_p75, kd_uso)
+        w_lo, w_hi = min(w_a, w_b), max(w_a, w_b)
         dif_dam = r.bl_mediana - relever(r.bu_ancla, r.de_damodaran, TARIFA)
         por_tamano = {}
         for tam in BC.TAMANOS:
