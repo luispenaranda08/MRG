@@ -11,6 +11,13 @@ efectivo, EBIT, costos financieros, ingresos e impuestos, más el CIIU.
 Decisiones (documentadas en docs/metodo-betas-kd.md):
 - Deuda financiera = otros pasivos financieros corrientes + no corrientes. Es la línea de la
   taxonomía resumida de Supersociedades para préstamos y bonos; no es pasivo total.
+  En NIIF Pymes (Grupo 2) también existen "Préstamos corrientes" y "Parte (no) corriente de préstamos
+  no corrientes", pero son el detalle de esas mismas líneas: en 2025 coinciden con "otros pasivos
+  financieros" en 9.211 de 9.646 empresas que reportan ambas. No se suman (se contaría dos veces).
+- Una empresa que omite la línea de deuda se trata como sin deuda financiera. Verificado en 2025: el
+  31 % de las que la omiten tiene costos financieros > 2 % de sus pasivos, igual que las que reportan
+  cero (32 %) y lejos de las que tienen deuda (58 %). Limitación conocida: la deuda con socios o
+  vinculados, el leasing y el factoring pueden no estar en esta línea.
 - Se usan estados individuales o separados; los consolidados se excluyen para no contar dos veces
   a un mismo grupo.
 - El dataset guarda las tildes como el carácter de reemplazo U+FFFD (``p�rdida``). Los conceptos
