@@ -17,5 +17,9 @@ logos/mirage/
 logos/concepts/
 # Motor y modelos de ML: no se publican
 ml/
-web/
+# web/ es el proyecto mirage de Vercel (Root Directory = web): no se ignora completo,
+# porque este archivo también se aplica a sus despliegues desde Git. Solo se excluyen sus artefactos.
+web/node_modules/
+web/.next/
+web/out/
 .github/
