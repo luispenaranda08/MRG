@@ -30,6 +30,12 @@ jobs:
           cache: pip
           cache-dependency-path: ml/requirements-api.txt
       - run: pip install -r requirements-api.txt
+      # Historia del formato 88 de la semana anterior: así solo se piden los meses recientes
+      - uses: actions/cache@v4
+        with:
+          path: ml/data/processed/superfinanciera_tasas_detalle.parquet
+          key: f88-${{ github.run_id }}
+          restore-keys: f88-
       - name: Descargar fuentes y regenerar la API
         run: python -m mirage.actualizar
       - name: Subir cambios

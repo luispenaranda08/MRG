@@ -42,7 +42,7 @@ def session() -> requests.Session:
 
 
 def fetch(source: str, url: str, filename: str, params: dict | None = None, *,
-          headers: dict | None = None, timeout: int = 300, retries: int = 3,
+          headers: dict | None = None, timeout: int = 300, retries: int = 4,
           as_of: dt.date | None = None) -> Path:
     """Descarga ``url`` y la guarda en ``data/raw/<source>/<fecha>/<filename>`` con su manifiesto."""
     as_of = as_of or dt.date.today()
@@ -56,7 +56,8 @@ def fetch(source: str, url: str, filename: str, params: dict | None = None, *,
             break
         except requests.RequestException as exc:  # reintento con espera creciente
             last = exc
-            time.sleep(2 ** attempt)
+            if attempt < retries - 1:
+                time.sleep(min(60, 5 * 2 ** attempt))  # 5, 10, 20 s: datos.gov.co corta conexiones bajo carga
     else:
         raise RuntimeError(f"{source}: no se pudo descargar {url}") from last
     content = r.content

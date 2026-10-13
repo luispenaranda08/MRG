@@ -14,7 +14,7 @@ import json
 
 import pandas as pd
 
-from ._http import fetch, save
+from ._http import PROCESSED, fetch, save
 
 DATASET = "https://www.datos.gov.co/resource/w9zh-vetq.json"
 COMERCIALES = ("Comercial ordinario", "Comercial preferencial o corporativo", "Comercial tesoreria")
@@ -35,25 +35,50 @@ def _query(select: str, where: str, group: str, tag: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def rates_detail(since: str = "2022-07-01") -> pd.DataFrame:
+def rates_detail(since: str = "2022-07-01", refresh_months: int = 3) -> pd.DataFrame:
     """Historia completa (desde jul-2022) por mes, modalidad, tamaño, plazo, garantía y división CIIU.
 
     La división CIIU (2 dígitos) se obtiene en el servidor con ``substring`` para que la tabla sea
     manejable; el detalle a 4 dígitos está en ``rates_by_sector``.
+
+    Se consulta mes a mes: agregar toda la historia en una sola consulta tarda más de lo que
+    datos.gov.co tolera y el servidor corta la conexión (falla del 12-oct-2026). Si ya existe la
+    tabla procesada, se conservan sus meses y solo se vuelven a pedir los ``refresh_months``
+    más recientes, que la Superfinanciera todavía puede corregir.
     """
     tipos = ",".join(f"'{t}'" for t in COMERCIALES)
     select = ("date_trunc_ym(fecha_corte) as mes, tipo_de_cr_dito as modalidad, tama_o_de_empresa as tamano, "
               "plazo_de_cr_dito as plazo, tipo_de_garant_a as garantia, substring(codigo_ciiu, 1, 2) as ciiu_division, "
               "sum(tasa_efectiva_promedio*montos_desembolsados) as tasa_x_monto, "
               "sum(montos_desembolsados) as monto, sum(numero_de_creditos) as creditos")
-    where = (f"fecha_corte >= '{since}' and tipo_de_persona = 'Jurídica' "
-             f"and tipo_de_cr_dito in ({tipos}) and montos_desembolsados > 0")
-    df = _query(select, where, "mes, modalidad, tamano, plazo, garantia, ciiu_division", f"tasas_detalle_{since[:7]}")
+    group = "mes, modalidad, tamano, plazo, garantia, ciiu_division"
+
+    previo = None
+    path = PROCESSED / "superfinanciera_tasas_detalle.parquet"
+    if path.exists():
+        previo = pd.read_parquet(path)
+        corte = (previo["mes"].max() - pd.DateOffset(months=refresh_months - 1)).date()
+        previo = previo[previo["mes"] < pd.Timestamp(corte)]
+        since = max(since, corte.isoformat())
+
+    partes = []
+    for inicio in pd.date_range(since, dt.date.today(), freq="MS"):
+        fin = inicio + pd.DateOffset(months=1)
+        where = (f"fecha_corte >= '{inicio:%Y-%m-%d}' and fecha_corte < '{fin:%Y-%m-%d}' "
+                 f"and tipo_de_persona = 'Jurídica' and tipo_de_cr_dito in ({tipos}) and montos_desembolsados > 0")
+        parte = _query(select, where, group, f"tasas_detalle_{inicio:%Y-%m}")
+        if not parte.empty:
+            partes.append(parte)
+    if not partes:
+        raise RuntimeError("superfinanciera: el formato 88 no devolvió datos desde " + since)
+    df = pd.concat(partes, ignore_index=True)
     for c in ("tasa_x_monto", "monto", "creditos"):
         df[c] = pd.to_numeric(df[c])
     df["mes"] = pd.to_datetime(df["mes"])
     df["tasa_ea"] = df["tasa_x_monto"] / df["monto"]
     df = df.drop(columns="tasa_x_monto")
+    if previo is not None:
+        df = pd.concat([previo, df], ignore_index=True).sort_values(group.split(", "), ignore_index=True)
     save(df, "superfinanciera_tasas_detalle")
     return df
 
