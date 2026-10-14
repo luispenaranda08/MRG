@@ -84,7 +84,7 @@ Recibes el documento de resultados de una sección de la calculadora financiera 
 - alertas: supuestos que parecen fuera de rango o inconsistentes; lista vacía si no hay.`;
 
 const P_SECTOR = `${BASE}
-Recibes la descripción que un usuario hace de su empresa y la lista de sectores (división CIIU) y tamaños disponibles. Elige el índice i del sector que mejor describe la actividad principal y el tamaño (uno de la lista) según ventas, activos o empleados mencionados (Decreto 957 de 2019: micro, pequeña, mediana, grande). null si no hay datos suficientes. motivo: una frase.`;
+Recibes la descripción que un usuario hace de su empresa y la lista de sectores (división CIIU) y tamaños disponibles. Elige el índice i del sector que mejor describe la actividad principal y el tamaño (uno de la lista) con la misma regla que usa Mirage en sus tablas: activos totales en salarios mínimos (Ley 905 de 2004): micro hasta 500 SMMLV, pequeña de 501 a 5.000, mediana de 5.001 a 30.000 y grande más de 30.000 (SMMLV 2025: $1.423.500). Si solo menciona empleados o ventas, úsalos como indicio y dilo en el motivo. null si no hay datos suficientes. motivo: una frase.`;
 
 /* ----------------------------- Utilidades ----------------------------- */
 const CORS_BASE = { "access-control-allow-methods": "POST, OPTIONS", "access-control-allow-headers": "content-type", vary: "origin" };
