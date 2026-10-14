@@ -16,7 +16,9 @@
     "test:wacc": "node src/components/__tests__/wacc.cjs",
     "test:alineacion": "node src/components/__tests__/alineacion.cjs",
     "test:decisiones": "node src/lib/dx/__tests__/decisiones.cjs",
-    "test:decisiones-excel": "node src/lib/dx/__tests__/decisiones-excel.cjs"
+    "test:decisiones-excel": "node src/lib/dx/__tests__/decisiones-excel.cjs",
+    "test:privacidad": "node scripts/privacidad.cjs",
+    "postbuild": "node scripts/privacidad.cjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",

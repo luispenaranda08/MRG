@@ -7,7 +7,7 @@ export function filasDecisiones(decisiones: Decision[], seleccion: SeleccionDocu
     const filas: string[][] = [["Decisión", "Opción elegida", "Alternativas", "Motivo", "Origen"]];
     for (const d of decisiones) {
         const e = ETIQUETAS[d.clave];
-        filas.push([e.titulo, e.opciones[d.opcion as never], (MENU[d.clave] as readonly string[]).map(o => e.opciones[o as never]).join("; "), d.motivo, d.origen === "jev" ? "JEV" : d.origen === "usuario" ? "Usted" : "Mirage (por defecto)"]);
+        filas.push([e.titulo, e.opciones[d.opcion as never], (MENU[d.clave] as readonly string[]).map(o => e.opciones[o as never]).join("; "), d.motivo, d.origen === "auto" ? "Recomendado" : d.origen === "usuario" ? "Usted" : "Valor base"]);
     }
     filas.push(["Sector", seleccion.sector, "", "", seleccion.sectorOrigen]);
     filas.push(["Tamaño", seleccion.tamano, "", "", seleccion.tamanoOrigen]);
@@ -15,7 +15,7 @@ export function filasDecisiones(decisiones: Decision[], seleccion: SeleccionDocu
 }
 
 export function agregarHojaDecisiones(wb: ExcelJS.Workbook, decisiones: Decision[], seleccion: SeleccionDocumento) {
-    const ws = wb.addWorksheet("Decisiones de JEV");
+    const ws = wb.addWorksheet("Supuestos recomendados");
     filasDecisiones(decisiones, seleccion).forEach((fila, i) => {
         const row = ws.addRow(fila);
         row.eachCell(cell => {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- Runner CommonJS local para transpilar TypeScript sin instalar nada. */
 // Ejecutar: node src/lib/finanzas/__tests__/finanzas.cjs
-// Casos de control: valores en caché de las hojas del profesor Félix Gutiérrez ("Sistemas de Amortización",
+// Casos de control: valores en caché de las hojas de referencia ("Sistemas de Amortización",
 // "Calculadora Financiera v9") y ejercicios resueltos de Ehrhardt y Brigham, cap. 10 (10-5, 10-6, 10-8).
 const assert = require("node:assert/strict"), fs = require("node:fs"), ts = require("typescript");
 require.extensions[".ts"] = (m, f) => m._compile(ts.transpileModule(fs.readFileSync(f, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } }).outputText, f);
@@ -39,7 +39,7 @@ assert.throws(() => F.resolver({ P: 1, F: null, A: null, n: 1, i: 0.1 }), /exact
 igual(F.nCuotas({ inicial: 0, final: 5, cuotas: null }).cuotas, 6, "nCuotas (Bases H39:H41)");
 igual(F.nCuotas({ inicial: null, final: 24, cuotas: 12 }).inicial, 13, "nCuotas periodo inicial");
 
-// ---------- Sistemas de amortización (valores en caché de la hoja del profesor) ----------
+// ---------- Sistemas de amortización (valores en caché de la hoja de referencia) ----------
 const base = { principal: 1000, cuotas: 4, tasaPeriodica: 0.1, periodosPorAnio: 1 };
 const s1 = F.amortizar({ ...base, sistema: "cuota_fija" });
 cerca(s1.cuotaInicial, 315.4708, 1e-4, "SISTEMA1 cuota");

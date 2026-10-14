@@ -22,7 +22,7 @@ if(kdi!=null){const s=D.aplicar(c,base,{...D.POR_DEFECTO,kd:'implicito_empresa'}
 // 3. Validación: lo que está fuera del menú o no disponible cae al valor por defecto de Mirage
 const v=D.validar(c,{crecimiento:{opcion:'inventado',motivo:'x'},margen:{opcion:'mediana_rentables',motivo:'Año con pérdida'},kd:{opcion:'implicito_empresa',motivo:'y'}});
 assert.equal(v[0].opcion,'historico_acotado');assert.equal(v[0].origen,'mirage');
-assert.equal(v[1].opcion,'mediana_rentables');assert.equal(v[1].origen,'jev');
+assert.equal(v[1].opcion,'mediana_rentables');assert.equal(v[1].origen,'auto');
 assert.equal(v[2].opcion,kdi==null?'observado_sector_tamano':'implicito_empresa');
 assert.ok(D.validar(c,null).every(d=>d.origen==='mirage'));
 // 4. El modelo corre con los supuestos decididos y el resumen para JEV no lleva datos de identificación

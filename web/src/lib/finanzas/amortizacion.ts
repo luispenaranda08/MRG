@@ -1,7 +1,7 @@
 /**
  * Sistemas de amortización de créditos.
  *
- * Replica "Sistemas de Amortización.xlsx" del profesor Félix Gutiérrez: tabla con Periodo, Ingreso, Egreso,
+ * Replica "Sistemas de Amortización.xlsx" de referencia: tabla con Periodo, Ingreso, Egreso,
  * FCN, Saldo inicial, Intereses, Saldo final y Abono a capital, para cuatro sistemas:
  * 1. Cuota fija (francés), 2. Abono a capital constante, 3. Bono con cupón (bullet), 4. Bono cero cupón.
  *
@@ -14,7 +14,7 @@
  *   con la proyección del índice;
  * - fechas de pago a partir de la fecha de desembolso.
  *
- * Convención de signos del profesor: el FCN es positivo para el prestatario en el desembolso y negativo en
+ * Convención de signos de la hoja de referencia: el FCN es positivo para el prestatario en el desembolso y negativo en
  * los pagos; el saldo es lo que se debe.
  */
 import { ErrorFinanciero } from "./tasas";
@@ -50,7 +50,7 @@ export interface EntradaCredito {
     periodosPorAnio?: number;
     /** Periodos iniciales en los que solo se pagan intereses. */
     gracia?: number;
-    /** Con tasa variable y cuota fija: "ajuste_final" (como el simulador del profesor) o "recalcular". */
+    /** Con tasa variable y cuota fija: "ajuste_final" (como el simulador de referencia) o "recalcular". */
     tasaVariable?: "ajuste_final" | "recalcular";
     /** Crédito en UVR o en moneda extranjera: `principal` va en esa unidad. */
     indexacion?: Indexacion;
@@ -187,7 +187,7 @@ export function amortizar(e: EntradaCredito): ResultadoCredito {
     };
 }
 
-/** Los cuatro sistemas con los mismos datos, para compararlos (como la hoja del profesor). */
+/** Los cuatro sistemas con los mismos datos, para compararlos (como la hoja de referencia). */
 export function compararSistemas(e: Omit<EntradaCredito, "sistema">): ResultadoCredito[] {
     return (Object.keys(SISTEMAS) as Sistema[]).map(s => amortizar({ ...e, sistema: s }));
 }

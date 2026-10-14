@@ -1,4 +1,4 @@
-"""Modelos y espacios de búsqueda (capítulos 2–6 y 10 del curso de Rubio).
+"""Modelos y espacios de búsqueda.
 
 Todos van dentro de un ``Pipeline`` con ``ColumnTransformer``: imputación por mediana, escalado
 estándar para las variables numéricas y ``OneHotEncoder(handle_unknown="ignore")`` para el CIIU,

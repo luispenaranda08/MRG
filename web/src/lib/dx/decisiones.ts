@@ -18,7 +18,7 @@ export const MENU = {
 export type Clave = keyof typeof MENU;
 export type Opcion<K extends Clave> = (typeof MENU)[K][number];
 export type Decisiones = { [K in Clave]: Opcion<K> };
-export interface Decision<K extends Clave = Clave> { clave: K; opcion: Opcion<K>; motivo: string; origen: "jev" | "mirage" | "usuario" }
+export interface Decision<K extends Clave = Clave> { clave: K; opcion: Opcion<K>; motivo: string; origen: "auto" | "mirage" | "usuario" }
 
 /** Lo que Mirage elige si JEV no responde: el comportamiento actual de defaultsFor. */
 export const POR_DEFECTO: Decisiones = { crecimiento: "historico_acotado", margen: "ultimo", kd: "observado_sector_tamano" };
@@ -87,7 +87,7 @@ export function validar(c: Company, r: Partial<Record<Clave, { opcion?: string; 
     const disp = disponibles(c);
     return (Object.keys(MENU) as Clave[]).map(k => {
         const o = r?.[k]?.opcion, ok = !!o && (disp[k] as string[]).includes(o);
-        return ok ? { clave: k, opcion: o as Opcion<typeof k>, motivo: (r?.[k]?.motivo || "").slice(0, 300), origen: "jev" as const }
+        return ok ? { clave: k, opcion: o as Opcion<typeof k>, motivo: (r?.[k]?.motivo || "").slice(0, 300), origen: "auto" as const }
             : { clave: k, opcion: POR_DEFECTO[k], motivo: "Valor por defecto de Mirage.", origen: "mirage" as const };
     });
 }

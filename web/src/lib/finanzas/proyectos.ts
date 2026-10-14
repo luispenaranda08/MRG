@@ -1,13 +1,13 @@
 /**
  * Evaluación de proyectos de inversión.
  *
- * Indicadores (Ehrhardt y Brigham, cap. 10; "Model Eval Proyectos" del profesor Félix Gutiérrez): VPN, TIR,
+ * Indicadores (Ehrhardt y Brigham, cap. 10; "Model Eval Proyectos" de referencia): VPN, TIR,
  * TIRM (como MIRR de Excel), índice de rentabilidad, VAE, periodo de recuperación simple y descontado, tasa
  * de cruce y perfil del VPN.
  *
  * Modelo de flujo de caja libre ("Formulación de Proyectos Modelo MFI"): estado de resultados, UODI, FCB,
- * reposición de KTNO y activos fijos, FCL del proyecto y del inversionista, y las tres evaluaciones del
- * profesor: proyecto con financiación a VPN(CK), proyecto sin financiación a VPN(TMRR) e inversionista con
+ * reposición de KTNO y activos fijos, FCL del proyecto y del inversionista, y las tres evaluaciones de
+ * referencia: proyecto con financiación a VPN(CK), proyecto sin financiación a VPN(TMRR) e inversionista con
  * financiación a VPN(TMRR). El CK puede venir del WACC sectorial de Mirage.
  */
 import { ErrorFinanciero } from "./tasas";
@@ -51,7 +51,7 @@ export interface Indicadores {
     vae: number;
     recuperacion: number | null;
     recuperacionDescontada: number | null;
-    /** Saldo final de la tabla del profesor: −VPN·(1+k)^n. */
+    /** Saldo final de la tabla de referencia: −VPN·(1+k)^n. */
     saldoFinal: number;
     decision: "aceptar" | "rechazar" | "indiferente";
 }

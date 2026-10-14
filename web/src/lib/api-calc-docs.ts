@@ -124,7 +124,6 @@ export const API_CALC = {
     }
   },
   "fuentes": [
-    "Herramientas del curso Planeación Financiera, prof. Félix Gutiérrez (MFi Uninorte)",
     "Ehrhardt y Brigham, Finanzas Corporativas, cap. 10"
   ]
 } as const;

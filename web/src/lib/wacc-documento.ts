@@ -15,6 +15,6 @@ export function documentoWacc(d: Datos, sectores: Sector[], moneda: string, moda
 }
 export function waccWorkbook(d: Datos, sectores: Sector[], moneda: string, modalidad: string, doc: Documento, tamano = "Todo el sector") {
     const w = tableWorkbook(d, [...columnasWacc, `WACC ${moneda} ${modalidad}`, ...(tamano === "Todo el sector" ? ["p25 COP nominal", "p75 COP nominal"] : [])], filasWacc(sectores, moneda, modalidad, tamano, d), "WACC");
-    agregarDecision(w, d.estilo, doc.jev);
+    agregarDecision(w, d.estilo, doc.rec);
     return pieCalculadora(w, d.estilo);
 }

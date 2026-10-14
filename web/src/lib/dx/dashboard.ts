@@ -12,7 +12,7 @@ export interface ComposicionCat { id: string; nombre: string; partes: { nombre: 
 export interface KpiCat { id: string; nombre: string; fmt: FormatoSerie | "texto"; f: string | null; v: number | string | null; nota?: { f?: string; v?: number | string; z?: string; texto?: string } }
 export interface Catalogo { anios: string[]; proyectados: string[]; series: SerieCat[]; composiciones: ComposicionCat[]; kpis: KpiCat[] }
 export interface GraficaPlan { tipo: TipoGrafica; titulo: string; series: string[]; secundaria: string[]; hallazgo: string }
-export interface PlanDashboard { lectura: string; kpis: string[]; graficas: GraficaPlan[]; origen: "jev" | "mirage" }
+export interface PlanDashboard { lectura: string; kpis: string[]; graficas: GraficaPlan[]; origen: "auto" | "mirage" }
 
 const TIPOS: TipoGrafica[] = ["columnas", "barras", "lineas", "area", "columnas_apiladas", "combo", "torta", "anillo"];
 export const FORMATOS: Record<FormatoSerie | "texto", string> = { num: "#,##0", pct: "0.0%", x: '0.00"x"', dias: "0", z: "0.00", texto: "@" };
@@ -83,7 +83,7 @@ export function validarPlan(plan: Partial<PlanDashboard> | null | undefined, cat
     for (const g of base.graficas) { if (graficas.length >= 6) break; if (!usadas.has(g.series.join("|"))) graficas.push(g); }
     const K = new Set(cat.kpis.map(k => k.id)), kpis = [...new Set((plan.kpis ?? []).filter(id => K.has(id)))].slice(0, 6);
     for (const id of base.kpis) { if (kpis.length >= 4) break; if (!kpis.includes(id)) kpis.push(id); }
-    return { origen: "jev", lectura: limpiar(plan.lectura, 600) || base.lectura, kpis, graficas: graficas.slice(0, 8) };
+    return { origen: "auto", lectura: limpiar(plan.lectura, 600) || base.lectura, kpis, graficas: graficas.slice(0, 8) };
 }
 const limpiar = (s: unknown, n: number) => typeof s === "string" ? s.replace(/\s+/g, " ").trim().slice(0, n) : "";
 
@@ -107,7 +107,7 @@ export function hojaDashboard(wb: ExcelJS.Workbook, cat: Catalogo, plan: PlanDas
     ws.getCell("B2").alignment = { wrapText: true, vertical: "top" };
     fuente(ws.getCell("B2"), 10.5, "FF3C4043");
     ws.getRow(2).height = 46;
-    ws.getCell("B3").value = plan.origen === "jev" ? "Gráficas, indicadores y lectura elegidos para esta empresa. Las cifras son fórmulas: cambian con la hoja Supuestos." : "Las cifras son fórmulas: cambian con la hoja Supuestos.";
+    ws.getCell("B3").value = plan.origen === "auto" ? "Gráficas, indicadores y lectura elegidos para esta empresa. Las cifras son fórmulas: cambian con la hoja Supuestos." : "Las cifras son fórmulas: cambian con la hoja Supuestos.";
     fuente(ws.getCell("B3"), 8.5, "FF6E7277");
 
     // KPI: etiqueta, valor y comparación

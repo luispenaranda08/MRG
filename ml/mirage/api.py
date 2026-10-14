@@ -58,7 +58,7 @@ ESTILO = {
     },
     "formatos": {"pct": "0.00%", "pp": "0.00\" pp\"", "x": "0.00", "num": "#,##0", "bn": "#,##0.0\" bn\"", "txt": "@"},
     "fuentes_tipograficas": {"texto": "IBM Plex Sans", "cifras": "IBM Plex Mono"},
-    "convencion_origen": "Talleres de Gerencia Financiera (Maestría en Finanzas, Uninorte): subidas en verde, bajadas en "
+    "convencion_origen": "Convención de Mirage: subidas en verde, bajadas en "
                          "rojo, insumos sobre fondo claro, encabezados oscuros con texto blanco, resultados resaltados.",
 }
 

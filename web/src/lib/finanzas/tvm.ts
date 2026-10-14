@@ -1,7 +1,7 @@
 /**
  * Valor del dinero en el tiempo con las convenciones de Excel (VA, VF, PAGO, NPER, TASA).
  *
- * Replica la hoja TVM de la "Calculadora Financiera v9" del profesor Félix Gutiérrez: cinco variables
+ * Replica la hoja TVM de la "Calculadora Financiera v9" de referencia: cinco variables
  * (P, F, A, n, i), se dan cuatro y se resuelve la incógnita. Signos como en Excel: un valor negativo es un
  * egreso y uno positivo un ingreso; un campo vacío es cero. `anticipada` equivale a tipo = 1.
  */
@@ -88,7 +88,7 @@ export interface EntradaTVM {
 }
 
 /**
- * Resuelve la incógnita: exactamente una variable debe venir como `null` (el "?" de la hoja del profesor);
+ * Resuelve la incógnita: exactamente una variable debe venir como `null` (el "?" de la hoja de referencia);
  * las que no vienen (`undefined`) se toman como cero.
  */
 export function resolver(e: EntradaTVM): { incognita: Variable; valor: number; entrada: Required<Omit<EntradaTVM, "anticipada">> & { anticipada: boolean } } {
@@ -112,7 +112,7 @@ export function resolver(e: EntradaTVM): { incognita: Variable; valor: number; e
     return { incognita: x, valor, entrada };
 }
 
-/** Hoja nCuotas del profesor: dos de (periodo inicial, periodo final, número de cuotas). */
+/** Hoja nCuotas de referencia: dos de (periodo inicial, periodo final, número de cuotas). */
 export function nCuotas(e: { inicial?: number | null; final?: number | null; cuotas?: number | null }) {
     if (e.inicial == null && e.final != null && e.cuotas != null) return { inicial: e.final - e.cuotas + 1, final: e.final, cuotas: e.cuotas };
     if (e.final == null && e.inicial != null && e.cuotas != null) return { inicial: e.inicial, final: e.cuotas + e.inicial - 1, cuotas: e.cuotas };

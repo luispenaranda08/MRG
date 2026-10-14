@@ -12,7 +12,7 @@ function Filas({ filas, insumos = false }: { filas: FilaDocumento[]; insumos?: b
 export function DocumentoMirage({ documento, excel }: { documento: Documento; excel?: (doc: Documento) => Promise<void> }) {
     const [identidad] = useState(() => identificarDocumento(documento));
     const clave = JSON.stringify(documento);
-    const [respuesta, setRespuesta] = useState<{ clave: string; jev?: DecisionJev; pendiente?: boolean } | null>(null);
+    const [respuesta, setRespuesta] = useState<{ clave: string; rec?: DecisionJev; pendiente?: boolean } | null>(null);
     // JEV solo decide sobre el documento que está a la vista (las pestañas ocultas no consultan)
     const caja = useRef<HTMLDivElement>(null), [visible, setVisible] = useState(false);
     useEffect(() => {
@@ -30,20 +30,20 @@ export function DocumentoMirage({ documento, excel }: { documento: Documento; ex
         let vigente = true;
         const espera = setTimeout(() => {
             const entrada = JSON.parse(clave) as Documento;
-            if (entrada.jev) return;
+            if (entrada.rec) return;
             setRespuesta({ clave, pendiente: true });
-            decidir(entrada).then(jev => { if (vigente) setRespuesta({ clave, jev }); }).catch(() => { if (vigente) setRespuesta({ clave }); });
+            decidir(entrada).then(rec => { if (vigente) setRespuesta({ clave, rec }); }).catch(() => { if (vigente) setRespuesta({ clave }); });
         }, 1500);
         return () => { vigente = false; clearTimeout(espera); };
     }, [clave, visible]);
-    const jev = documento.jev ?? (respuesta?.clave === clave ? respuesta.jev : undefined);
-    const doc = { ...documento, jev, numero: identidad.numero, fecha: identidad.fecha };
+    const rec = documento.rec ?? (respuesta?.clave === clave ? respuesta.rec : undefined);
+    const doc = { ...documento, rec, numero: identidad.numero, fecha: identidad.fecha };
     return <div className="documento-wrap" ref={caja}><div className="actions"><Descargar run={async () => { const logos = await logosDocumento(); pdfDocumento(doc, logos).save(archivoDocumento(doc)); }}>↓ PDF</Descargar>{excel && <Descargar run={() => excel(doc)}>↓ Excel</Descargar>}</div><article className="documento-mirage" aria-label={`Vista previa: ${doc.titulo}`}>
         <header className="documento-cabecera"><div className="documento-marca"><Image src="/mirage-symbol-black.svg" alt="" width={32} height={32}/>Mirage</div><div>Documento N.º {doc.numero}<br/>Datos de mercado al {doc.corte}</div></header>
         <h2>{doc.titulo}</h2>{doc.empresa && <p>Empresa o proyecto: {doc.empresa}</p>}
         <h4>Conclusión</h4><p className="documento-conclusion">{doc.conclusion}</p>{doc.notas.map((n, j) => <p className="alert" key={j}>{n}</p>)}
-        {!jev && respuesta?.clave === clave && respuesta.pendiente && <p className="source" role="status">Analizando…</p>}
-        <DecisionDocumento jev={jev}/>
+        {!rec && respuesta?.clave === clave && respuesta.pendiente && <p className="source" role="status">Analizando…</p>}
+        <DecisionDocumento rec={rec}/>
         <h4>Supuestos</h4><Filas filas={doc.supuestos} insumos/>
         <h4>Resultados</h4><Filas filas={doc.resultados}/>
         {doc.tablas.map((t, j) => <section key={j}><h4>{t.titulo}</h4><div className="table-scroll" tabIndex={0}><table><thead><tr>{t.columnas.map(c => <th scope="col" key={c}>{c}</th>)}</tr></thead><tbody>{t.filas.map((f, i) => <tr key={i}>{f.map((v, k) => k === 0 ? <th scope="row" key={k}>{v}</th> : <td key={k}>{v}</td>)}</tr>)}</tbody></table></div>{t.nota && <p className="source">{t.nota}</p>}</section>)}
@@ -53,8 +53,8 @@ export function DocumentoMirage({ documento, excel }: { documento: Documento; ex
     </article></div>;
 }
 
-export function DecisionDocumento({ jev }: { jev?: DecisionJev }) {
-    if (!jev) return null;
-    const tono = { favorable: "sube", desfavorable: "baja", con_reservas: "alerta", informativo: "nota" }[jev.veredicto];
-    return <section aria-label="Recomendación"><h4>Recomendación</h4><strong className={`tono-${tono}`}>{VEREDICTO[jev.veredicto]}</strong><p>{jev.decision}</p>{jev.recomendaciones.length > 0 && <><h4>Recomendaciones</h4><ul>{jev.recomendaciones.map((r, i) => <li key={i}>{r}</li>)}</ul></>}{jev.alertas.length > 0 && <><h4>Alertas</h4><ul className="tono-alerta">{jev.alertas.map((a, i) => <li key={i}>{a}</li>)}</ul></>}</section>;
+export function DecisionDocumento({ rec }: { rec?: DecisionJev }) {
+    if (!rec) return null;
+    const tono = { favorable: "sube", desfavorable: "baja", con_reservas: "alerta", informativo: "nota" }[rec.veredicto];
+    return <section aria-label="Recomendación"><h4>Recomendación</h4><strong className={`tono-${tono}`}>{VEREDICTO[rec.veredicto]}</strong><p>{rec.decision}</p>{rec.recomendaciones.length > 0 && <><h4>Recomendaciones</h4><ul>{rec.recomendaciones.map((r, i) => <li key={i}>{r}</li>)}</ul></>}{rec.alertas.length > 0 && <><h4>Alertas</h4><ul className="tono-alerta">{rec.alertas.map((a, i) => <li key={i}>{a}</li>)}</ul></>}</section>;
 }

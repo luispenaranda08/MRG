@@ -2,7 +2,7 @@
  * Conversión de tasas de interés con la nomenclatura colombiana.
  *
  * Basado en la "Calculadora Financiera v9" (hoja ICNV) y la tabla TPERIODOS de "Sistemas de Amortización"
- * del profesor Félix Gutiérrez (Planeación Financiera, MFi Uninorte), ampliado a tasas anticipadas.
+ * de referencia, ampliado a tasas anticipadas.
  *
  * Códigos aceptados:
  * - Efectiva anual: `EA`.
@@ -25,7 +25,7 @@ export interface Frecuencia {
     periodicaAnticipada: string;
 }
 
-/** Tabla TPERIODOS del profesor (más la columna de tasa periódica anticipada). */
+/** Tabla TPERIODOS de referencia (más la columna de tasa periódica anticipada). */
 export const PERIODOS: Frecuencia[] = [
     { frecuencia: "Año", plural: "Años", adjetivo: "Anual", m: 1, efectiva: "EA", nominalVencida: "NA", nominalAnticipada: "NAA", periodicaAnticipada: "AA" },
     { frecuencia: "Semestre", plural: "Semestres", adjetivo: "Semestral", m: 2, efectiva: "ES", nominalVencida: "NASV", nominalAnticipada: "NASA", periodicaAnticipada: "SA" },
@@ -126,7 +126,7 @@ export function equivalencias(tasa: number, codigo: string): { ea: number; tabla
     };
 }
 
-/** Hoja ICNV del profesor: dada la nominal (J) o la efectiva (EFF) y m, devuelve J, EFF e i. */
+/** Hoja ICNV de referencia: dada la nominal (J) o la efectiva (EFF) y m, devuelve J, EFF e i. */
 export function icnv(entrada: { nominal?: number; efectiva?: number; m: number }) {
     const { m } = entrada;
     if (!(m > 0)) throw new ErrorFinanciero("m (periodos de capitalización) debe ser positivo.");

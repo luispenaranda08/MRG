@@ -75,7 +75,7 @@ N01 = [
 
 Objetivo del libro: estimar con datos colombianos de fuente primaria los insumos de la página
 **Costo de capital por sector** de Mirage y evaluar qué modelos los predicen mejor, siguiendo la
-metodología del curso [*Machine Learning* de Lihki Rubio, Ph.D.](https://lihkir.github.io/MachineLearning/intro.html).
+metodología del curso aprendizaje automático estándar (validación fuera de muestra y comparación estadística).
 
 | Fuente | Conjunto | Uso |
 |---|---|---|

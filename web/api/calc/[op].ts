@@ -77,7 +77,7 @@ export function GET(request: Request) {
         api: "Mirage · calculadora financiera", version: VERSION,
         uso: "POST /api/calc/<operacion> con un cuerpo JSON. Tasas como fracción (0,12 = 12 %).",
         operaciones: Object.fromEntries(Object.entries(OPERACIONES).map(([k, v]) => [k, { descripcion: v.descripcion, ejemplo: v.ejemplo }])),
-        fuentes: ["Herramientas del curso Planeación Financiera, prof. Félix Gutiérrez (MFi Uninorte)", "Ehrhardt y Brigham, Finanzas Corporativas, cap. 10"],
+        fuentes: ["Ehrhardt y Brigham, Finanzas Corporativas, cap. 10"],
     });
 }
 

@@ -1,5 +1,4 @@
-"""Evaluación de modelos de regresión siguiendo el capítulo 9 de Rubio, *Machine Learning*
-(https://lihkir.github.io/MachineLearning/model_evaluation.html):
+"""Evaluación de modelos de regresión con validación y métricas estándar:
 
 - Métricas: R², MAE, MSE, RMSE y MAPE (9.6).
 - Diferencias significativas entre modelos (9.9.3): prueba de Diebold y Mariano (1995) sobre las

@@ -98,7 +98,7 @@ function evaluar(w, sheet, address, stack = new Set(), cache = new Map()) {
             assert.ok(preview, component.name); assert.equal(preview.props.documento.empresa, company);
             let exported;
             excel.saveWorkbook = async (book, filename) => { exported = { book: await roundtrip(book), filename }; };
-            await preview.props.excel({ ...preview.props.documento, jev: decision });
+            await preview.props.excel({ ...preview.props.documento, rec: decision });
             assert.ok(exported.book.title.includes(company), component.name);
             assert.ok(exported.filename.includes("Empresa---Bogotá--SAS"), exported.filename);
             assert.ok(!/[<>:"/\\|?*]/.test(exported.filename));

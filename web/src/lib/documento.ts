@@ -15,7 +15,7 @@ export interface Documento {
     numero: string; fecha: string; conclusion: string; supuestos: FilaDocumento[];
     resultados: FilaDocumento[]; metodo: string; fuentes: Fuente[]; estilo: Estilo;
     tablas: { titulo: string; columnas: string[]; filas: string[][]; nota?: string }[];
-    notas: string[]; aviso: string; jev?: DecisionJev;
+    notas: string[]; aviso: string; rec?: DecisionJev;
 }
 interface Entradas {
     capital: { mercado: Datos; entrada: Insumos; sector: string; tamano: string };
@@ -189,10 +189,10 @@ export function pdfDocumento(original: Documento, logos: LogosDocumento = {}, op
     y += 15; pdf.setDrawColor(tonos.neutro.texto); pdf.setLineWidth(0.53); pdf.line(margin, y, width - margin, y); y += 7;
     texto(doc.titulo, 18, true); if (doc.empresa) texto(`Empresa o proyecto: ${doc.empresa}`);
     seccion("Conclusión"); texto(doc.conclusion, 11, true); doc.notas.forEach(n => texto(n, 9));
-    if (doc.jev) {
-        seccion("Recomendación"); texto(VEREDICTO[doc.jev.veredicto], 11, true); texto(doc.jev.decision);
-        if (doc.jev.recomendaciones.length) { texto("Recomendaciones", 10, true); doc.jev.recomendaciones.forEach(r => texto(`• ${r}`)); }
-        if (doc.jev.alertas.length) { texto("Alertas", 10, true); doc.jev.alertas.forEach(a => texto(`• ${a}`)); }
+    if (doc.rec) {
+        seccion("Recomendación"); texto(VEREDICTO[doc.rec.veredicto], 11, true); texto(doc.rec.decision);
+        if (doc.rec.recomendaciones.length) { texto("Recomendaciones", 10, true); doc.rec.recomendaciones.forEach(r => texto(`• ${r}`)); }
+        if (doc.rec.alertas.length) { texto("Alertas", 10, true); doc.rec.alertas.forEach(a => texto(`• ${a}`)); }
     }
     seccion("Supuestos"); tabla(["Concepto", "Valor"], doc.supuestos.map(f => [f.concepto, fmt(f.cifra)]), "insumo", doc.supuestos.map(f => f.cifra.tono));
     seccion("Resultados"); tabla(["Concepto", "Valor"], doc.resultados.map(f => [f.concepto, fmt(f.cifra)]), "clave", doc.resultados.map(f => f.cifra.tono));

@@ -69,7 +69,7 @@ module.exports = async function probarJev({ docs, mercado, credito, proyecto, en
         assert.equal(calls, 1);
         assert.ok(html(tree).includes("Recomendación")); assert.ok(html(tree).includes(decision.decision)); assert.ok(html(tree).includes("tono-alerta"));
         await buscar(tree, e => e.props?.children === "↓ Excel").props.run();
-        assert.deepEqual(exported.jev, decision);
+        assert.deepEqual(exported.rec, decision);
         await decidir(props.documento); assert.equal(calls, 1, "La misma entrada usa la caché");
 
         // Una respuesta anterior no se muestra después de cambiar la entrada.
@@ -87,7 +87,7 @@ module.exports = async function probarJev({ docs, mercado, credito, proyecto, en
         tree = mounted.render(props);
         assert.ok(!html(tree).includes("Recomendación")); assert.ok(!html(tree).includes("Analizando…")); assert.ok(!html(tree).includes("Fallo simulado"));
         assert.ok(html(tree).includes("↓ PDF")); assert.ok(html(tree).includes("↓ Excel"));
-        await buscar(tree, e => e.props?.children === "↓ Excel").props.run(); assert.equal(exported.jev, undefined);
+        await buscar(tree, e => e.props?.children === "↓ Excel").props.run(); assert.equal(exported.rec, undefined);
         mounted.unmount();
 
         // El selector fija sector y tamaño; el fallo deja habilitado el botón.
@@ -109,13 +109,13 @@ module.exports = async function probarJev({ docs, mercado, credito, proyecto, en
 
         for (const [veredicto, tono] of [["favorable", "sube"], ["desfavorable", "baja"], ["con_reservas", "alerta"], ["informativo", "nota"]]) {
             mounted = montar(DocumentoMirage, hooks);
-            tree = mounted.render({ documento: { ...docs[0][0], jev: { ...decision, veredicto } } });
+            tree = mounted.render({ documento: { ...docs[0][0], rec: { ...decision, veredicto } } });
             assert.ok(html(tree).includes(`tono-${tono}`)); assert.ok(html(tree).includes(VEREDICTO[veredicto])); mounted.unmount();
         }
 
         for (const [doc] of docs) {
             const plain = pdfDocumento(doc, {}, { comprimir: false }).output(); assert.ok(!plain.includes("RECOMENDACIÓN"));
-            const pdf = pdfDocumento({ ...doc, jev: decision }, {}, { comprimir: false }).output();
+            const pdf = pdfDocumento({ ...doc, rec: decision }, {}, { comprimir: false }).output();
             for (const text of ["RECOMENDACIÓN", "Con reservas", decision.decision, ...decision.recomendaciones, ...decision.alertas]) assert.ok(pdf.includes(text), text);
         }
         const filtered = mercado.sectores.filter(s => s.ciiu_division === "47");
@@ -129,8 +129,8 @@ module.exports = async function probarJev({ docs, mercado, credito, proyecto, en
             assert.equal(book.getWorksheet("WACC").getCell("A3").value, null);
             await book.xlsx.writeBuffer();
         }
-        const waccDoc = { ...documentoWacc(mercado, filtered, "COP", "nominal"), jev: decision };
-        const books = [documentoWorkbook({ ...docs[0][0], jev: decision }), documentoWorkbook({ ...docs[1][0], jev: decision }), documentoWorkbook({ ...docs[2][0], jev: decision }), creditoWorkbook(credito, mercado.estilo, "", decision), proyectoWorkbook(proyecto, mercado.estilo, "", decision), proyectoWorkbook({ modo: "modelo", entrada: entradaModelo }, mercado.estilo, "", decision), waccWorkbook(mercado, filtered, "COP", "nominal", waccDoc)];
+        const waccDoc = { ...documentoWacc(mercado, filtered, "COP", "nominal"), rec: decision };
+        const books = [documentoWorkbook({ ...docs[0][0], rec: decision }), documentoWorkbook({ ...docs[1][0], rec: decision }), documentoWorkbook({ ...docs[2][0], rec: decision }), creditoWorkbook(credito, mercado.estilo, "", decision), proyectoWorkbook(proyecto, mercado.estilo, "", decision), proyectoWorkbook({ modo: "modelo", entrada: entradaModelo }, mercado.estilo, "", decision), waccWorkbook(mercado, filtered, "COP", "nominal", waccDoc)];
         for (const book of books) {
             const copy = new ExcelJS.Workbook(); await copy.xlsx.load(await book.xlsx.writeBuffer());
             const sheet = copy.getWorksheet("Recomendación"); assert.ok(sheet);

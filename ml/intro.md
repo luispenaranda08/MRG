@@ -1,7 +1,7 @@
 # Mirage · Modelos de machine learning para el costo de capital en Colombia
 
 Este libro documenta, con la metodología del curso
-[*Machine Learning* de Lihki Rubio, Ph.D.](https://lihkir.github.io/MachineLearning/intro.html), la
+aprendizaje automático estándar (validación fuera de muestra y comparación estadística), la
 construcción y evaluación de los modelos que alimentan la página **Costo de capital por sector** de
 Mirage: Kd por sector, estructura de capital y los insumos de mercado del WACC.
 
