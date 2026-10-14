@@ -49,6 +49,8 @@ export interface Tamano {
     beta_apalancada: Celda;
     de: Celda;
     kd: Celda;
+    ke?: Celda;
+    wacc_cop_nominal?: Celda;
 }
 export interface Sector {
     ciiu_division: string;
@@ -83,6 +85,7 @@ export interface Sector {
     wacc_cop_real: Celda;
     wacc_usd_real?: Celda;
     por_tamano: Record<string, Tamano>;
+    ke_anatomia?: { rf: Celda; beta_por_erp: Celda; crp: Celda; ke_usd: Celda; ajuste_fisher: Celda; ke_cop: Celda };
     damodaran: {
         industria: string;
         empresas_emergentes: Celda;
@@ -136,3 +139,13 @@ export function variables(estilo: Estilo): Record<string, string> { const r: Rec
 } return r; }
 export function waccSector(s: Sector, moneda: string, modo: string): Celda { if (moneda === "COP")
     return modo === "real" ? s.wacc_cop_real : s.wacc_cop_nominal; return modo === "real" ? s.wacc_usd_real || celda(null, "pct", "nota", "No se publica WACC USD real en este corte.") : s.wacc_usd_nominal; }
+/** Convierte WACC COP nominal usando la misma paridad de Fisher para todas las vistas. */
+export function convertirWaccCopNominal(base: Celda | undefined, moneda: string, modo: string, p: Parametros): Celda {
+    if (!base) return celda(null, "pct", "nota", "Menos de 10 empresas.");
+    if (moneda === "COP" && modo === "nominal") return base;
+    const n = numero(base), ic = numero(p.inflacion_cop), iu = numero(p.inflacion_usd);
+    if (n === null || ic === null || iu === null) return celda(null, "pct", "nota", "No hay datos para convertir esta tasa.");
+    const usdNominal = (1 + n) * (1 + iu) / (1 + ic) - 1;
+    const value = moneda === "COP" ? (1 + n) / (1 + ic) - 1 : modo === "real" ? (1 + usdNominal) / (1 + iu) - 1 : usdNominal;
+    return { ...base, v: value };
+}

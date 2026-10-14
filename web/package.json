@@ -10,9 +10,10 @@
     "test:dx": "node src/lib/dx/__tests__/regression.cjs",
     "test:finanzas": "node src/lib/finanzas/__tests__/finanzas.cjs",
     "test:calc": "node src/components/__tests__/calc.cjs",
-    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc && npm run test:documento",
+    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc && npm run test:wacc && npm run test:documento",
     "test:formatos": "node src/lib/dx/__tests__/formatos.cjs",
-    "test:documento": "node src/lib/__tests__/documento.cjs"
+    "test:documento": "node src/lib/__tests__/documento.cjs",
+    "test:wacc": "node src/components/__tests__/wacc.cjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
