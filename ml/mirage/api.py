@@ -211,12 +211,27 @@ def sectores(v: dict, anterior: dict | None) -> dict:
             n = int(pt.loc[d, ("n", tam)]) if d in pt.index and np.isfinite(pt.loc[d, ("n", tam)]) else 0
             ok = n >= 10
             kdt = _f(kd_tam.loc[d, tam_kd[tam]]) if d in kd_tam.index and tam_kd[tam] in kd_tam.columns else None
+            bl_t, de_t = (pt.loc[d, ("bl", tam)], pt.loc[d, ("de", tam)]) if ok else (None, None)
+            ke_t = w_t = None
+            if ok and np.isfinite(bl_t) and np.isfinite(de_t):
+                ke_t, w_t, _, _ = wacc(bl_t, de_t, kdt if kdt is not None else kd_uso)
             por_tamano[tam] = {"empresas": celda(n, "num"),
-                               "beta_apalancada": celda(pt.loc[d, ("bl", tam)] if ok else None, "x"),
-                               "de": celda(pt.loc[d, ("de", tam)] if ok else None, "x"),
-                               "kd": celda(kdt, "pct")}
+                               "beta_apalancada": celda(bl_t, "x"),
+                               "de": celda(de_t, "x"),
+                               "kd": celda(kdt, "pct"),
+                               # Ke y WACC del tamaño con su propia βL, su D/E y su Kd (o el del sector si no hay)
+                               "ke": celda(ke_t, "pct", "clave"),
+                               "wacc_cop_nominal": celda(w_t, "pct", "clave")}
+        ke_usd = v["rf_usd"] + r.bl_mediana * v["erp_maduro"] + v["crp"]
+        anatomia = {"rf": celda(v["rf_usd"], "pct", "insumo"),
+                    "beta_por_erp": celda(r.bl_mediana * v["erp_maduro"], "pct", "insumo"),
+                    "crp": celda(v["crp"], "pct", "insumo"),
+                    "ke_usd": celda(ke_usd, "pct"),
+                    "ajuste_fisher": celda((ke - ke_usd) * 100, "pp", "nota", "Paso de USD a COP por paridad de Fisher con la inflación implícita de TES y la de EE. UU."),
+                    "ke_cop": celda(ke, "pct", "clave")}
         filas.append({
             "ciiu_division": d, "nombre": r.descripcion,
+            "ke_anatomia": anatomia,
             "empresas": celda(r.empresas_colombia, "num", "nota"),
             "pct_con_deuda": celda(r.pct_con_deuda, "pct"),
             "beta_desapalancada": celda(r.bu_mediana, "x"),
