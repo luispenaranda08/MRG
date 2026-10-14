@@ -41,8 +41,10 @@ jobs:
       - name: Subir cambios
         working-directory: .
         run: |
-          git config user.name "mirage-bot"
-          git config user.email "mirage-bot@users.noreply.github.com"
+          # Autor = dueño del repo: en el plan Hobby de Vercel, con repo privado, solo se despliegan
+          # commits cuyo autor es la cuenta de GitHub vinculada al dueño del proyecto.
+          git config user.name "luispenaranda08"
+          git config user.email "146387877+luispenaranda08@users.noreply.github.com"
           git add web/public/api/v1 ml/reports/spread_soberano_mensual.csv ml/reports/inflacion_implicita_mensual.csv ml/reports/prima_pais_mensual.csv
           if git diff --cached --quiet; then echo "Sin cambios"; exit 0; fi
           git commit -m "API de mercado: corte $(date -u +%F)"
