@@ -99,7 +99,7 @@ Recibes el resumen de una empresa (ventas, margen EBIT, D/E y cobertura por año
 - crecimiento: "historico_acotado" si la historia es estable y representativa; "inflacion_largo_plazo" si el crecimiento histórico es errático, viene de una base muy pequeña o de un año atípico; "intermedio" si hay señales mixtas.
 - margen: "ultimo" si los márgenes son estables o hay una tendencia clara y sostenible; "mediana_rentables" si hay años con pérdidas o saltos; "promedio_3" si el último año parece atípico.
 - kd: "implicito_empresa" solo si aparece en "opciones" y la deuda de la empresa es representativa (no marginal frente a sus pasivos); si no, "observado_sector_tamano".
-Elige solo entre las opciones disponibles que vienen en el resumen. motivo: una frase con la cifra que te hizo decidir. No recomiendes invertir ni dejar de invertir.`;
+Elige solo entre las opciones disponibles que vienen en el resumen. Cada motivo explica solo su propia decisión (no repitas el mismo texto en las tres): una frase con la cifra que te hizo decidir. No recomiendes invertir ni dejar de invertir.`;
 
 /* ----------------------------- Utilidades ----------------------------- */
 const CORS_BASE = { "access-control-allow-methods": "POST, OPTIONS", "access-control-allow-headers": "content-type", vary: "origin" };
