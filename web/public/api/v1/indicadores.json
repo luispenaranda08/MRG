@@ -1,13 +1,13 @@
 {
- "corte": "2026-10-13",
+ "corte": "2026-10-14",
  "indicadores": {
   "trm": {
-   "v": 3194.44,
+   "v": 3181.74,
    "fmt": "num",
    "tono": "insumo",
    "nota": "Pesos por dólar, tasa representativa del mercado.",
    "fuente": "Banco de la República · servicio SDMX",
-   "corte": "2026-10-13",
+   "corte": "2026-10-14",
    "codigo_tasa": null,
    "nombre": "TRM"
   },

@@ -1,12 +1,12 @@
 {
- "corte": "2026-10-13",
+ "corte": "2026-10-14",
  "parametros": {
   "rf_usd": {
-   "v": 0.0513,
+   "v": 0.0515,
    "fmt": "pct",
    "tono": "insumo",
    "fuente": "FRED · DGS10 (Tesoro de EE. UU. a 10 años), promedio de 20 días hábiles",
-   "corte": "2026-10-12"
+   "corte": "2026-10-13"
   },
   "erp_maduro": {
    "v": 0.0423,
@@ -56,7 +56,7 @@
    "fmt": "pct",
    "tono": "insumo",
    "fuente": "FRED · T10YIE, promedio de 20 días hábiles",
-   "corte": "2026-10-12"
+   "corte": "2026-10-13"
   },
   "tasa_impuesto": {
    "v": 0.35,

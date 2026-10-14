@@ -1,9 +1,9 @@
 {
  "version": "1.0.0",
- "corte": "2026-10-13",
- "generado": "2026-10-13T21:34:43",
+ "corte": "2026-10-14",
+ "generado": "2026-10-14T04:59:13",
  "aviso": "Mirage v1.0.0. Cifras agregadas por sector y tamaño, construidas con fuentes públicas verificables y actualizadas cada semana. No constituyen asesoría de inversión.",
- "corte_anterior": "2026-10-10",
+ "corte_anterior": "2026-10-13",
  "fuentes": [
   {
    "id": "supersociedades",
