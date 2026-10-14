@@ -7,6 +7,7 @@ import { pedirJev } from "../jev";
 import { FI } from "./engine";
 import { catalogoParaJev, type Catalogo, type PlanDashboard } from "./dashboard";
 import type { Parsed, Revision } from "./types";
+import { validar, type resumenParaJev } from "./decisiones";
 
 interface FilaJev { i: number; mostrar: boolean; estado: "bal" | "pyg"; campo: string | null; motivo: string }
 export interface RevisionJev { formato: string; veredicto: string; unidad: string; moneda: string; nombre: string | null; sector: number | null; alertas: string[]; filas: FilaJev[] }
@@ -80,4 +81,15 @@ export async function revisarConJev(p: Parsed, sectores: { ciiu_division: string
 /** Plan del dashboard según JEV; el motor lo valida contra el catálogo y completa lo que falte. */
 export async function planConJev(cat: Catalogo, empresa: { nombre: string; moneda: string; unidad: string; sector: string; alertas: string[] }): Promise<Partial<PlanDashboard>> {
     return unaVez<Partial<PlanDashboard>>("graficas", { empresa, catalogo: catalogoParaJev(cat) }, 60_000);
+}
+
+/** Decisiones de JEV sobre los supuestos de la proyección (menú cerrado de decisiones.ts). Si JEV no
+ *  responde o devuelve algo fuera del menú, cada decisión cae al valor por defecto de Mirage. */
+export async function decisionesConJev(c: Parameters<typeof validar>[0], resumen: ReturnType<typeof resumenParaJev>) {
+    try {
+        const r = await unaVez<Parameters<typeof validar>[1]>("supuestos", resumen, 45_000);
+        return validar(c, r);
+    } catch {
+        return validar(c, null);
+    }
 }

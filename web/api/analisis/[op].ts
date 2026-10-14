@@ -5,6 +5,7 @@
  *   POST /api/analisis/graficas  → qué gráficas y KPI van en el dashboard del Excel, a partir de un resumen de la empresa
  *   POST /api/analisis/decidir   → decisión y recomendaciones sobre el resultado de una sección de la calculadora
  *   POST /api/analisis/sector    → sector CIIU y tamaño a partir de la descripción de la empresa
+ *   POST /api/analisis/supuestos → elige opciones de un menú cerrado (crecimiento, margen, Kd) para «Tu empresa»; Mirage las calcula
  *
  * JEV nunca recibe archivos: la extracción la hacen los lectores de Mirage en el navegador y aquí solo llega la tabla
  * plana (cuentas y cifras) o el resumen de indicadores. Así cada archivo cuesta una fracción de centavo de dólar.
@@ -50,6 +51,13 @@ const ESQ_DECIDIR = obj({
     alertas: arr(str),
 });
 const ESQ_SECTOR = obj({ sector: { type: ["integer", "null"] }, tamano: { type: ["string", "null"] }, motivo: str });
+// Decisiones dentro del harness: JEV elige una opción de un menú cerrado; Mirage calcula cada opción.
+const eleccion = (opciones: string[]) => obj({ opcion: { type: "string", enum: opciones }, motivo: str });
+const ESQ_SUPUESTOS = obj({
+    crecimiento: eleccion(["historico_acotado", "inflacion_largo_plazo", "intermedio"]),
+    margen: eleccion(["ultimo", "mediana_rentables", "promedio_3"]),
+    kd: eleccion(["observado_sector_tamano", "implicito_empresa"]),
+});
 
 /* ----------------------------- Instrucciones ----------------------------- */
 const BASE = "Eres JEV, analista financiero senior de Mirage (HyperTarget). Trabajas con estados financieros de empresas colombianas y extranjeras (NIIF plenas, NIIF pymes, PUC, US GAAP, formatos internos). Escribes en español de Colombia, sobrio y concreto, sin adornos. Respondes solo el JSON pedido.";
@@ -85,6 +93,13 @@ Recibes el documento de resultados de una sección de la calculadora financiera 
 
 const P_SECTOR = `${BASE}
 Recibes la descripción que un usuario hace de su empresa y la lista de sectores (división CIIU) y tamaños disponibles. Elige el índice i del sector que mejor describe la actividad principal y el tamaño (uno de la lista) con la misma regla que usa Mirage en sus tablas: activos totales en salarios mínimos (Ley 905 de 2004): micro hasta 500 SMMLV, pequeña de 501 a 5.000, mediana de 5.001 a 30.000 y grande más de 30.000 (SMMLV 2025: $1.423.500). Si solo menciona empleados o ventas, úsalos como indicio y dilo en el motivo. null si no hay datos suficientes. motivo: una frase.`;
+
+const P_SUPUESTOS = `${BASE}
+Recibes el resumen de una empresa (ventas, margen EBIT, D/E y cobertura por año, crecimiento histórico, Kd observado de su sector y tamaño, Kd implícito propio si existe y los recortes que Mirage ya aplicó) y un menú cerrado de opciones. Mirage calcula cada opción; tú solo eliges, con criterio de valorador prudente:
+- crecimiento: "historico_acotado" si la historia es estable y representativa; "inflacion_largo_plazo" si el crecimiento histórico es errático, viene de una base muy pequeña o de un año atípico; "intermedio" si hay señales mixtas.
+- margen: "ultimo" si los márgenes son estables o hay una tendencia clara y sostenible; "mediana_rentables" si hay años con pérdidas o saltos; "promedio_3" si el último año parece atípico.
+- kd: "implicito_empresa" solo si aparece en "opciones" y la deuda de la empresa es representativa (no marginal frente a sus pasivos); si no, "observado_sector_tamano".
+Elige solo entre las opciones disponibles que vienen en el resumen. motivo: una frase con la cifra que te hizo decidir. No recomiendes invertir ni dejar de invertir.`;
 
 /* ----------------------------- Utilidades ----------------------------- */
 const CORS_BASE = { "access-control-allow-methods": "POST, OPTIONS", "access-control-allow-headers": "content-type", vary: "origin" };
@@ -144,6 +159,9 @@ const OPERACIONES: Record<string, (e: Entrada) => Promise<unknown>> = {
     async sector(e) {
         const lista = recortar((e.sectores ?? []).map((s: Entrada) => `${s.i} · ${s.ciiu} · ${s.nombre}`).join("\n"), 8000);
         return jev("sector", ESQ_SECTOR, [{ role: "system", content: P_SECTOR }, { role: "user", content: `Sectores (i · CIIU · nombre):\n${lista}\n\nTamaños: ${recortar(e.tamanos, 300)}\n\nDescripción:\n${recortar(e.descripcion, 1500)}` }], 1_500);
+    },
+    async supuestos(e) {
+        return jev("supuestos", ESQ_SUPUESTOS, [{ role: "system", content: P_SUPUESTOS }, { role: "user", content: recortar(e, 6_000) }], 1_500);
     },
     async graficas(e) {
         return jev("dashboard", ESQ_GRAFICAS, [{ role: "system", content: P_GRAFICAS }, { role: "user", content: recortar(e, 20_000) }], 6_000);
