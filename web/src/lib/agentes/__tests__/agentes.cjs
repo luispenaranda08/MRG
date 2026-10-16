@@ -139,6 +139,30 @@ const bloque = (codigo, e) => IMPLEMENTACIONES[codigo](e, datos).cifras;
     const umbral = ejv.cifras["regla.pd_pd_1"];
     ok(umbral && umbral.v === 0.05 && umbral.origen.bloque === "REGLA", "los umbrales de las reglas quedan como cifras citables");
 
+    // ---------- Componer: conexiones automáticas ----------
+    // Cada plantilla rehecha solo con su lista de bloques debe ser válida y dar las mismas cifras con la PYME.
+    let compuestas = 0;
+    for (const c of cert) {
+        const t = A.plantilla(c.codigo), ag = A.componer(t.pasos.map(p => p.bloque));
+        ok(A.validarAgente(ag).length === 0, `componer ${c.codigo} es válido`);
+        if (!t.entradas.some(e => e.tipo === "estados") || t.entradas.some(e => e.requerido && e.tipo !== "estados" && e.defecto === undefined)) continue;
+        const vt = { empresa: pyme }, va = { empresa: pyme };
+        for (const e of t.entradas) if (e.defecto !== undefined) { vt[e.id] = e.defecto; if (ag.entradas.some(x => x.id === e.id)) va[e.id] = e.defecto; }
+        const et = A.ejecutarAgente(t, vt, datos), ea = A.ejecutarAgente(ag, va, datos);
+        if (et.estado !== "completa" || ea.estado !== "completa") continue;
+        const porBloque = ej => Object.fromEntries(Object.values(ej.cifras).filter(x => x.origen.bloque !== "ENTRADA" && typeof x.v === "number").map(x => [`${x.origen.bloque}.${x.etiqueta}`, x.v]));
+        const pt = porBloque(et), pa = porBloque(ea), comunes = Object.keys(pt).filter(k => k in pa);
+        const distintas = comunes.filter(k => Math.abs(pt[k] - pa[k]) > 1e-9 * Math.max(1, Math.abs(pt[k])));
+        if (!distintas.length) compuestas++;
+        else console.log(`  componer ${c.codigo}: ${distintas.length} cifras distintas, p. ej. ${distintas.slice(0, 3).join(", ")}`);
+    }
+    console.log(`  componer: ${compuestas} plantillas con estados dan las mismas cifras`);
+    const wacc = A.componer(["SECTOR", "WACC", "RAT", "EVA"]);
+    ok(wacc.pasos[0].bloque === "MERCADO" || wacc.pasos.some(p => p.bloque === "MERCADO"), "componer agrega Parámetros de mercado como dependencia del WACC");
+    ok(A.ejecutarAgente(wacc, { empresa: pyme }, datos).estado === "completa", "WACC + indicadores + EVA compuesto corre con la PYME");
+    const waccE = A.componer(["SECTOR", "WACCE", "EVA", "RAT"]), ejwe = A.ejecutarAgente(waccE, { empresa: pyme }, datos);
+    ok(ejwe.estado === "completa" && Object.values(ejwe.cifras).some(c => c.origen.bloque === "WACCE" && typeof c.v === "number"), `WACC de la empresa compuesto corre con la PYME (${ejwe.detenida?.motivo ?? "ok"})`);
+
     // ---------- Montos completos → unidad de los estados ----------
     const principal = ej => ej.pasos.find(p => p.paso === "amort")?.entrada.principal;
     const ejmc = A.ejecutarAgente(A.plantilla("CRED"), { empresa: pyme, monto: 800_000_000 }, datos);

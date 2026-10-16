@@ -31,6 +31,7 @@ export { planificar, instruir } from "./cliente";
 export { listarAgentes, guardarAgente, eliminarAgente, exportarAgente, importarAgente } from "./almacen";
 export { cajas, fraseRegla, paqueteAgente, type Cajas, type PasoClaro } from "./presentar";
 export { flujo, type Flujo, type NodoFlujo } from "./flujo";
+export { componer } from "./componer";
 
 export const CAPACIDADES: Capacidad[] = CATALOGO.map(c => ({ ...c, certificada: c.bloques.every(b => b in MAPA_BLOQUES) && c.codigo in PLANTILLAS }));
 

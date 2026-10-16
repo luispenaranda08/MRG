@@ -16,8 +16,9 @@ import { CATALOGO } from "../../src/lib/agentes/catalogo";
 import { DEF_BLOQUES, MAPA_BLOQUES } from "../../src/lib/agentes/bloques-def";
 import { PLANTILLAS } from "../../src/lib/agentes/plantillas";
 import { validarAgente } from "../../src/lib/agentes/receta";
+import { componer } from "../../src/lib/agentes/componer";
 import { validarTexto } from "../../src/lib/agentes/validador";
-import type { Agente, Cifra, Efecto, Operador, Paso, Plan, Regla, TipoTexto, Vinculo } from "../../src/lib/agentes/tipos";
+import type { Agente, Cifra, Efecto, Operador, Plan, Regla, TipoTexto } from "../../src/lib/agentes/tipos";
 
 const MODELO_PLAN = process.env.JEV_MODEL || "typesafe/jev-router";
 // El modelo de redacción se configura solo por variable de entorno; el código público no lo nombra.
@@ -165,18 +166,6 @@ const certificadas = CATALOGO.filter(c => c.bloques.every(b => b in MAPA_BLOQUES
 const str = { type: "string" }, strN = { type: ["string", "null"] };
 const obj = (properties: Record<string, unknown>) => ({ type: "object", additionalProperties: false, required: Object.keys(properties), properties });
 const arr = (items: unknown) => ({ type: "array", items });
-const ESQ_PLAN = obj({
-    capacidad: strN,
-    nombre: str,
-    explicacion: str,
-    instruccion: str,
-    salida: { type: "string", enum: ["memo", "decision", "resumen", "ninguna"] },
-    valores: arr(obj({ entrada: str, valor: { type: ["number", "string", "null"] } })),
-    reglas: arr(obj({ cifra: str, operador: { type: "string", enum: [">=", ">", "<=", "<", "="] }, umbral: { type: "number" }, efecto: { type: "string", enum: ["aprobar", "condicionar", "negar", "alertar"] }, mensaje: str })),
-    entradas: arr(obj({ id: str, etiqueta: str, tipo: { type: "string", enum: ["numero", "entero", "tasa", "dinero", "texto", "flujos", "estados", "sector", "tamano", "codigo_tasa"] } })),
-    pasos: arr(obj({ id: str, bloque: str, vinculos: arr(obj({ entrada: str, de: { type: "string", enum: ["entrada", "paso", "valor"] }, ref: strN, valor: { type: ["number", "string", "null"] } })) })),
-});
-
 /** Esquema de la decisión de JEV: corto a propósito, para que razonar sea barato. */
 const ESQ_DECISION = obj({ capacidad: strN, bloques: arr(str), explicacion: str });
 
@@ -188,16 +177,13 @@ const SISTEMA_DECIDIR = `Eres JEV, el planificador del constructor de agentes de
 Si el usuario pide un cambio sobre un agente existente, conserva su capacidad salvo que el cambio exija otra.
 "explicacion": una frase en español de Colombia, para el usuario, que diga qué hará el agente.`;
 
-const SISTEMA_PLAN = `Eres el Motor Mirage y construyes agentes de finanzas corporativas para HyperTarget. El planificador ya decidió qué capacidad o qué bloques usar; tú armas el agente con ese material. Respondes solo el JSON pedido.
+const SISTEMA_PLAN = `Eres el Motor Mirage y personalizas agentes de finanzas corporativas para HyperTarget. El agente ya está armado y conectado (sus entradas y las cifras que calcula vienen en el mensaje); tú solo escribes lo particular de lo que pidió el usuario. Respondes solo el JSON pedido.
 
-Con capacidad: devuelve su código en "capacidad" y deja "entradas" y "pasos" vacíos. Ajusta "reglas" (claves "paso.salida" de la lista de cifras de la capacidad) y "valores" (solo datos que el usuario dio explícitamente, con el id de la entrada).
-Sin capacidad: "capacidad" en null y arma "entradas" y "pasos" con los bloques indicados, en ese orden. Conecta cada entrada de cada bloque con una entrada del agente (de "entrada", ref = id de la entrada), con una salida de un paso anterior (de "paso", ref = "paso.salida") o con un valor fijo (de "valor", ref null). Las entradas marcadas con * son obligatorias. No inventes bloques ni salidas.
-
+"valores": solo datos que el usuario dio explícitamente, con el id exacto de una entrada de la lista.
 Montos: siempre completos, en la moneda: "800 millones" es 800000000 y "2.500 millones" es 2500000000. Mirage los lleva a la unidad de los estados al ejecutar. Tasas como fracción: 16 % = 0.16.
-Reglas: cada regla dice lo que DEBE cumplirse; su "efecto" se aplica cuando NO se cumple. "No aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. No aprueba, rechaza o no acepta → "negar"; lo exige como condición → "condicionar"; solo avisar → "alertar". "mensaje": el motivo en una frase corta. Solo pon reglas que el usuario pidió; si es un ajuste de un agente existente, devuelve la lista completa de reglas que debe quedar.
-
-"instruccion": lo que el usuario quiere leer en el texto final, en una o dos frases.
-"salida": memo para comités y juntas, decision para sí/no, resumen para lecturas rápidas.
+"reglas": solo los criterios de decisión que el usuario pidió, sobre claves "paso.salida" exactas de la lista de cifras. Cada regla dice lo que DEBE cumplirse; su "efecto" se aplica cuando NO se cumple. "No aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. No aprueba, rechaza o no acepta → "negar"; lo exige como condición → "condicionar"; solo avisar → "alertar". "mensaje": el motivo en una frase corta. Si el usuario no da criterios, deja la lista vacía (se conservan los del agente). Si es un ajuste de un agente existente, devuelve la lista completa de reglas que debe quedar.
+"instruccion": lo que el usuario quiere leer en el texto final (qué analizar, qué comparar, a quién va dirigido), en una a tres frases.
+"salida": memo para comités y juntas, decision para sí/no, resumen para lecturas rápidas y análisis.
 "nombre": nombre corto y claro del agente. "explicacion": una frase que diga qué hace el agente.`;
 
 /** Catálogo breve para que JEV decida (solo códigos, nombres y para qué sirven). */
@@ -207,15 +193,10 @@ function catalogoBreve() {
     return `Capacidades:\n${caps.join("\n")}\n\nBloques:\n${bloques.join("\n")}`;
 }
 
-/** Detalle solo de lo que JEV eligió: lo único que necesita el Motor para construir. */
-function detalleElegido(capacidad: string | null, bloques: string[]) {
-    if (capacidad) {
-        const ag = PLANTILLAS[capacidad]();
-        const cifras = ag.pasos.flatMap(p => (MAPA_BLOQUES[p.bloque]?.salidas ?? []).map(s => `${p.id}.${s.id} (${s.etiqueta}, ${s.fmt})`));
-        return `Capacidad elegida: ${capacidad}\nEntradas: ${ag.entradas.map(e => `${e.id} (${e.etiqueta}, ${e.tipo})`).join("; ")}\nCifras que calcula: ${cifras.join("; ")}\nReglas actuales de la plantilla: ${JSON.stringify(ag.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })))}`;
-    }
-    const defs = bloques.map(b => MAPA_BLOQUES[b]).filter(Boolean);
-    return `Bloques elegidos, en orden:\n${defs.map(b => `${b.codigo} ${b.nombre} | entradas: ${b.entradas.map(e => `${e.id}:${e.tipo}${e.requerido ? "*" : ""}`).join(", ")} | salidas: ${b.salidas.map(x => `${x.id} (${x.etiqueta})`).join(", ")}`).join("\n")}`;
+/** El agente ya armado, en lo que necesita el Motor para personalizarlo. */
+function detalle(a: Agente) {
+    const cifras = a.pasos.flatMap(p => (MAPA_BLOQUES[p.bloque]?.salidas ?? []).map(s => `${p.id}.${s.id} (${s.etiqueta}, ${s.fmt})`));
+    return `Agente armado: ${a.nombre}\nEntradas: ${a.entradas.map(e => `${e.id} = ${e.etiqueta} [${e.tipo}]`).join("; ")}\nCifras que calcula: ${cifras.join("; ")}\nCriterios actuales: ${JSON.stringify(a.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })))}`;
 }
 
 /** El esquema estricto del Motor no admite listas de tipos: se pasan a anyOf. */
@@ -226,42 +207,37 @@ function sinListasDeTipos(x: unknown): unknown {
     if (Array.isArray(o.type)) { const { type, ...resto } = o; return { ...resto, anyOf: (type as string[]).map(t => ({ type: t })) }; }
     return o;
 }
-const ESQ_PLAN_MOTOR = sinListasDeTipos(ESQ_PLAN) as Record<string, unknown>;
+const ESQ_AJUSTE = obj({
+    nombre: str, explicacion: str, instruccion: str,
+    salida: { type: "string", enum: ["memo", "decision", "resumen", "ninguna"] },
+    valores: arr(obj({ entrada: str, valor: { type: ["number", "string", "null"] } })),
+    reglas: arr(obj({ cifra: str, operador: { type: "string", enum: [">=", ">", "<=", "<", "="] }, umbral: { type: "number" }, efecto: { type: "string", enum: ["aprobar", "condicionar", "negar", "alertar"] }, mensaje: str })),
+});
+const ESQ_AJUSTE_MOTOR = sinListasDeTipos(ESQ_AJUSTE) as Record<string, unknown>;
 
-type PlanJev = { capacidad: string | null; nombre: string; explicacion: string; instruccion: string; salida: TipoTexto; valores: { entrada: string; valor: number | string | null }[]; reglas: Omit<Regla, "id">[]; entradas: { id: string; etiqueta: string; tipo: string }[]; pasos: { id: string; bloque: string; vinculos: { entrada: string; de: "entrada" | "paso" | "valor"; ref: string | null; valor: number | string | null }[] }[] };
+type Ajuste = { nombre: string; explicacion: string; instruccion: string; salida: TipoTexto; valores: { entrada: string; valor: number | string | null }[]; reglas: Omit<Regla, "id">[] };
 
-function construir(p: PlanJev, reemplazarReglas = false): Plan {
-    const ahora = new Date().toISOString();
-    let agente: Agente;
-    const cod = p.capacidad?.toUpperCase() ?? null;
-    if (cod && certificadas.some(c => c.codigo === cod)) {
-        agente = PLANTILLAS[cod]();
-        for (const v of p.valores ?? []) { const e = agente.entradas.find(x => x.id === v.entrada); if (e && v.valor !== null && e.tipo !== "estados") e.defecto = v.valor; }
-    } else {
-        if (!p.pasos?.length) throw new ErrorMotor(p.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
-        const pasos: Paso[] = p.pasos.map(x => ({ id: x.id, bloque: x.bloque, vinculos: Object.fromEntries(x.vinculos.map(v => [v.entrada, v.de === "entrada" ? { de: "entrada", id: v.ref ?? "" } : v.de === "paso" ? { de: "paso", paso: (v.ref ?? "").split(".")[0], salida: (v.ref ?? "").split(".")[1] ?? "" } : { de: "valor", v: v.valor }] as [string, Vinculo])) }));
-        agente = { id: `ag_${Date.now().toString(36)}`, nombre: p.nombre || "Agente", descripcion: p.explicacion, version: 1, creado: ahora, actualizado: ahora, entradas: (p.entradas ?? []).map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo as Agente["entradas"][number]["tipo"], requerido: true, ...(e.tipo === "dinero" && p.entradas.some(x => x.tipo === "estados") ? { escala: "estados" as const } : {}) })), pasos, instruccion: { texto: "", salida: "resumen", reglas: [] } };
-    }
-    agente.nombre = p.nombre?.trim() || agente.nombre;
-    agente.instruccion.texto = recortar(p.instruccion ?? "", 1500);
-    if (["memo", "decision", "resumen", "ninguna"].includes(p.salida)) agente.instruccion.salida = p.salida;
-    // Las reglas del usuario reemplazan las de la plantilla sobre la misma cifra y se suman a las demás.
-    // Al ajustar un agente existente, el plan trae la lista completa de reglas: reemplaza todas.
-    if (reemplazarReglas) agente.instruccion.reglas = [];
-    for (const [i, r] of (p.reglas ?? []).entries()) {
+/** Aplica lo particular al agente ya armado. Devuelve los criterios que no se pudieron aplicar, para una corrección. */
+function aplicar(base: Agente, a: Ajuste, reemplazarReglas: boolean): { agente: Agente; rechazadas: string[] } {
+    const agente = structuredClone(base), rechazadas: string[] = [];
+    for (const v of a.valores ?? []) { const e = agente.entradas.find(x => x.id === v.entrada); if (e && v.valor !== null && e.tipo !== "estados") e.defecto = v.valor; }
+    agente.nombre = a.nombre?.trim() || agente.nombre;
+    agente.descripcion = recortar(a.explicacion ?? agente.descripcion, 400);
+    agente.instruccion.texto = recortar(a.instruccion ?? "", 1500);
+    if (["memo", "decision", "resumen", "ninguna"].includes(a.salida)) agente.instruccion.salida = a.salida;
+    // Las reglas del usuario reemplazan las del agente sobre la misma cifra y se suman a las demás; en un ajuste, reemplazan todas.
+    if (reemplazarReglas && a.reglas?.length) agente.instruccion.reglas = [];
+    for (const [i, r] of (a.reglas ?? []).entries()) {
         const nueva: Regla = { ...r, id: `u${i + 1}`, operador: r.operador as Operador, efecto: r.efecto as Efecto, mensaje: r.mensaje || "No cumple la exigencia del agente." };
         const reglas = [...agente.instruccion.reglas.filter(x => x.cifra !== nueva.cifra), nueva];
-        if (!validarAgente({ ...agente, instruccion: { ...agente.instruccion, reglas } }).length) agente.instruccion.reglas = reglas;
+        const errores = validarAgente({ ...agente, instruccion: { ...agente.instruccion, reglas } });
+        if (errores.length) rechazadas.push(`${r.cifra}: ${errores[0]}`); else agente.instruccion.reglas = reglas;
     }
-    const errores = validarAgente(agente);
-    if (errores.length) { console.error("planificar: agente inválido", errores); throw new ErrorMotor("No se pudo armar un agente válido para esa tarea. Descríbala con más detalle.", 422); }
-    return { agente, capacidad: cod && certificadas.some(c => c.codigo === cod) ? cod : null, explicacion: recortar(p.explicacion ?? "", 400) };
+    return { agente, rechazadas };
 }
 
-function intentar(p: PlanJev, reemplazarReglas: boolean): { plan: Plan | null; error: string } {
-    try { return { plan: construir(p, reemplazarReglas), error: "" }; }
-    catch (e) { return { plan: null, error: e instanceof Error ? e.message : String(e) }; }
-}
+/** Resumen del agente actual para que JEV entienda un pedido de cambio. */
+const resumenAgente = (a: Agente) => ({ nombre: a.nombre, capacidad: a.capacidad ?? null, bloques: a.pasos.map(p => p.bloque), instruccion: a.instruccion.texto, salida: a.instruccion.salida, criterios: a.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })) });
 
 /** JEV decide: capacidad o bloques. Salida mínima y razonamiento bajo. */
 async function decidir(pedido: string) {
@@ -288,33 +264,20 @@ async function decidir(pedido: string) {
 }
 
 /** El Motor construye el agente con lo que JEV eligió. Esfuerzo bajo, tope de salida y una corrección si el validador lo rechaza. */
-async function construirConMotor(mensajes: Anthropic.MessageParam[]) {
+async function ajustarConMotor(mensajes: Anthropic.MessageParam[]) {
     const cliente = motor();
     try {
-        const r = await cliente.messages.create({ model: MODELO_TEXTO!, max_tokens: 4000, output_config: { effort: "low", format: { type: "json_schema", schema: ESQ_PLAN_MOTOR } }, system: SISTEMA_PLAN, messages: mensajes });
+        const r = await cliente.messages.create({ model: MODELO_TEXTO!, max_tokens: 3000, output_config: { effort: "low", format: { type: "json_schema", schema: ESQ_AJUSTE_MOTOR } }, system: SISTEMA_PLAN, messages: mensajes });
         console.log(JSON.stringify({ op: "construir", modelo: r.model, entrada: r.usage.input_tokens, salida: r.usage.output_tokens, fin: r.stop_reason }));
         if (r.stop_reason !== "end_turn") throw new ErrorMotor("No se pudo armar el agente; describa la tarea en menos palabras.", 422);
         const texto = r.content.filter(b => b.type === "text").map(b => (b as Anthropic.TextBlock).text).join("");
-        return { plan: JSON.parse(texto) as PlanJev, texto };
+        return { ajuste: JSON.parse(texto) as Ajuste, texto };
     } catch (e) {
         if (e instanceof ErrorMotor) throw e;
         if (e instanceof Anthropic.RateLimitError) throw new ErrorMotor("El Motor Mirage está ocupado; intente en un minuto.", 429);
         if (e instanceof Anthropic.APIError) { console.error("construir", e.status, e.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
         console.error("construir", e); throw new ErrorMotor(NO_DISPONIBLE, 502);
     }
-}
-
-/** El agente actual en el formato del plan, para aplicar un cambio sobre él. */
-function planDeAgente(a: Agente): PlanJev {
-    const deVinculo = (k: string, v: Vinculo) => v.de === "entrada" ? { entrada: k, de: v.de, ref: v.id, valor: null } : v.de === "paso" ? { entrada: k, de: v.de, ref: `${v.paso}.${v.salida}`, valor: null } : { entrada: k, de: v.de, ref: null, valor: typeof v.v === "number" || typeof v.v === "string" ? v.v : null };
-    const cert = a.capacidad && certificadas.some(c => c.codigo === a.capacidad) ? a.capacidad : null;
-    return {
-        capacidad: cert, nombre: a.nombre, explicacion: a.descripcion, instruccion: a.instruccion.texto, salida: a.instruccion.salida,
-        valores: a.entradas.filter(e => typeof e.defecto === "number" || typeof e.defecto === "string").map(e => ({ entrada: e.id, valor: e.defecto as number | string })),
-        reglas: a.instruccion.reglas.map(({ cifra, operador, umbral, efecto, mensaje }) => ({ cifra, operador, umbral, efecto, mensaje })),
-        entradas: cert ? [] : a.entradas.map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo })),
-        pasos: cert ? [] : a.pasos.map(p => ({ id: p.id, bloque: p.bloque, vinculos: Object.entries(p.vinculos).map(([k, v]) => deVinculo(k, v)) })),
-    };
 }
 
 async function planificar(e: Record<string, unknown>) {
@@ -325,29 +288,41 @@ async function planificar(e: Record<string, unknown>) {
         const b = e.base as Agente;
         if (Array.isArray(b.pasos) && Array.isArray(b.entradas) && b.instruccion && !validarAgente(b).length) base = b;
     }
-    const actual = base ? planDeAgente(base) : null;
-    const clave = await huella({ objetivo, base: actual }), previo = enCache(clave);
+    const clave = await huella({ objetivo, base: base ? { ...resumenAgente(base), entradas: base.entradas.map(x => [x.id, x.defecto ?? null]) } : null }), previo = enCache(clave);
     if (previo) return previo;
 
-    const pedido = actual
-        ? `Agente actual: ${JSON.stringify(actual)}\n\nCambio que pide el usuario: ${objetivo}`
+    const pedido = base
+        ? `Agente actual: ${JSON.stringify(resumenAgente(base))}\n\nCambio que pide el usuario: ${objetivo}`
         : `Lo que pide el usuario: ${objetivo}`;
     // 1) JEV decide qué usar.
     const decision = await decidir(pedido);
-    if (!decision.capacidad && !decision.bloques.length) throw new ErrorMotor(decision.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
-    // 2) El Motor construye el agente con solo lo elegido.
-    const mensajes: Anthropic.MessageParam[] = [{ role: "user", content: `${pedido}${actual ? "\n\nDevuelve el agente completo con el cambio aplicado; conserva lo que el usuario no pidió cambiar." : ""}\n\n${detalleElegido(decision.capacidad, decision.bloques)}` }];
-    const c1 = await construirConMotor(mensajes);
-    let r = intentar({ ...c1.plan, capacidad: decision.capacidad ?? c1.plan.capacidad }, !!base);
-    if (!r.plan) {
-        const c2 = await construirConMotor([...mensajes, { role: "assistant", content: c1.texto }, { role: "user", content: `El validador rechazó el agente: ${r.error} Corrígelo y devuelve el JSON completo.` }]);
-        r = intentar({ ...c2.plan, capacidad: decision.capacidad ?? c2.plan.capacidad }, !!base);
+    // 2) Mirage arma y conecta el agente: plantilla certificada o composición automática de bloques.
+    let armado: Agente;
+    if (decision.capacidad) armado = PLANTILLAS[decision.capacidad]();
+    else if (decision.bloques.length) {
+        try { armado = componer(decision.bloques); }
+        catch (err) { console.error("planificar: componer", decision.bloques, err); throw new ErrorMotor("Mirage todavía no tiene los cálculos para esa tarea.", 422); }
+    } else throw new ErrorMotor(decision.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
+    // En un cambio sobre el mismo agente, se conservan los valores que ya tenía.
+    if (base) {
+        armado.id = base.id;
+        for (const x of armado.entradas) { const previa = base.entradas.find(y => y.id === x.id); if (previa?.defecto !== undefined) x.defecto = previa.defecto; }
+        if (armado.pasos.map(p => p.bloque).join() === base.pasos.map(p => p.bloque).join()) armado.instruccion.reglas = structuredClone(base.instruccion.reglas);
     }
-    if (!r.plan) throw new ErrorMotor("No se pudo armar un agente para esa tarea. Descríbala con más detalle.", 422);
-    if (base) r.plan.agente.id = base.id;
-    if (!r.plan.explicacion) r.plan.explicacion = decision.explicacion;
-    guardarCache(clave, r.plan);
-    return r.plan;
+    // 3) El Motor escribe lo particular: nombre, instrucción, criterios y valores.
+    const mensajes: Anthropic.MessageParam[] = [{ role: "user", content: `${pedido}${base ? "\n\nDevuelve el agente completo con el cambio aplicado; conserva lo que el usuario no pidió cambiar." : ""}\n\n${detalle(armado)}` }];
+    const a1 = await ajustarConMotor(mensajes);
+    let r = aplicar(armado, a1.ajuste, !!base);
+    if (r.rechazadas.length) {
+        const a2 = await ajustarConMotor([...mensajes, { role: "assistant", content: a1.texto }, { role: "user", content: `Estos criterios usan cifras que el agente no calcula: ${r.rechazadas.join(" | ")}. Usa solo claves de la lista «Cifras que calcula» y devuelve el JSON completo.` }]);
+        const r2 = aplicar(armado, a2.ajuste, !!base);
+        if (r2.rechazadas.length <= r.rechazadas.length) r = r2;
+    }
+    const errores = validarAgente(r.agente);
+    if (errores.length) { console.error("planificar: agente inválido", errores); throw new ErrorMotor("No se pudo armar un agente para esa tarea. Descríbala con más detalle.", 422); }
+    const plan: Plan = { agente: r.agente, capacidad: decision.capacidad, explicacion: r.agente.descripcion || decision.explicacion };
+    guardarCache(clave, plan);
+    return plan;
 }
 
 const OPERACIONES: Record<string, (e: Record<string, unknown>) => Promise<unknown>> = { instruir, planificar };
