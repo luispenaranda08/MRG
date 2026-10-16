@@ -43,8 +43,9 @@ export async function instruir(agente: Agente, ejecucion: Ejecucion): Promise<Te
     return { texto: r.texto, intentos: r.intentos, validacion: validarTexto(r.texto, ejecucion) };
 }
 
-export async function planificar(objetivo: string): Promise<Plan> {
+/** Arma un agente a partir de lo que pide el usuario; con `base`, aplica ese pedido como cambio sobre el agente actual. */
+export async function planificar(objetivo: string, base?: Agente): Promise<Plan> {
     const texto = objetivo.trim();
-    if (!texto) throw new Error("Describa la tarea del agente.");
-    return post<Plan>("planificar", { objetivo: texto.slice(0, 1500) });
+    if (!texto) throw new Error("Describa lo que debe hacer el agente.");
+    return post<Plan>("planificar", { objetivo: texto.slice(0, 1500), ...(base ? { base } : {}) });
 }

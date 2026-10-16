@@ -22,6 +22,7 @@ export async function prepararEmpresa(archivo: ArrayBuffer | Uint8Array, nombreA
     const sc = datos.sectores[opciones.sector];
     if (!sc) throw new Error("Elija el sector de la empresa.");
     if (!sc.por_tamano[opciones.tamano]) throw new Error(`El sector no tiene el tamaño «${opciones.tamano}».`);
+    const bytes = new Uint8Array(archivo).slice();
     const p = await leerEstados(archivo, nombreArchivo);
     const fields = p.rows.filter(r => r.field).map(r => r.field);
     if (new Set(fields).size !== fields.length) throw new Error("Una cuenta del archivo quedó asignada a dos campos. Revise el archivo en «Tu empresa».");
@@ -33,7 +34,7 @@ export async function prepararEmpresa(archivo: ArrayBuffer | Uint8Array, nombreA
     if (interno.years.some((_: number, i: number) => M(interno, i).eq <= 0 || M(interno, i).rev <= 0)) throw new Error("Para calcular capital, flujo y valor se requieren patrimonio e ingresos positivos en todos los años.");
     const alertas = [...(p.revision?.alertas ?? [])];
     if (!trm && moneda === "COP") alertas.push("Sin TRM publicada: el tamaño en USD del rating sintético no se puede calcular.");
-    return { tipo: "empresa", nombre, archivo: nombreArchivo, anios: interno.years, moneda, unidad, pais, sector: opciones.sector, tamano: opciones.tamano, interno, alertas };
+    return { tipo: "empresa", nombre, archivo: nombreArchivo, anios: interno.years, moneda, unidad, pais, sector: opciones.sector, tamano: opciones.tamano, interno, alertas, bytes };
 }
 
 /** Carga un archivo de ejemplo publicado en /ejemplos con su sector y tamaño. */

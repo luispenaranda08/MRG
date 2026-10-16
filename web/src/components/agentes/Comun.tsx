@@ -9,7 +9,9 @@ export const CargaArchivos = createContext<((cargando: boolean) => void) | null>
 export function Numero({ valor, fmt = "num" }: { valor: number | string | null; etiqueta?: string; fmt?: Formato }) {
     return <span className="cifra tono-clave">{fmtCelda({ v: valor, fmt, tono: "clave" })}</span>;
 }
-export function Valor({ cifra }: { cifra: CifraDato }) { return <Cifra celda={formatoCifra(cifra)} />; }
+export function Valor({ cifra }: { cifra: CifraDato }) {
+    return <Cifra celda={{ ...formatoCifra(cifra), fuente: cifra.origen.fuente }} />;
+}
 export function descargar(nombre: string, contenido: string) {
     const url = URL.createObjectURL(new Blob([contenido], { type: "application/json;charset=utf-8" }));
     const a = document.createElement("a"); a.href = url; a.download = nombre; a.click();

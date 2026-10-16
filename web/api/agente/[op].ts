@@ -1,7 +1,10 @@
 /**
  * Motor Mirage del constructor de agentes (función de Vercel; las llaves viven en las variables de entorno).
  *
- *   POST /api/agente/planificar → { objetivo } → agente listo (capacidad certificada o composición de bloques validada)
+ *   POST /api/agente/planificar → { objetivo, base? } → agente listo (capacidad certificada o composición de bloques validada).
+ *                                 JEV decide qué hacer (capacidad o bloques, salida corta); el Motor Mirage construye el agente
+ *                                 con ese detalle (reglas, valores, instrucción). Con `base`, el objetivo es un cambio sobre ese
+ *                                 agente: el usuario lo ajusta con instrucciones, no con casillas.
  *   POST /api/agente/instruir   → cifras ya calculadas + instrucción particular → texto con cada cifra validada
  *
  * Nunca recibe archivos ni estados completos: solo cifras ya calculadas en el navegador. El nombre de los modelos,
@@ -102,13 +105,17 @@ function mensajeTexto(p: PaqueteTexto) {
 }
 
 let cliente: Anthropic | null = null;
-async function redactar(mensajes: Anthropic.MessageParam[]) {
+function motor() {
     if (!process.env.ANTHROPIC_API_KEY || !MODELO_TEXTO) throw new ErrorMotor(NO_DISPONIBLE, 503);
     // Una llave creada fuera de un workspace exige el encabezado con el workspace (ANTHROPIC_WORKSPACE_ID).
     const workspace = process.env.ANTHROPIC_WORKSPACE_ID;
     cliente ??= new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, maxRetries: 1, timeout: 55_000, defaultHeaders: workspace ? { "anthropic-workspace-id": workspace } : undefined });
+    return cliente;
+}
+async function redactar(mensajes: Anthropic.MessageParam[]) {
+    const cliente = motor();
     try {
-        const r = await cliente.messages.create({ model: MODELO_TEXTO, max_tokens: 6000, output_config: { effort: "low" }, system: SISTEMA_TEXTO, messages: mensajes });
+        const r = await cliente.messages.create({ model: MODELO_TEXTO!, max_tokens: 6000, output_config: { effort: "low" }, system: SISTEMA_TEXTO, messages: mensajes });
         console.log(JSON.stringify({ op: "instruir", modelo: r.model, entrada: r.usage.input_tokens, salida: r.usage.output_tokens, fin: r.stop_reason }));
         if (r.stop_reason === "refusal") throw new ErrorMotor("El Motor Mirage no pudo redactar este texto. Ajuste la instrucción particular.", 422);
         if (r.stop_reason === "max_tokens") throw new ErrorMotor("El texto quedó incompleto. Pida un texto más corto en la instrucción particular.", 422);
@@ -170,53 +177,60 @@ const ESQ_PLAN = obj({
     pasos: arr(obj({ id: str, bloque: str, vinculos: arr(obj({ entrada: str, de: { type: "string", enum: ["entrada", "paso", "valor"] }, ref: strN, valor: { type: ["number", "string", "null"] } })) })),
 });
 
-const SISTEMA_PLAN = `Eres JEV, el planificador del constructor de agentes de Mirage (HyperTarget). Conviertes la tarea de finanzas corporativas que describe el usuario en un agente ejecutable. Respondes solo el JSON pedido.
+/** Esquema de la decisión de JEV: corto a propósito, para que razonar sea barato. */
+const ESQ_DECISION = obj({ capacidad: strN, bloques: arr(str), explicacion: str });
 
-Prioridad:
-1. Si una capacidad certificada del catálogo resuelve la tarea, devuelve su código en "capacidad", y deja "entradas" y "pasos" vacíos. Ajusta "reglas" solo si el usuario da umbrales (usa claves "paso.salida" de los pasos de esa capacidad, que aparecen en el catálogo) y "valores" solo con datos que el usuario dio explícitamente (montos, plazos, tasas como fracción: 16 % = 0.16).
-2. Si ninguna capacidad sirve pero los bloques sí, deja "capacidad" en null y arma "entradas" y "pasos": cada paso usa un bloque de la lista y conecta cada entrada del bloque con una entrada del agente (de "entrada", ref = id de la entrada), con una salida de un paso anterior (de "paso", ref = "paso.salida") o con un valor fijo (de "valor").
-3. Si la tarea no se puede resolver con los bloques, deja "capacidad" en null, "pasos" vacío y explica en "explicacion" qué falta. No inventes bloques ni salidas.
+const SISTEMA_DECIDIR = `Eres JEV, el planificador del constructor de agentes de Mirage (HyperTarget). Decides cómo resolver la tarea de finanzas corporativas que pide el usuario. No armas el agente: solo decides. Respondes solo el JSON pedido.
 
-Montos: las entradas de tipo dinero van en la misma unidad de los estados financieros. Si el usuario dice "800 millones" y la capacidad usa estados financieros, escribe 800 y dilo en "explicacion" (se asume que los estados están en millones). Sin estados, escribe el monto completo (800000000).
-Reglas: cada regla expresa lo que DEBE cumplirse, y su "efecto" se aplica cuando NO se cumple. Ejemplo: "no aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. Si el usuario dice que no aprueba, rechaza o no acepta, el efecto es "negar"; si lo exige como condición, "condicionar"; si solo quiere que se le avise, "alertar". Las tasas van como fracción.
+1. Si una capacidad del catálogo resuelve la tarea, devuelve su código en "capacidad" y "bloques" vacío.
+2. Si ninguna sirve pero los bloques sí, "capacidad" en null y en "bloques" los códigos de los bloques necesarios, en el orden en que se ejecutan (primero los de datos, luego los de cálculo).
+3. Si no se puede resolver, "capacidad" en null, "bloques" vacío y en "explicacion" qué falta.
+Si el usuario pide un cambio sobre un agente existente, conserva su capacidad salvo que el cambio exija otra.
+"explicacion": una frase en español de Colombia, para el usuario, que diga qué hará el agente.`;
 
-"instruccion": la instrucción particular para la redacción, en una o dos frases, con lo que el usuario pidió además del cálculo.
+const SISTEMA_PLAN = `Eres el Motor Mirage y construyes agentes de finanzas corporativas para HyperTarget. El planificador ya decidió qué capacidad o qué bloques usar; tú armas el agente con ese material. Respondes solo el JSON pedido.
+
+Con capacidad: devuelve su código en "capacidad" y deja "entradas" y "pasos" vacíos. Ajusta "reglas" (claves "paso.salida" de la lista de cifras de la capacidad) y "valores" (solo datos que el usuario dio explícitamente, con el id de la entrada).
+Sin capacidad: "capacidad" en null y arma "entradas" y "pasos" con los bloques indicados, en ese orden. Conecta cada entrada de cada bloque con una entrada del agente (de "entrada", ref = id de la entrada), con una salida de un paso anterior (de "paso", ref = "paso.salida") o con un valor fijo (de "valor", ref null). Las entradas marcadas con * son obligatorias. No inventes bloques ni salidas.
+
+Montos: las entradas de tipo dinero van en la misma unidad de los estados financieros. Si el usuario dice "800 millones" y el agente usa estados financieros, escribe 800. Sin estados, escribe el monto completo (800000000). Tasas como fracción: 16 % = 0.16.
+Reglas: cada regla dice lo que DEBE cumplirse; su "efecto" se aplica cuando NO se cumple. "No aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. No aprueba, rechaza o no acepta → "negar"; lo exige como condición → "condicionar"; solo avisar → "alertar". "mensaje": el motivo en una frase corta. Solo pon reglas que el usuario pidió; si es un ajuste de un agente existente, devuelve la lista completa de reglas que debe quedar.
+
+"instruccion": lo que el usuario quiere leer en el texto final, en una o dos frases.
 "salida": memo para comités y juntas, decision para sí/no, resumen para lecturas rápidas.
-"explicacion": una frase en español de Colombia que diga qué agente armaste y por qué.
-"nombre": nombre corto del agente.`;
+"nombre": nombre corto y claro del agente. "explicacion": una frase que diga qué hace el agente.`;
 
-function catalogoParaPlan() {
-    const caps = certificadas.map(c => {
-        const ag = PLANTILLAS[c.codigo]();
-        return `${c.codigo} · ${c.nombre}: ${c.descripcion} | entradas: ${ag.entradas.map(e => `${e.id}(${e.tipo})`).join(", ")} | pasos: ${ag.pasos.map(p => `${p.id}=${p.bloque}`).join(", ")}`;
-    });
-    const bloques = DEF_BLOQUES.map(b => `${b.codigo} (${b.caja}) ${b.nombre} | entradas: ${b.entradas.map(e => `${e.id}:${e.tipo}${e.requerido ? "*" : ""}`).join(", ")} | salidas: ${b.salidas.map(s => s.id).join(", ")}`);
-    return `Capacidades certificadas:\n${caps.join("\n")}\n\nBloques:\n${bloques.join("\n")}`;
+/** Catálogo breve para que JEV decida (solo códigos, nombres y para qué sirven). */
+function catalogoBreve() {
+    const caps = certificadas.map(c => `${c.codigo} · ${c.nombre}: ${c.descripcion}`);
+    const bloques = DEF_BLOQUES.map(b => `${b.codigo} (${b.caja}) ${b.nombre}: ${b.descripcion}`);
+    return `Capacidades:\n${caps.join("\n")}\n\nBloques:\n${bloques.join("\n")}`;
 }
 
-async function jev(objetivo: string) {
-    const llave = process.env.OPENROUTER_API_KEY;
-    if (!llave) throw new ErrorMotor(NO_DISPONIBLE, 503);
-    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: { authorization: `Bearer ${llave}`, "content-type": "application/json", "http-referer": "https://mirage.hypertarget.tech", "x-title": "Mirage" },
-        body: JSON.stringify({
-            model: MODELO_PLAN, temperature: 0, max_tokens: 4000, reasoning: { effort: "low" }, provider: { data_collection: "deny" },
-            messages: [{ role: "system", content: SISTEMA_PLAN }, { role: "user", content: `${catalogoParaPlan()}\n\nTarea del usuario:\n${objetivo}` }],
-            response_format: { type: "json_schema", json_schema: { name: "plan", strict: true, schema: ESQ_PLAN } },
-        }),
-        signal: AbortSignal.timeout(100_000),
-    });
-    const d = await r.json().catch(() => null) as { model?: string; usage?: unknown; error?: { message?: string }; choices?: { message?: { content?: string } }[] } | null;
-    if (!r.ok || !d?.choices?.[0]) { console.error("planificar", r.status, d?.error?.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
-    console.log(JSON.stringify({ op: "planificar", modelo: d.model, uso: d.usage }));
-    try { return JSON.parse((d.choices[0].message?.content ?? "").replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, "")); }
-    catch { throw new ErrorMotor("No se pudo armar el agente; intente describir la tarea de otra forma.", 502); }
+/** Detalle solo de lo que JEV eligió: lo único que necesita el Motor para construir. */
+function detalleElegido(capacidad: string | null, bloques: string[]) {
+    if (capacidad) {
+        const ag = PLANTILLAS[capacidad]();
+        const cifras = ag.pasos.flatMap(p => (MAPA_BLOQUES[p.bloque]?.salidas ?? []).map(s => `${p.id}.${s.id} (${s.etiqueta}, ${s.fmt})`));
+        return `Capacidad elegida: ${capacidad}\nEntradas: ${ag.entradas.map(e => `${e.id} (${e.etiqueta}, ${e.tipo})`).join("; ")}\nCifras que calcula: ${cifras.join("; ")}\nReglas actuales de la plantilla: ${JSON.stringify(ag.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })))}`;
+    }
+    const defs = bloques.map(b => MAPA_BLOQUES[b]).filter(Boolean);
+    return `Bloques elegidos, en orden:\n${defs.map(b => `${b.codigo} ${b.nombre} | entradas: ${b.entradas.map(e => `${e.id}:${e.tipo}${e.requerido ? "*" : ""}`).join(", ")} | salidas: ${b.salidas.map(x => `${x.id} (${x.etiqueta})`).join(", ")}`).join("\n")}`;
 }
+
+/** El esquema estricto del Motor no admite listas de tipos: se pasan a anyOf. */
+function sinListasDeTipos(x: unknown): unknown {
+    if (Array.isArray(x)) return x.map(sinListasDeTipos);
+    if (!x || typeof x !== "object") return x;
+    const o = Object.fromEntries(Object.entries(x).map(([k, v]) => [k, sinListasDeTipos(v)])) as Record<string, unknown>;
+    if (Array.isArray(o.type)) { const { type, ...resto } = o; return { ...resto, anyOf: (type as string[]).map(t => ({ type: t })) }; }
+    return o;
+}
+const ESQ_PLAN_MOTOR = sinListasDeTipos(ESQ_PLAN) as Record<string, unknown>;
 
 type PlanJev = { capacidad: string | null; nombre: string; explicacion: string; instruccion: string; salida: TipoTexto; valores: { entrada: string; valor: number | string | null }[]; reglas: Omit<Regla, "id">[]; entradas: { id: string; etiqueta: string; tipo: string }[]; pasos: { id: string; bloque: string; vinculos: { entrada: string; de: "entrada" | "paso" | "valor"; ref: string | null; valor: number | string | null }[] }[] };
 
-function construir(p: PlanJev): Plan {
+function construir(p: PlanJev, reemplazarReglas = false): Plan {
     const ahora = new Date().toISOString();
     let agente: Agente;
     const cod = p.capacidad?.toUpperCase() ?? null;
@@ -224,7 +238,7 @@ function construir(p: PlanJev): Plan {
         agente = PLANTILLAS[cod]();
         for (const v of p.valores ?? []) { const e = agente.entradas.find(x => x.id === v.entrada); if (e && v.valor !== null && e.tipo !== "estados") e.defecto = v.valor; }
     } else {
-        if (!p.pasos?.length) throw new ErrorMotor(p.explicacion || "No hay bloques suficientes para esa tarea. Elija una capacidad del catálogo.", 422);
+        if (!p.pasos?.length) throw new ErrorMotor(p.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
         const pasos: Paso[] = p.pasos.map(x => ({ id: x.id, bloque: x.bloque, vinculos: Object.fromEntries(x.vinculos.map(v => [v.entrada, v.de === "entrada" ? { de: "entrada", id: v.ref ?? "" } : v.de === "paso" ? { de: "paso", paso: (v.ref ?? "").split(".")[0], salida: (v.ref ?? "").split(".")[1] ?? "" } : { de: "valor", v: v.valor }] as [string, Vinculo])) }));
         agente = { id: `ag_${Date.now().toString(36)}`, nombre: p.nombre || "Agente", descripcion: p.explicacion, version: 1, creado: ahora, actualizado: ahora, entradas: (p.entradas ?? []).map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo as Agente["entradas"][number]["tipo"], requerido: true })), pasos, instruccion: { texto: "", salida: "resumen", reglas: [] } };
     }
@@ -232,24 +246,108 @@ function construir(p: PlanJev): Plan {
     agente.instruccion.texto = recortar(p.instruccion ?? "", 1500);
     if (["memo", "decision", "resumen", "ninguna"].includes(p.salida)) agente.instruccion.salida = p.salida;
     // Las reglas del usuario reemplazan las de la plantilla sobre la misma cifra y se suman a las demás.
+    // Al ajustar un agente existente, el plan trae la lista completa de reglas: reemplaza todas.
+    if (reemplazarReglas) agente.instruccion.reglas = [];
     for (const [i, r] of (p.reglas ?? []).entries()) {
-        const nueva: Regla = { ...r, id: `u${i + 1}`, operador: r.operador as Operador, efecto: r.efecto as Efecto };
+        const nueva: Regla = { ...r, id: `u${i + 1}`, operador: r.operador as Operador, efecto: r.efecto as Efecto, mensaje: r.mensaje || "No cumple la exigencia del agente." };
         const reglas = [...agente.instruccion.reglas.filter(x => x.cifra !== nueva.cifra), nueva];
         if (!validarAgente({ ...agente, instruccion: { ...agente.instruccion, reglas } }).length) agente.instruccion.reglas = reglas;
     }
     const errores = validarAgente(agente);
-    if (errores.length) { console.error("planificar: agente inválido", errores); throw new ErrorMotor("No se pudo armar un agente válido para esa tarea. Elija una capacidad del catálogo o descríbala con más detalle.", 422); }
+    if (errores.length) { console.error("planificar: agente inválido", errores); throw new ErrorMotor("No se pudo armar un agente válido para esa tarea. Descríbala con más detalle.", 422); }
     return { agente, capacidad: cod && certificadas.some(c => c.codigo === cod) ? cod : null, explicacion: recortar(p.explicacion ?? "", 400) };
+}
+
+function intentar(p: PlanJev, reemplazarReglas: boolean): { plan: Plan | null; error: string } {
+    try { return { plan: construir(p, reemplazarReglas), error: "" }; }
+    catch (e) { return { plan: null, error: e instanceof Error ? e.message : String(e) }; }
+}
+
+/** JEV decide: capacidad o bloques. Salida mínima y razonamiento bajo. */
+async function decidir(pedido: string) {
+    const llave = process.env.OPENROUTER_API_KEY;
+    if (!llave) throw new ErrorMotor(NO_DISPONIBLE, 503);
+    const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { authorization: `Bearer ${llave}`, "content-type": "application/json", "http-referer": "https://mirage.hypertarget.tech", "x-title": "Mirage" },
+        body: JSON.stringify({
+            model: MODELO_PLAN, temperature: 0, max_tokens: 1500, reasoning: { effort: "low" }, provider: { data_collection: "deny" },
+            messages: [{ role: "system", content: SISTEMA_DECIDIR }, { role: "user", content: `${catalogoBreve()}\n\n${pedido}` }],
+            response_format: { type: "json_schema", json_schema: { name: "decision", strict: true, schema: ESQ_DECISION } },
+        }),
+        signal: AbortSignal.timeout(50_000),
+    });
+    const d = await r.json().catch(() => null) as { model?: string; usage?: unknown; error?: { message?: string }; choices?: { message?: { content?: string } }[] } | null;
+    if (!r.ok || !d?.choices?.[0]) { console.error("decidir", r.status, d?.error?.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
+    console.log(JSON.stringify({ op: "decidir", modelo: d.model, uso: d.usage }));
+    try {
+        const x = JSON.parse((d.choices[0].message?.content ?? "").replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, "")) as { capacidad: string | null; bloques: string[]; explicacion: string };
+        const cap = x.capacidad?.toUpperCase() ?? null;
+        return { capacidad: cap && certificadas.some(c => c.codigo === cap) ? cap : null, bloques: (x.bloques ?? []).map(b => b.toUpperCase()).filter(b => b in MAPA_BLOQUES), explicacion: recortar(x.explicacion ?? "", 400) };
+    } catch { throw new ErrorMotor("No se pudo armar el agente; intente describir la tarea de otra forma.", 502); }
+}
+
+/** El Motor construye el agente con lo que JEV eligió. Esfuerzo bajo, tope de salida y una corrección si el validador lo rechaza. */
+async function construirConMotor(mensajes: Anthropic.MessageParam[]) {
+    const cliente = motor();
+    try {
+        const r = await cliente.messages.create({ model: MODELO_TEXTO!, max_tokens: 4000, output_config: { effort: "low", format: { type: "json_schema", schema: ESQ_PLAN_MOTOR } }, system: SISTEMA_PLAN, messages: mensajes });
+        console.log(JSON.stringify({ op: "construir", modelo: r.model, entrada: r.usage.input_tokens, salida: r.usage.output_tokens, fin: r.stop_reason }));
+        if (r.stop_reason !== "end_turn") throw new ErrorMotor("No se pudo armar el agente; describa la tarea en menos palabras.", 422);
+        const texto = r.content.filter(b => b.type === "text").map(b => (b as Anthropic.TextBlock).text).join("");
+        return { plan: JSON.parse(texto) as PlanJev, texto };
+    } catch (e) {
+        if (e instanceof ErrorMotor) throw e;
+        if (e instanceof Anthropic.RateLimitError) throw new ErrorMotor("El Motor Mirage está ocupado; intente en un minuto.", 429);
+        if (e instanceof Anthropic.APIError) { console.error("construir", e.status, e.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
+        console.error("construir", e); throw new ErrorMotor(NO_DISPONIBLE, 502);
+    }
+}
+
+/** El agente actual en el formato del plan, para aplicar un cambio sobre él. */
+function planDeAgente(a: Agente): PlanJev {
+    const deVinculo = (k: string, v: Vinculo) => v.de === "entrada" ? { entrada: k, de: v.de, ref: v.id, valor: null } : v.de === "paso" ? { entrada: k, de: v.de, ref: `${v.paso}.${v.salida}`, valor: null } : { entrada: k, de: v.de, ref: null, valor: typeof v.v === "number" || typeof v.v === "string" ? v.v : null };
+    const cert = a.capacidad && certificadas.some(c => c.codigo === a.capacidad) ? a.capacidad : null;
+    return {
+        capacidad: cert, nombre: a.nombre, explicacion: a.descripcion, instruccion: a.instruccion.texto, salida: a.instruccion.salida,
+        valores: a.entradas.filter(e => typeof e.defecto === "number" || typeof e.defecto === "string").map(e => ({ entrada: e.id, valor: e.defecto as number | string })),
+        reglas: a.instruccion.reglas.map(({ cifra, operador, umbral, efecto, mensaje }) => ({ cifra, operador, umbral, efecto, mensaje })),
+        entradas: cert ? [] : a.entradas.map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo })),
+        pasos: cert ? [] : a.pasos.map(p => ({ id: p.id, bloque: p.bloque, vinculos: Object.entries(p.vinculos).map(([k, v]) => deVinculo(k, v)) })),
+    };
 }
 
 async function planificar(e: Record<string, unknown>) {
     const objetivo = typeof e.objetivo === "string" ? e.objetivo.trim().slice(0, 1500) : "";
-    if (!objetivo) throw new ErrorMotor("Describa la tarea del agente.", 400);
-    const clave = await huella({ objetivo }), previo = enCache(clave);
+    if (!objetivo) throw new ErrorMotor("Describa lo que debe hacer el agente.", 400);
+    let base: Agente | null = null;
+    if (e.base && typeof e.base === "object") {
+        const b = e.base as Agente;
+        if (Array.isArray(b.pasos) && Array.isArray(b.entradas) && b.instruccion && !validarAgente(b).length) base = b;
+    }
+    const actual = base ? planDeAgente(base) : null;
+    const clave = await huella({ objetivo, base: actual }), previo = enCache(clave);
     if (previo) return previo;
-    const plan = construir(await jev(objetivo) as PlanJev);
-    guardarCache(clave, plan);
-    return plan;
+
+    const pedido = actual
+        ? `Agente actual: ${JSON.stringify(actual)}\n\nCambio que pide el usuario: ${objetivo}`
+        : `Lo que pide el usuario: ${objetivo}`;
+    // 1) JEV decide qué usar.
+    const decision = await decidir(pedido);
+    if (!decision.capacidad && !decision.bloques.length) throw new ErrorMotor(decision.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
+    // 2) El Motor construye el agente con solo lo elegido.
+    const mensajes: Anthropic.MessageParam[] = [{ role: "user", content: `${pedido}${actual ? "\n\nDevuelve el agente completo con el cambio aplicado; conserva lo que el usuario no pidió cambiar." : ""}\n\n${detalleElegido(decision.capacidad, decision.bloques)}` }];
+    const c1 = await construirConMotor(mensajes);
+    let r = intentar({ ...c1.plan, capacidad: decision.capacidad ?? c1.plan.capacidad }, !!base);
+    if (!r.plan) {
+        const c2 = await construirConMotor([...mensajes, { role: "assistant", content: c1.texto }, { role: "user", content: `El validador rechazó el agente: ${r.error} Corrígelo y devuelve el JSON completo.` }]);
+        r = intentar({ ...c2.plan, capacidad: decision.capacidad ?? c2.plan.capacidad }, !!base);
+    }
+    if (!r.plan) throw new ErrorMotor("No se pudo armar un agente para esa tarea. Descríbala con más detalle.", 422);
+    if (base) r.plan.agente.id = base.id;
+    if (!r.plan.explicacion) r.plan.explicacion = decision.explicacion;
+    guardarCache(clave, r.plan);
+    return r.plan;
 }
 
 const OPERACIONES: Record<string, (e: Record<string, unknown>) => Promise<unknown>> = { instruir, planificar };
@@ -259,8 +357,9 @@ export function OPTIONS(request: Request) { return new Response(null, { status: 
 
 export async function POST(request: Request) {
     const origen = request.headers.get("origin");
-    if (!origen || !ORIGENES.test(origen)) return json({ ok: false, error: "Origen no permitido." }, 403, origen);
     const partes = new URL(request.url).pathname.split("/").filter(Boolean), op = (partes[partes.length - 1] ?? "").toLowerCase();
+    // Los navegadores siempre envían Origin; el agente descargado (Node) no lo envía y solo puede pedir la redacción.
+    if (origen ? !ORIGENES.test(origen) : op !== "instruir") return json({ ok: false, error: "Origen no permitido." }, 403, origen);
     const ejecutar = OPERACIONES[op];
     if (!ejecutar) return json({ ok: false, error: `Operación desconocida: "${op}".` }, 404, origen);
     const texto = await request.text();

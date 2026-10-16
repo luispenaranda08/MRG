@@ -8,7 +8,9 @@
  *   prepararEmpresa(archivo, nombre, opciones, datos) / cargarEjemplo()   estados financieros para la caja 1
  *   ejecutarAgente(agente, valores, datos)    cajas 2 y 3: cifras con su origen, tablas y decisión por reglas
  *   instruir(agente, ejecucion)               caja 4: texto del Motor Mirage validado cifra por cifra
- *   planificar(objetivo)                      línea de comando: objetivo en lenguaje natural → agente
+ *   planificar(objetivo, base?)               lo que pide el usuario → agente (con base: aplica el pedido como cambio)
+ *   cajas(agente, valores) / fraseRegla()     el agente en lenguaje claro para las cuatro cajas
+ *   paqueteAgente(agente, valores, datos)     .zip descargable: receta, entradas, archivo, programa y datos
  *   validarTexto(texto, ejecucion)            cifras del texto que tienen o no respaldo
  *   listarAgentes() / guardarAgente() / eliminarAgente() / exportarAgente() / importarAgente()
  */
@@ -27,6 +29,8 @@ export { validarTexto } from "./validador";
 export { prepararEmpresa, cargarEjemplo, EJEMPLOS } from "./empresa";
 export { planificar, instruir } from "./cliente";
 export { listarAgentes, guardarAgente, eliminarAgente, exportarAgente, importarAgente } from "./almacen";
+export { cajas, fraseRegla, paqueteAgente, type Cajas, type PasoClaro } from "./presentar";
+export { flujo, type Flujo, type NodoFlujo } from "./flujo";
 
 export const CAPACIDADES: Capacidad[] = CATALOGO.map(c => ({ ...c, certificada: c.bloques.every(b => b in MAPA_BLOQUES) && c.codigo in PLANTILLAS }));
 

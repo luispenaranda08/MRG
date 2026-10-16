@@ -52,6 +52,8 @@ export interface EmpresaPreparada {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     interno: any;
     alertas: string[];
+    /** Copia del archivo original, para empaquetarlo con el agente descargable. No se serializa al guardar el agente. */
+    bytes?: Uint8Array;
 }
 
 export type ValorCampo = number | string | boolean | number[] | EmpresaPreparada | null;
