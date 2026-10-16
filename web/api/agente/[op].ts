@@ -141,7 +141,7 @@ async function instruir(e: Record<string, unknown>) {
         const corregido = await redactar([
             { role: "user", content: pedido },
             { role: "assistant", content: texto },
-            { role: "user", content: `Estas cifras de tu texto no están en la lista de cifras calculadas: ${v.sinRespaldo.map(x => `«${x.texto}»`).join(", ")}. Reescribe el texto completo usando solo cifras de la lista, copiadas tal cual. Lo que no esté en la lista, descríbelo sin número.` },
+            { role: "user", content: `Estas cifras de tu texto no están en la lista de cifras calculadas: ${v.sinRespaldo.map(x => `«${x.texto}»`).join(", ")}. Reescribe el texto completo usando solo cifras de la lista, copiadas tal cual. Lo que no esté en la lista, descríbelo sin número. Responde solo con el texto final, sin comentar la corrección.` },
         ]);
         intentos = 2;
         const v2 = validarTexto(corregido, ejecucion);

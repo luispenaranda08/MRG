@@ -72,7 +72,11 @@ export function validarTexto(texto: string, ejecucion: Pick<Ejecucion, "cifras">
                 const escU = escalaDeUnidad(c.unidad);
                 ops.push(Math.abs(Math.abs(n.x * escTexto) - Math.abs(v * escU)) - tolTexto * escTexto);
                 if (escTexto === 1) ops.push(Math.abs(Math.abs(n.x) - Math.abs(v)) - tolTexto);
-                if (escTexto !== 1 && escU === 1) ops.push(Math.abs(Math.abs(n.x * escTexto) - Math.abs(v)) - tolTexto * escTexto);
+                if (escTexto !== 1 && escU === 1) {
+                    ops.push(Math.abs(Math.abs(n.x * escTexto) - Math.abs(v)) - tolTexto * escTexto);
+                    // Cifra sin unidad propia (un monto de entrada): el texto puede nombrar la unidad de los estados después del número.
+                    ops.push(Math.abs(Math.abs(n.x) - Math.abs(v)) - tolTexto);
+                }
             }
             const ok = ops.filter(o => o <= 1e-9);
             if (ok.length) { const err = Math.min(...ok); if (!mejor || err < mejor.err) mejor = { clave, err }; }

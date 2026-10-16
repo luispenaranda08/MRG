@@ -132,6 +132,8 @@ const bloque = (codigo, e) => IMPLEMENTACIONES[codigo](e, datos).cifras;
     v = A.validarTexto(`Ingresos de USD ${fmt({ v: ing, fmt: "num" })} millones y también ${(ing / 1000).toFixed(1).replace(".", ",")} mil millones.`, ejm);
     ok(v.respaldadas === 2 && v.sinRespaldo.length === 0, `validador: escalas de millones y mil millones (${JSON.stringify(v)})`);
 
+    const conMonto = { cifras: { "entrada.monto": { v: 500000, fmt: "num", etiqueta: "Monto", origen: {} } } };
+    ok(["un crédito de 500.000 (COP miles)", "un crédito de 500.000 miles de pesos", "COP 500.000 miles"].every(t => A.validarTexto(t, conMonto).sinRespaldo.length === 0), "validador: monto de entrada seguido de la unidad de los estados");
     v = A.validarTexto("El sector 14 tiene un rating de 31,7 % sin respaldo.", ejw);
     ok(v.coincidencias.some(x => x.texto === "14" && x.clave === "sector.nombre") && v.sinRespaldo.length === 1, `validador: número dentro de una cifra de texto (${JSON.stringify(v)})`);
     const umbral = ejv.cifras["regla.pd_pd_1"];
