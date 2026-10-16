@@ -172,7 +172,7 @@ const CAP: Impl = e => {
     if (min <= 0) throw new ErrorBloque("El DSCR mínimo debe ser positivo.");
     const total = actual + nuevo, alertas: string[] = [];
     if (total <= 0) alertas.push("Sin servicio de deuda: el DSCR no aplica.");
-    if (flujo > 0 && nuevo > 50 * flujo) alertas.push("Revise la unidad del monto: el servicio de la deuda nueva supera 50 veces el flujo disponible. El monto debe ir en la misma unidad de los estados.");
+    if (flujo > 0 && nuevo > 50 * flujo) alertas.push("Revise la unidad del monto: el servicio de la deuda nueva supera 50 veces el flujo disponible. Escriba el monto completo en la moneda de los estados (800000000 = 800 millones).");
     return { cifras: { dscr: total > 0 ? flujo / total : null, servicio_total: total, holgura: flujo - total * min, servicio_maximo_nuevo: flujo / min - actual }, alertas };
 };
 

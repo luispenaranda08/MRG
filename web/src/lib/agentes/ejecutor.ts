@@ -43,6 +43,8 @@ function decidir(agente: Agente, cifras: Record<string, Cifra>, entradas: Record
     return { decision: { efecto, reglas }, alertas };
 }
 
+const FACTORES: Record<string, number> = { unidades: 1, miles: 1e3, millones: 1e6, "miles de millones": 1e9 };
+
 function cifraEntrada(c: Campo, v: ValorCampo): Cifra | null {
     if (typeof v !== "number" || !Number.isFinite(v)) return null;
     const fmt = c.tipo === "tasa" ? "pct" : c.tipo === "numero" && !Number.isInteger(v) ? "x" : "num";
@@ -73,6 +75,14 @@ export function ejecutarAgente(agente: Agente, valores: Record<string, ValorCamp
         entradas[c.id] = v ?? null;
         const ce = cifraEntrada(c, entradas[c.id]);
         if (ce) cifras[claveCifra("entrada", c.id)] = ce;
+    }
+    // Montos escritos completos → unidad de los estados (miles, millones…). La cifra de entrada conserva el valor escrito.
+    const empresa = Object.values(entradas).find(v => v && typeof v === "object" && (v as EmpresaPreparada).tipo === "empresa") as EmpresaPreparada | undefined;
+    const factor = empresa ? FACTORES[empresa.unidad?.toLowerCase()] ?? 1 : 1;
+    for (const c of agente.entradas) {
+        if (c.escala !== "estados" || typeof entradas[c.id] !== "number") continue;
+        if (empresa) { const ce = cifras[claveCifra("entrada", c.id)]; if (ce) ce.unidad = empresa.moneda; }
+        entradas[c.id] = (entradas[c.id] as number) / factor;
     }
 
     for (const p of agente.pasos) {

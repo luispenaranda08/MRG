@@ -74,7 +74,7 @@ function entradasLegibles(agente: Agente, valores: Record<string, ValorCampo>, d
 }
 
 function leame(agente: Agente, c: Cajas, entradas: Record<string, unknown>) {
-    const tipo: Record<string, string> = { tasa: "en porcentaje (16 = 16 %)", dinero: "en la misma unidad de los estados financieros", sector: "código CIIU", estados: "nombre del archivo, en esta carpeta", flujos: "lista de flujos desde el año 0" };
+    const tipo: Record<string, string> = { tasa: "en porcentaje (16 = 16 %)", dinero: "valor completo, en la moneda de los estados (800000000 = 800 millones)", sector: "código CIIU", estados: "nombre del archivo, en esta carpeta", flujos: "lista de flujos desde el año 0" };
     return [
         `# ${agente.nombre}`, "", agente.descripcion, "",
         "## Qué hace", "",

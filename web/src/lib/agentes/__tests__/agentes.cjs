@@ -139,6 +139,14 @@ const bloque = (codigo, e) => IMPLEMENTACIONES[codigo](e, datos).cifras;
     const umbral = ejv.cifras["regla.pd_pd_1"];
     ok(umbral && umbral.v === 0.05 && umbral.origen.bloque === "REGLA", "los umbrales de las reglas quedan como cifras citables");
 
+    // ---------- Montos completos → unidad de los estados ----------
+    const principal = ej => ej.pasos.find(p => p.paso === "amort")?.entrada.principal;
+    const ejmc = A.ejecutarAgente(A.plantilla("CRED"), { empresa: pyme, monto: 800_000_000 }, datos);
+    ok(ejmc.estado === "completa" && principal(ejmc) === 800_000, `800 millones con estados en miles → 800.000 (${principal(ejmc)})`);
+    ok(ejmc.cifras["entrada.monto"]?.v === 800_000_000 && ejmc.cifras["entrada.monto"]?.unidad === "COP", "la cifra de entrada conserva el monto escrito y su moneda");
+    const ejmv = A.ejecutarAgente(A.plantilla("CRED"), { empresa: visa, monto: 800_000_000 }, datos);
+    ok(principal(ejmv) === 800, `800 millones con estados en millones → 800 (${principal(ejmv)})`);
+
     // ---------- Almacén y receta ----------
     const copia = A.importarAgente(A.exportarAgente(cred));
     ok(copia.pasos.length === cred.pasos.length && A.validarAgente(copia).length === 0, "exportar e importar un agente");

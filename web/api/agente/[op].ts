@@ -193,7 +193,7 @@ const SISTEMA_PLAN = `Eres el Motor Mirage y construyes agentes de finanzas corp
 Con capacidad: devuelve su código en "capacidad" y deja "entradas" y "pasos" vacíos. Ajusta "reglas" (claves "paso.salida" de la lista de cifras de la capacidad) y "valores" (solo datos que el usuario dio explícitamente, con el id de la entrada).
 Sin capacidad: "capacidad" en null y arma "entradas" y "pasos" con los bloques indicados, en ese orden. Conecta cada entrada de cada bloque con una entrada del agente (de "entrada", ref = id de la entrada), con una salida de un paso anterior (de "paso", ref = "paso.salida") o con un valor fijo (de "valor", ref null). Las entradas marcadas con * son obligatorias. No inventes bloques ni salidas.
 
-Montos: las entradas de tipo dinero van en la misma unidad de los estados financieros. Si el usuario dice "800 millones" y el agente usa estados financieros, escribe 800. Sin estados, escribe el monto completo (800000000). Tasas como fracción: 16 % = 0.16.
+Montos: siempre completos, en la moneda: "800 millones" es 800000000 y "2.500 millones" es 2500000000. Mirage los lleva a la unidad de los estados al ejecutar. Tasas como fracción: 16 % = 0.16.
 Reglas: cada regla dice lo que DEBE cumplirse; su "efecto" se aplica cuando NO se cumple. "No aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. No aprueba, rechaza o no acepta → "negar"; lo exige como condición → "condicionar"; solo avisar → "alertar". "mensaje": el motivo en una frase corta. Solo pon reglas que el usuario pidió; si es un ajuste de un agente existente, devuelve la lista completa de reglas que debe quedar.
 
 "instruccion": lo que el usuario quiere leer en el texto final, en una o dos frases.
@@ -240,7 +240,7 @@ function construir(p: PlanJev, reemplazarReglas = false): Plan {
     } else {
         if (!p.pasos?.length) throw new ErrorMotor(p.explicacion || "Mirage todavía no tiene los cálculos para esa tarea.", 422);
         const pasos: Paso[] = p.pasos.map(x => ({ id: x.id, bloque: x.bloque, vinculos: Object.fromEntries(x.vinculos.map(v => [v.entrada, v.de === "entrada" ? { de: "entrada", id: v.ref ?? "" } : v.de === "paso" ? { de: "paso", paso: (v.ref ?? "").split(".")[0], salida: (v.ref ?? "").split(".")[1] ?? "" } : { de: "valor", v: v.valor }] as [string, Vinculo])) }));
-        agente = { id: `ag_${Date.now().toString(36)}`, nombre: p.nombre || "Agente", descripcion: p.explicacion, version: 1, creado: ahora, actualizado: ahora, entradas: (p.entradas ?? []).map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo as Agente["entradas"][number]["tipo"], requerido: true })), pasos, instruccion: { texto: "", salida: "resumen", reglas: [] } };
+        agente = { id: `ag_${Date.now().toString(36)}`, nombre: p.nombre || "Agente", descripcion: p.explicacion, version: 1, creado: ahora, actualizado: ahora, entradas: (p.entradas ?? []).map(e => ({ id: e.id, etiqueta: e.etiqueta, tipo: e.tipo as Agente["entradas"][number]["tipo"], requerido: true, ...(e.tipo === "dinero" && p.entradas.some(x => x.tipo === "estados") ? { escala: "estados" as const } : {}) })), pasos, instruccion: { texto: "", salida: "resumen", reglas: [] } };
     }
     agente.nombre = p.nombre?.trim() || agente.nombre;
     agente.instruccion.texto = recortar(p.instruccion ?? "", 1500);

@@ -76,7 +76,7 @@ export const PLANTILLAS: Record<string, () => Agente> = {
         "Dice si la empresa crea valor, con cuánto margen y desde cuándo.", "resumen", [regla("eva.spread", ">", 0, "alertar", "El ROIC no supera el WACC: la empresa destruye valor.")]),
     APAL: agente("APAL", "Apalancamiento operativo y financiero", "GAO, GAF y GAT.", [EST, tasa("gastos_fijos", "Porción fija de los gastos operativos", 1)], [["apal", "APAL"]],
         "Explica la sensibilidad de la utilidad a cambios en ventas y el riesgo que agrega la deuda.", "resumen"),
-    UPA: agente("UPA", "UPA y EBIT de indiferencia", "Acciones o deuda.", [EST, dinero("financiacion", "Financiación adicional (unidad de los estados)", undefined, { requerido: false }), tasa("tasa_deuda", "Tasa de la deuda nueva", 0.14)], [["upa", "UPA"]],
+    UPA: agente("UPA", "UPA y EBIT de indiferencia", "Acciones o deuda.", [EST, dinero("financiacion", "Financiación adicional (valor completo)", undefined, { requerido: false, escala: "estados" }), tasa("tasa_deuda", "Tasa de la deuda nueva", 0.14)], [["upa", "UPA"]],
         "Recomienda cómo financiarse según la UPA y el EBIT de indiferencia.", "decision"),
     PE: agente("PE", "Punto de equilibrio", "Ventas de equilibrio y margen de seguridad.", [EST, tasa("gastos_fijos", "Porción fija de los gastos operativos", 1)], [["apal", "APAL"]],
         "Explica el punto de equilibrio y qué tan lejos están las ventas actuales.", "resumen", [regla("apal.margen_seguridad", ">=", 0.2, "alertar", "Margen de seguridad inferior a 20 %.")]),
@@ -85,7 +85,7 @@ export const PLANTILLAS: Record<string, () => Agente> = {
 
     /* C · Crédito */
     CRED: agente("CRED", "Memo de crédito para comité", "Estados del cliente, rating, PD, servicio de la deuda nueva y DSCR con las reglas del comité. El servicio actual se aproxima con los intereses del último año.",
-        [EST, dinero("monto", "Monto solicitado (misma unidad de los estados)", 500000), num("plazo_anios", "Plazo en años", 5), tasa("tasa_ea", "Tasa efectiva anual", 0.16), PAGOS, num("dscr_minimo", "DSCR mínimo del comité", 1.3)],
+        [EST, dinero("monto", "Monto solicitado (valor completo)", 500_000_000, { escala: "estados" }), num("plazo_anios", "Plazo en años", 5), tasa("tasa_ea", "Tasa efectiva anual", 0.16), PAGOS, num("dscr_minimo", "DSCR mínimo del comité", 1.3)],
         [["sector", "SECTOR"], ["dq", "DQ"], ["rat", "RAT"], ["rtg", "RTG"], ["pd", "PD"],
             ["amort", "AMORT", { principal: "@monto", plazo_anios: "@plazo_anios", tasa_ea: "@tasa_ea", periodos_por_anio: "@periodos_por_anio" }],
             ["cap", "CAP", { flujo: "rat.flujo_deuda", servicio_actual: "rat.intereses", servicio_nuevo: "amort.servicio_anio1", dscr_minimo: "@dscr_minimo" }],
@@ -98,7 +98,7 @@ export const PLANTILLAS: Record<string, () => Agente> = {
         "Explica la probabilidad de incumplimiento y sus causas.", "resumen", [regla("pd.pd_1", "<=", 0.05, "alertar", "PD a un año superior a 5 %.")]),
     ZALT: agente("ZALT", "Z'' de Altman", "Puntaje Z'' y zona.", [EST], [["zal", "ZAL"]],
         "Explica el puntaje Z'' y la zona en que cae la empresa.", "resumen", [regla("zal.z", ">=", 4.15, "alertar", "Z'' en zona de riesgo de insolvencia.")]),
-    DSCR: agente("DSCR", "Capacidad de pago", "DSCR con el crédito nuevo.", [EST, dinero("monto", "Monto del crédito (misma unidad de los estados)", 500000), num("plazo_anios", "Plazo en años", 5), tasa("tasa_ea", "Tasa efectiva anual", 0.16), PAGOS, num("dscr_minimo", "DSCR mínimo", 1.3)],
+    DSCR: agente("DSCR", "Capacidad de pago", "DSCR con el crédito nuevo.", [EST, dinero("monto", "Monto del crédito (valor completo)", 500_000_000, { escala: "estados" }), num("plazo_anios", "Plazo en años", 5), tasa("tasa_ea", "Tasa efectiva anual", 0.16), PAGOS, num("dscr_minimo", "DSCR mínimo", 1.3)],
         [["rat", "RAT"], ["amort", "AMORT", { principal: "@monto", plazo_anios: "@plazo_anios", tasa_ea: "@tasa_ea", periodos_por_anio: "@periodos_por_anio" }], ["cap", "CAP", { flujo: "rat.flujo_deuda", servicio_actual: "rat.intereses", servicio_nuevo: "amort.servicio_anio1", dscr_minimo: "@dscr_minimo" }]],
         "Concluye si la empresa puede servir el crédito y con qué holgura.", "decision", [regla("cap.dscr", ">=", 1.3, "condicionar", "DSCR por debajo del mínimo.", "dscr_minimo")]),
     CUPO: agente("CUPO", "Cupo máximo de crédito", "Monto máximo con un DSCR objetivo.", [EST, num("plazo_anios", "Plazo en años", 5), tasa("tasa_ea", "Tasa efectiva anual", 0.16), num("dscr_minimo", "DSCR objetivo", 1.3)],

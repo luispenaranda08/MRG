@@ -35,6 +35,8 @@ export interface Campo {
     ayuda?: string;
     min?: number;
     max?: number;
+    /** "estados": el usuario escribe el monto completo (800.000.000) y al ejecutar se lleva a la unidad del archivo (miles, millones…). */
+    escala?: "estados";
 }
 
 /** Estados financieros leídos y homologados por el motor DX, listos para los bloques de empresa. */
