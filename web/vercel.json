@@ -20,6 +20,9 @@
   "functions": {
     "api/analisis/[op].ts": {
       "maxDuration": 120
+    },
+    "api/agente/[op].ts": {
+      "maxDuration": 120
     }
   }
 }

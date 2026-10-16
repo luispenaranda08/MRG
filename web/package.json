@@ -10,7 +10,7 @@
     "test:dx": "node src/lib/dx/__tests__/regression.cjs",
     "test:finanzas": "node src/lib/finanzas/__tests__/finanzas.cjs",
     "test:calc": "node src/components/__tests__/calc.cjs",
-    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc && npm run test:wacc && npm run test:alineacion && npm run test:decisiones && npm run test:decisiones-excel && npm run test:documento",
+    "test": "npm run test:dx && npm run test:formatos && npm run test:finanzas && npm run test:calc && npm run test:wacc && npm run test:alineacion && npm run test:decisiones && npm run test:decisiones-excel && npm run test:documento && npm run test:agentes",
     "test:formatos": "node src/lib/dx/__tests__/formatos.cjs",
     "test:documento": "node src/lib/__tests__/documento.cjs",
     "test:wacc": "node src/components/__tests__/wacc.cjs",
@@ -18,9 +18,11 @@
     "test:decisiones": "node src/lib/dx/__tests__/decisiones.cjs",
     "test:decisiones-excel": "node src/lib/dx/__tests__/decisiones-excel.cjs",
     "test:privacidad": "node scripts/privacidad.cjs",
-    "postbuild": "node scripts/privacidad.cjs"
+    "postbuild": "node scripts/privacidad.cjs",
+    "test:agentes": "node src/lib/agentes/__tests__/agentes.cjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
     "exceljs": "^4.4.0",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
