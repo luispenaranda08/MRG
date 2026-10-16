@@ -19,3 +19,5 @@ CODEX-*-ultimo-mensaje.txt
 web/out/
 web/build-output.txt
 qa/excel-check/
+# Notebook con salidas derivadas de Yahoo (interno): se versiona solo su generador
+ml/notebooks/07_betas_fundamentales.ipynb
