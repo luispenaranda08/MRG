@@ -295,7 +295,9 @@ const VH: Impl = conEmpresa(emp => {
 });
 
 const RAT: Impl = conEmpresa((emp, R) => {
-    const c = emp.interno, k = c.years.length - 1, m = R.m, m0 = k > 0 ? M(c, k - 1) : null, ebitda = ebitdaDe(m);
+    const c = emp.interno, k = c.years.length - 1, m = R.m, m0 = k > 0 ? M(c, k - 1) : null;
+    // Sin depreciación ni EBITDA en el archivo, el EBIT es una aproximación conservadora (el DSCR sale más bajo, no más alto).
+    const sinDA = ebitdaDe(m) == null && Number.isFinite(m.ebit), ebitda = sinDA ? fin(m.ebit) : ebitdaDe(m);
     return {
         cifras: {
             anio: String(c.years[k]), ingresos: fin(m.rev), ebitda, ebit: fin(m.ebit), utilidad_neta: fin(m.ni), activo: fin(m.ta), deuda: fin(m.debt), patrimonio: fin(m.eq), intereses: fin(m.intr), impuestos: fin(m.tax),
@@ -303,7 +305,7 @@ const RAT: Impl = conEmpresa((emp, R) => {
             margen_bruto: fin(m.gm), margen_ebit: fin(m.em), margen_neto: fin(m.nm), roe: fin(m.roe), roa: fin(m.roa), roic: fin(m.roic), razon_corriente: fin(m.cr), prueba_acida: fin(m.quick), de: fin(m.de), endeudamiento: fin(m.la), cobertura: fin(m.cov), deuda_neta_ebitda: ebitda ? fin((m.debt - (m.cash || 0) - (m.sti || 0)) / ebitda) : null, rotacion_activos: fin(m.at),
         },
         tablas: { serie: { columnas: [{ id: "anio", etiqueta: "Año", fmt: "num" }, { id: "ingresos", etiqueta: "Ingresos", fmt: "num" }, { id: "margen_ebit", etiqueta: "Margen EBIT", fmt: "pct" }, { id: "margen_neto", etiqueta: "Margen neto", fmt: "pct" }, { id: "roe", etiqueta: "ROE", fmt: "pct" }, { id: "razon_corriente", etiqueta: "Razón corriente", fmt: "x" }, { id: "de", etiqueta: "D/E", fmt: "x" }, { id: "cobertura", etiqueta: "Cobertura", fmt: "x" }], filas: serie(emp, q => ({ ingresos: fin(q.rev), margen_ebit: fin(q.em), margen_neto: fin(q.nm), roe: fin(q.roe), razon_corriente: fin(q.cr), de: fin(q.de), cobertura: fin(q.cov) })) } },
-        alertas: (R.alertas ?? []).map((a: { msg: string }) => a.msg),
+        alertas: [...(R.alertas ?? []).map((a: { msg: string }) => a.msg), ...(sinDA ? ["El archivo no trae depreciación ni EBITDA: se usa el EBIT como aproximación conservadora del EBITDA."] : [])],
     };
 });
 
