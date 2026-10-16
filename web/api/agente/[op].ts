@@ -269,16 +269,34 @@ async function decidir(pedido: string) {
             messages: [{ role: "system", content: SISTEMA_DECIDIR }, { role: "user", content: `${catalogoBreve()}\n\n${pedido}` }],
             response_format: { type: "json_schema", json_schema: { name: "decision", strict: true, schema: ESQ_DECISION } },
         }),
-        signal: AbortSignal.timeout(50_000),
+        signal: AbortSignal.timeout(25_000),
     });
     const d = await r.json().catch(() => null) as { model?: string; usage?: unknown; error?: { message?: string }; choices?: { message?: { content?: string } }[] } | null;
-    if (!r.ok || !d?.choices?.[0]) { console.error("decidir", r.status, d?.error?.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
+    if (!r.ok || !d?.choices?.[0]?.message?.content) { console.error("decidir", r.status, d?.error?.message); throw new ErrorMotor(NO_DISPONIBLE, 502); }
     console.log(JSON.stringify({ op: "decidir", modelo: d.model, uso: d.usage }));
     try {
         const x = JSON.parse((d.choices[0].message?.content ?? "").replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, "")) as { capacidad: string | null; bloques: string[]; explicacion: string };
         const cap = x.capacidad?.toUpperCase() ?? null;
         return { capacidad: cap && certificadas.some(c => c.codigo === cap) ? cap : null, bloques: (x.bloques ?? []).map(b => b.toUpperCase()).filter(b => b in MAPA_BLOQUES), explicacion: recortar(x.explicacion ?? "", 400) };
     } catch { throw new ErrorMotor("No se pudo armar el agente; intente describir la tarea de otra forma.", 502); }
+}
+
+type Decision = { capacidad: string | null; bloques: string[]; explicacion: string };
+const limpiarDecision = (x: Partial<Decision>): Decision => {
+    const cap = x.capacidad?.toUpperCase() ?? null;
+    return { capacidad: cap && certificadas.some(c => c.codigo === cap) ? cap : null, bloques: (x.bloques ?? []).map(b => b.toUpperCase()).filter(b => b in MAPA_BLOQUES), explicacion: recortar(x.explicacion ?? "", 400) };
+};
+
+/** Respaldo si JEV no responde a tiempo: la misma decisión corta, con el Motor y esfuerzo bajo. */
+async function decidirConMotor(pedido: string): Promise<Decision> {
+    const cliente = motor();
+    try {
+        const r = await cliente.messages.create({ model: MODELO_TEXTO!, max_tokens: 1500, output_config: { effort: "low", format: { type: "json_schema", schema: sinListasDeTipos(ESQ_DECISION) as Record<string, unknown> } }, system: SISTEMA_DECIDIR.replace("Eres JEV, el planificador", "Eres el planificador"), messages: [{ role: "user", content: `${catalogoBreve()}
+
+${pedido}` }] });
+        console.log(JSON.stringify({ op: "decidir-respaldo", modelo: r.model, entrada: r.usage.input_tokens, salida: r.usage.output_tokens }));
+        return limpiarDecision(JSON.parse(r.content.filter(b => b.type === "text").map(b => (b as Anthropic.TextBlock).text).join("")));
+    } catch (e) { console.error("decidir-respaldo", e); throw new ErrorMotor(NO_DISPONIBLE, 502); }
 }
 
 /** El Motor construye el agente con lo que JEV eligió. Esfuerzo bajo, tope de salida y una corrección si el validador lo rechaza. */
@@ -313,7 +331,9 @@ async function planificar(e: Record<string, unknown>) {
         ? `Agente actual: ${JSON.stringify(resumenAgente(base))}\n\nCambio que pide el usuario: ${objetivo}`
         : `Lo que pide el usuario: ${objetivo}`;
     // 1) JEV decide qué usar.
-    const decision = await decidir(pedido);
+    let decision: Decision;
+    try { decision = await decidir(pedido); }
+    catch (err) { console.error("decidir: respaldo con el Motor", err instanceof Error ? err.message : err); decision = await decidirConMotor(pedido); }
     // 2) Mirage arma y conecta el agente: plantilla certificada o composición automática de bloques.
     let armado: Agente;
     if (decision.capacidad) armado = PLANTILLAS[decision.capacidad]();
