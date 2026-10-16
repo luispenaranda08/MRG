@@ -171,15 +171,15 @@ const ESQ_DECISION = obj({ capacidad: strN, bloques: arr(str), explicacion: str 
 
 const SISTEMA_DECIDIR = `Eres JEV, el planificador del constructor de agentes de Mirage (HyperTarget). Decides cómo resolver la tarea de finanzas corporativas que pide el usuario. No armas el agente: solo decides. Respondes solo el JSON pedido.
 
-1. Si una capacidad del catálogo resuelve la tarea, devuelve su código en "capacidad" y "bloques" vacío.
-2. Si ninguna sirve pero los bloques sí, "capacidad" en null y en "bloques" los códigos de los bloques necesarios, en el orden en que se ejecutan (primero los de datos, luego los de cálculo).
+1. Si una capacidad del catálogo cubre TODO lo que pide el usuario, devuelve su código en "capacidad" y "bloques" vacío. Si el usuario nombra cálculos que la capacidad no tiene (por ejemplo DuPont, WACC o DCF además de un informe), no la uses: lista los bloques.
+2. Si ninguna capacidad lo cubre todo pero los bloques sí, "capacidad" en null y en "bloques" los códigos de los bloques necesarios, en el orden en que se ejecutan (primero los de datos, luego los de cálculo).
 3. Si no se puede resolver, "capacidad" en null, "bloques" vacío y en "explicacion" qué falta.
 Si el usuario pide un cambio sobre un agente existente, conserva su capacidad salvo que el cambio exija otra.
 "explicacion": una frase en español de Colombia, para el usuario, que diga qué hará el agente.`;
 
 const SISTEMA_PLAN = `Eres el Motor Mirage y personalizas agentes de finanzas corporativas para HyperTarget. El agente ya está armado y conectado (sus entradas y las cifras que calcula vienen en el mensaje); tú solo escribes lo particular de lo que pidió el usuario. Respondes solo el JSON pedido.
 
-"valores": solo datos que el usuario dio explícitamente, con el id exacto de una entrada de la lista.
+"valores": solo datos que el usuario dio explícitamente. "entrada" es el id exacto de una entrada de la lista, o la clave "paso.entrada" de un dato interno ajustable (por ejemplo, pagos trimestrales → { entrada: "amort.periodos_por_anio", valor: "4" }; en las opciones usa el código, no la etiqueta). Si el mismo dato del usuario sirve a varios cálculos (por ejemplo, el monto de una financiación para la amortización y para la comparación deuda vs. acciones), ponlo en cada uno.
 Montos: siempre completos, en la moneda: "800 millones" es 800000000 y "2.500 millones" es 2500000000. Mirage los lleva a la unidad de los estados al ejecutar. Tasas como fracción: 16 % = 0.16.
 "reglas": solo los criterios de decisión que el usuario pidió, sobre claves "paso.salida" exactas de la lista de cifras. Cada regla dice lo que DEBE cumplirse; su "efecto" se aplica cuando NO se cumple. "No aprueba con PD mayor a 3 %" es { cifra: "pd.pd_1", operador: "<=", umbral: 0.03, efecto: "negar" }; "exige DSCR de 1,5" es { cifra: "cap.dscr", operador: ">=", umbral: 1.5, efecto: "condicionar" }. No aprueba, rechaza o no acepta → "negar"; lo exige como condición → "condicionar"; solo avisar → "alertar". "mensaje": el motivo en una frase corta. Si el usuario no da criterios, deja la lista vacía (se conservan los del agente). Si es un ajuste de un agente existente, devuelve la lista completa de reglas que debe quedar.
 "instruccion": lo que el usuario quiere leer en el texto final (qué analizar, qué comparar, a quién va dirigido), en una a tres frases.
@@ -196,7 +196,11 @@ function catalogoBreve() {
 /** El agente ya armado, en lo que necesita el Motor para personalizarlo. */
 function detalle(a: Agente) {
     const cifras = a.pasos.flatMap(p => (MAPA_BLOQUES[p.bloque]?.salidas ?? []).map(s => `${p.id}.${s.id} (${s.etiqueta}, ${s.fmt})`));
-    return `Agente armado: ${a.nombre}\nEntradas: ${a.entradas.map(e => `${e.id} = ${e.etiqueta} [${e.tipo}]`).join("; ")}\nCifras que calcula: ${cifras.join("; ")}\nCriterios actuales: ${JSON.stringify(a.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })))}`;
+    const internos = a.pasos.flatMap(p => (MAPA_BLOQUES[p.bloque]?.entradas ?? []).filter(c => c.tipo !== "estados" && (!p.vinculos[c.id] || p.vinculos[c.id].de === "valor")).map(c => {
+        const v = p.vinculos[c.id];
+        return `${p.id}.${c.id} = ${c.etiqueta} [${c.tipo}${c.opciones ? `: ${c.opciones.map(o => `${o.v}=${o.etiqueta}`).join(", ")}` : ""}] valor actual: ${v?.de === "valor" ? JSON.stringify(v.v) : "sin valor"}`;
+    }));
+    return `Agente armado: ${a.nombre}\nEntradas: ${a.entradas.map(e => `${e.id} = ${e.etiqueta} [${e.tipo}]`).join("; ")}\nDatos internos ajustables (clave "paso.entrada"): ${internos.join("; ") || "ninguno"}\nCifras que calcula: ${cifras.join("; ")}\nCriterios actuales: ${JSON.stringify(a.instruccion.reglas.map(({ cifra, operador, umbral, efecto }) => ({ cifra, operador, umbral, efecto })))}`;
 }
 
 /** El esquema estricto del Motor no admite listas de tipos: se pasan a anyOf. */
@@ -220,7 +224,21 @@ type Ajuste = { nombre: string; explicacion: string; instruccion: string; salida
 /** Aplica lo particular al agente ya armado. Devuelve los criterios que no se pudieron aplicar, para una corrección. */
 function aplicar(base: Agente, a: Ajuste, reemplazarReglas: boolean): { agente: Agente; rechazadas: string[] } {
     const agente = structuredClone(base), rechazadas: string[] = [];
-    for (const v of a.valores ?? []) { const e = agente.entradas.find(x => x.id === v.entrada); if (e && v.valor !== null && e.tipo !== "estados") e.defecto = v.valor; }
+    const conEstados = agente.entradas.some(e => e.tipo === "estados");
+    for (const v of a.valores ?? []) {
+        if (v.valor === null) continue;
+        const e = agente.entradas.find(x => x.id === v.entrada);
+        if (e) { if (e.tipo !== "estados") e.defecto = v.valor; continue; }
+        // Dato interno de un paso: "paso.entrada".
+        const [pid, cid] = v.entrada.split("."), paso = agente.pasos.find(x => x.id === pid), c = paso && MAPA_BLOQUES[paso.bloque]?.entradas.find(x => x.id === cid);
+        if (!paso || !c || c.tipo === "estados" || (paso.vinculos[cid] && paso.vinculos[cid].de !== "valor")) continue;
+        if (c.tipo === "dinero" && conEstados && typeof v.valor === "number") {
+            // Un monto escrito completo se vuelve entrada del agente para llevarlo a la unidad de los estados.
+            const id = agente.entradas.some(x => x.id === cid) ? `${pid}_${cid}` : cid;
+            agente.entradas.push({ id, etiqueta: `${c.etiqueta} (valor completo)`, tipo: "dinero", requerido: !!c.requerido, defecto: v.valor, escala: "estados" });
+            paso.vinculos[cid] = { de: "entrada", id };
+        } else paso.vinculos[cid] = { de: "valor", v: c.tipo === "opcion" || c.tipo === "codigo_tasa" ? String(v.valor) : v.valor };
+    }
     agente.nombre = a.nombre?.trim() || agente.nombre;
     agente.descripcion = recortar(a.explicacion ?? agente.descripcion, 400);
     agente.instruccion.texto = recortar(a.instruccion ?? "", 1500);
@@ -314,7 +332,7 @@ async function planificar(e: Record<string, unknown>) {
     const a1 = await ajustarConMotor(mensajes);
     let r = aplicar(armado, a1.ajuste, !!base);
     if (r.rechazadas.length) {
-        const a2 = await ajustarConMotor([...mensajes, { role: "assistant", content: a1.texto }, { role: "user", content: `Estos criterios usan cifras que el agente no calcula: ${r.rechazadas.join(" | ")}. Usa solo claves de la lista «Cifras que calcula» y devuelve el JSON completo.` }]);
+        const a2 = await ajustarConMotor([...mensajes, { role: "assistant", content: a1.texto }, { role: "user", content: `Estos criterios no son válidos: ${r.rechazadas.join(" | ")}. Usa solo claves numéricas de la lista «Cifras que calcula» (no las de formato txt) y devuelve el JSON completo.` }]);
         const r2 = aplicar(armado, a2.ajuste, !!base);
         if (r2.rechazadas.length <= r.rechazadas.length) r = r2;
     }

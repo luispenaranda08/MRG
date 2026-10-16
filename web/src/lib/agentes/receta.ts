@@ -69,6 +69,10 @@ export function validarAgente(agente: Agente): string[] {
     for (const r of agente.instruccion.reglas) {
         const [paso, salida] = r.cifra.split(".");
         if (!vistos.get(paso)?.has(salida)) errores.push(`La regla «${r.mensaje || r.id}» usa una cifra que el agente no calcula (${r.cifra}).`);
+        else {
+            const p = agente.pasos.find(x => x.id === paso), s = p && MAPA_BLOQUES[p.bloque]?.salidas.find(x => x.id === salida);
+            if (s?.fmt === "txt") errores.push(`La regla «${r.mensaje || r.id}» compara una cifra de texto (${r.cifra}); use una cifra numérica.`);
+        }
         if (!Number.isFinite(r.umbral)) errores.push(`La regla «${r.mensaje || r.id}» no tiene un umbral numérico.`);
         if (r.umbralDe && !entradas.has(r.umbralDe)) errores.push(`La regla «${r.mensaje || r.id}» toma su umbral de una entrada que no existe (${r.umbralDe}).`);
     }
